@@ -4,5 +4,188 @@
     Layout = "~/Views/Shared/_LayoutHomeClient.cshtml";
 }
 
-<h2>Timkiemsach</h2>
+ <!-- Start: Products Section -->
+<div id="content" class="site-content">
+    <div id="primary" class="content-area">
+        <main id="main" class="site-main">
+            <div class="books-full-width">
+                <div class="container">
+                    <!-- Start: Search Section -->
+                    <!-- End: Search Section -->
+
+                    <div class="filter-options margin-list">
+                        <div class="row">
+                            <div class="col-md-3 col-sm-3">
+                                <select name="orderby">
+                                    <option selected="selected">Sort by Title</option>
+                                    <option>Sort by popularity</option>
+                                    <option>Sort by rating</option>
+                                    <option>Sort by newness</option>
+                                    <option>Sort by price</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3 col-sm-3">
+                                <select name="orderby">
+                                    <option selected="selected">Sort by Author</option>
+                                    <option>Sort by popularity</option>
+                                    <option>Sort by rating</option>
+                                    <option>Sort by newness</option>
+                                    <option>Sort by price</option>
+                                </select>
+                            </div>
+                            <div class="col-md-2 col-sm-3">
+                                <select name="orderby">
+                                    <option selected="selected">Language</option>
+                                    <option>Sort by popularity</option>
+                                    <option>Sort by rating</option>
+                                    <option>Sort by newness</option>
+                                    <option>Sort by price</option>
+                                </select>
+                            </div>
+                            <div class="col-md-2 col-sm-3">
+                                <select name="orderby">
+                                    <option selected="selected">Publishing Date</option>
+                                    <option>Sort by popularity</option>
+                                    <option>Sort by rating</option>
+                                    <option>Sort by newness</option>
+                                    <option>Sort by price</option>
+                                </select>
+                            </div>
+                            <div class="col-md-2 col-sm-12 pull-right">
+                                <div class="filter-toggle">
+                                    <a href="#" class="active"><i class="glyphicon glyphicon-th-large"></i></a>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="booksmedia-fullwidth">
+                        <ul>
+                            @foreach (var item in ViewBag.SearchSach)
+                            {
+                                <li>
+                                    <div class="book-list-icon light-green-icon"></div>
+                                    <figure>
+                                        <a href="/sach/chitietsach"><img src="~/Content/ClientContent/images/Books/@item.HINHANH" alt="Book"></a>
+                                        <figcaption>
+                                            <header>
+                                                <h4><a href="/sach/chitietsach">@item.TENSACH</a></h4>
+                                                <p><strong>Author:</strong>  F. Scott Fitzgerald</p>
+                                                <p><strong>ISBN:</strong>  9781581573268</p>
+                                            </header>
+                                            <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. Pellentesque dolor turpis, pulvinar varius.</p>
+                                            <div class="actions">
+                                                <ul>
+                                                    <li>
+                                                        <a href="#" target="_blank" data-toggle="blog-tags" data-placement="top" title="Add TO CART">
+                                                            <i class="fa fa-shopping-cart"></i>
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#" target="_blank" data-toggle="blog-tags" data-placement="top" title="Like">
+                                                            <i class="fa fa-heart"></i>
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#" target="_blank" data-toggle="blog-tags" data-placement="top" title="Mail">
+                                                            <i class="fa fa-envelope"></i>
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#" target="_blank" data-toggle="blog-tags" data-placement="top" title="Search">
+                                                            <i class="fa fa-search"></i>
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#" target="_blank" data-toggle="blog-tags" data-placement="top" title="Print">
+                                                            <i class="fa fa-print"></i>
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#" target="_blank" data-toggle="blog-tags" data-placement="top" title="Share">
+                                                            <i class="fa fa-share-alt"></i>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </figcaption>
+                                    </figure>
+                                </li>
+                            }
+
+                        </ul>
+                    </div>
+                    <nav class="navigation pagination text-center">
+                        <h2 class="screen-reader-text">Posts navigation</h2>
+                        <div class="nav-links">
+                            <a class="prev page-numbers" href="#."><i class="fa fa-long-arrow-left"></i> Previous</a>
+                            <a class="page-numbers" href="#.">1</a>
+                            <span class="page-numbers current">2</span>
+                            <a class="page-numbers" href="#.">3</a>
+                            <a class="page-numbers" href="#.">4</a>
+                            <a class="next page-numbers" href="#.">Next <i class="fa fa-long-arrow-right"></i></a>
+                        </div>
+                    </nav>
+                </div>
+
+            </div>
+        </main>
+    </div>
+</div>
+<!-- End: Products Section -->
+<!-- Start: Social Network -->
+<section class="social-network section-padding">
+    <div class="container">
+        <div class="center-content">
+            <h2 class="section-title">Follow Us</h2>
+            <span class="underline center"></span>
+            <p class="lead">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        </div>
+        <ul>
+            <li>
+                <a class="facebook" href="#" target="_blank">
+                    <span>
+                        <i class="fa fa-facebook-f"></i>
+                    </span>
+                </a>
+            </li>
+            <li>
+                <a class="twitter" href="#" target="_blank">
+                    <span>
+                        <i class="fa fa-twitter"></i>
+                    </span>
+                </a>
+            </li>
+            <li>
+                <a class="google" href="#" target="_blank">
+                    <span>
+                        <i class="fa fa-google-plus"></i>
+                    </span>
+                </a>
+            </li>
+            <li>
+                <a class="rss" href="#" target="_blank">
+                    <span>
+                        <i class="fa fa-rss"></i>
+                    </span>
+                </a>
+            </li>
+            <li>
+                <a class="linkedin" href="#" target="_blank">
+                    <span>
+                        <i class="fa fa-linkedin"></i>
+                    </span>
+                </a>
+            </li>
+            <li>
+                <a class="youtube" href="#" target="_blank">
+                    <span>
+                        <i class="fa fa-youtube"></i>
+                    </span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</section>
+<!-- End: Social Network -->
 
