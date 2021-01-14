@@ -454,7 +454,7 @@
     <Folder Include="Content\AdminContent\vendor\" />
     <Folder Include="Content\ClientContent\css\" />
     <Folder Include="Content\ClientContent\fonts\" />
-    <Folder Include="Content\ClientContent\images\" />
+    <Folder Include="Content\ClientContent\images\Books\" />
     <Folder Include="Content\ClientContent\js\" />
     <Folder Include="Models\CustomClass\" />
     <Folder Include="Views\Account\" />

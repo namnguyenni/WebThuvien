@@ -21,7 +21,9 @@
 
 </head>
 <body class="layout-v2">
-
+    @{Html.RenderAction("HeaderSection", "Home"); }
+    @{Html.RenderAction("SliderSection", "Home"); }
+    @{Html.RenderAction("SearchSection", "Home"); }
 
     @RenderBody()
 

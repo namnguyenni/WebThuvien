@@ -13,11 +13,11 @@ namespace WebThuvien.Controllers
         {
             QLTHUVIEN db = new QLTHUVIEN();
             //SÁCH MỚI CẬP NHẬT : 10 sách
-            List<SACH> TOPNEWBOOK10 = db.Database.SqlQuery<SACH>("exec dbo.TOPNEWBOOK10").ToList();
-            ViewBag.TOPNEWBOOK10 = TOPNEWBOOK10;
-            //SÁCH XEM NHIỀU TOPPOPULARBOOK
-            List<SACH> TOPPOPULARBOOK = db.Database.SqlQuery<SACH>("exec dbo.TOPPOPULARBOOK").ToList();
-            ViewBag.TOPPOPULARBOOK = TOPPOPULARBOOK;
+            //List<SACH> TOPNEWBOOK10 = db.Database.SqlQuery<SACH>("exec dbo.TOPNEWBOOK10").ToList();
+            //ViewBag.TOPNEWBOOK10 = TOPNEWBOOK10;
+            ////SÁCH XEM NHIỀU TOPPOPULARBOOK
+            //List<SACH> TOPPOPULARBOOK = db.Database.SqlQuery<SACH>("exec dbo.TOPPOPULARBOOK").ToList();
+            //ViewBag.TOPPOPULARBOOK = TOPPOPULARBOOK;
             //SÁCH THEO LĨNH VỰC
             ViewBag.TatcaSach = db.SACHes.ToList();
             return View();
@@ -31,6 +31,17 @@ namespace WebThuvien.Controllers
         }
         public ActionResult SliderSection()
         {
+            QLTHUVIEN db = new QLTHUVIEN();
+            //SÁCH LOẠI 1
+            SACH sach1 = db.SACHes.First(x=>x.MALOAISACH == "1");
+            //SÁCH LOẠI 2
+            SACH sach2 = db.SACHes.First(x => x.MALOAISACH == "2");
+            //SÁCH LOẠI 3
+            SACH sach3 = db.SACHes.First(x => x.MALOAISACH == "3");
+
+            ViewBag.sach1 = sach1;
+            ViewBag.sach2 = sach2;
+            ViewBag.sach3 = sach3;
 
             return View();
         }
@@ -40,16 +51,33 @@ namespace WebThuvien.Controllers
         }
         public ActionResult FeaturesSection()
         {
+            QLTHUVIEN db = new QLTHUVIEN();
+            List<LOAISACH> Loaisach = new List<LOAISACH>();
+            Loaisach = db.LOAISACHes.ToList();
+            ViewBag.Loaisach = Loaisach;
             return View();
         }
         //danh mục sách trong kho
         public ActionResult CatagorySection()
         {
+            QLTHUVIEN db = new QLTHUVIEN();
+            List<SACH> Tatcasach = new List<SACH>();
+            //LINH VỰC
+            List<LINHVUC> listLinhvuc = db.LINHVUCs.ToList();
+            ViewBag.Linhvuc = listLinhvuc;
+            //SÁCH THEO LĨNH VỰC
+            foreach (var item in listLinhvuc)
+            {
+                List<SACH> sach_linhvuc = db.SACHes.Where(x => x.MALINHVUC == item.MALINHVUC).Take(10).ToList();
+                Tatcasach.AddRange(sach_linhvuc);
+            }
+            ViewBag.TatcaSach = Tatcasach;
             return View();
         }
 
         public ActionResult CountBook()
         {
+
             return View();
         }
         public ActionResult EventSection()
@@ -68,29 +96,6 @@ namespace WebThuvien.Controllers
             
 
             return View();
-        }
-
-
-
-        public ActionResult Chitietsach(string masach)
-        {
-            QLTHUVIEN db = new QLTHUVIEN();
-            //thong tin cuốn sách đó
-            SACH detailSach = db.SACHes.Single(x => x.MASACH == masach);
-            //những sách có liên quan
-            //những cuốn sách cùng loại
-            List<SACH> SachLienQuan_Loai = db.SACHes.Where(x => x.MALOAISACH == detailSach.MALOAISACH).Take(3).ToList();
-            ViewBag.SachLienQuanCungLoai = SachLienQuan_Loai;
-            //những cuốn sách liên quan về lĩnh vực
-            List<SACH> SachLienQuan_LinhVuc = db.SACHes.Where(x => x.MALINHVUC == detailSach.MALINHVUC).Take(3).ToList();
-            ViewBag.SachLienQuan_LinhVuc = SachLienQuan_LinhVuc;
-            //những sách cùng tác giả
-            List<SACH> SachLienQuan_Tacgia = db.SACHes.Where(x => x.MATACGIA == detailSach.MATACGIA).Take(3).ToList();
-            ViewBag.SachLienQuan_Tacgia = SachLienQuan_Tacgia;
-            //bình luận về cuốn sách này
-            List<BINHLUAN> binhluan = db.BINHLUANs.Where(x => x.MASACH == masach).ToList();
-            ViewBag.binhluan = binhluan;
-            return View(detailSach);
         }
 
         public ActionResult Timkiemsach(string noidungnhap)
