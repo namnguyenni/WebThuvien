@@ -169,6 +169,7 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\ClientContent\images\Anonymous.jpg" />
     <Content Include="Content\ClientContent\style.css" />
     <Content Include="Content\DataTables\css\autoFill.bootstrap.css" />
     <Content Include="Content\DataTables\css\autoFill.bootstrap.min.css" />
@@ -337,6 +338,7 @@
     <Content Include="Content\DataTables\css\mixins.scss" />
     <Content Include="Content\DataTables\css\common.scss" />
     <Content Include="Content\AdminContent\prepros-6.config" />
+    <Content Include="Content\ClientContent\FILE_PDF\SACH1.pdf" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\DataTables\autoFill.bootstrap.js" />
     <Content Include="Scripts\DataTables\autoFill.bootstrap.min.js" />
@@ -445,8 +447,8 @@
     <Content Include="Views\Home\CountBook.cshtml" />
     <Content Include="Views\Home\EventSection.cshtml" />
     <Content Include="Views\Sach\Index.cshtml" />
-    <Content Include="Views\Sach\SliderSection.cshtml" />
     <Content Include="Views\Sach\Chitietsach.cshtml" />
+    <Content Include="Views\Sach\Timkiemsach.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

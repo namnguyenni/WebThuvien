@@ -47,6 +47,12 @@ namespace WebThuvien.Controllers
         }
         public ActionResult SearchSection()
         {
+            QLTHUVIEN db = new QLTHUVIEN();
+            List<LOAISACH> list_loaisach = db.LOAISACHes.ToList();
+            ViewBag.list_loaisach = list_loaisach;
+            List<LINHVUC> list_linhvuc = db.LINHVUCs.ToList();
+            ViewBag.list_linhvuc = list_linhvuc;
+
             return View();
         }
         public ActionResult FeaturesSection()
@@ -98,31 +104,7 @@ namespace WebThuvien.Controllers
             return View();
         }
 
-        public ActionResult Timkiemsach(string noidungnhap)
-        {
-            string noidung = noidungnhap.ToUpper();
-            QLTHUVIEN db = new QLTHUVIEN();
-            List<SACH> SearchSach = new List<SACH>();
-            //tim kiem gần đúng trên tên sách
-            List<SACH> SearchSachName = db.SACHes.Where(x => x.TENSACH.Contains(noidung) == true).ToList();
-            SearchSach.AddRange(SearchSachName);
-            //tìm kiếm vào tên tác giả
-            List<SACH> SearchSachTacgia = db.Database.SqlQuery<SACH>("exec dbo.SearchSachTacgia").ToList();
-            SearchSach.AddRange(SearchSachTacgia);
-            //tim kiếm theo lĩnh vực
-            List<LINHVUC> Linhvulienquan = db.LINHVUCs.Where(x => x.TENLINHVUC.Contains(noidung) == true).ToList();
-            
-            foreach (var item in Linhvulienquan)
-            {
-                List<SACH> sach =  db.SACHes.Where(x => x.MALINHVUC == item.MALINHVUC).ToList();//tìm kiếm sách có lĩnh vực
-                SearchSach.AddRange(sach);//thêm vào sách search
-            }
-            
-            ViewBag.SearchSach = SearchSach;
 
-
-            return View();
-        }
 
 
 

@@ -6,34 +6,35 @@
     <div class="container">
         <div class="filter-box">
             <h3>Tìm cuốn sách bạn yêu thích?</h3>
-            <form action="http://libraria.demo.presstigers.com/index.html" method="get">
+            <form action="/Sach/Timkiemsach" method="get" enctype="multipart/form-data">
                 <div class="col-md-4 col-sm-6">
                     <div class="form-group">
                         <label class="sr-only" for="keywords">Tìm kiếm bằng từ khóa</label>
-                        <input class="form-control" placeholder="Nhập từ khóa tìm kiếm" id="keywords" name="keywords" type="text">
+                        <input class="form-control" placeholder="Nhập từ khóa tìm kiếm" id="noidungnhap" name="noidungnhap" type="text">
                     </div>
                 </div>
                 <div class="col-md-3 col-sm-6">
                     <div class="form-group">
-                        <select name="catalog" id="catalog" class="form-control">
-                            <option>Tất cả loại sách</option>
-                            <option>Loại sách 01</option>
-                            <option>Loại sách 02</option>
-                            <option>Loại sách 03</option>
-                            <option>Loại sách 04</option>
-                            <option>Loại sách 05</option>
+                        <select name="loaisach" id="loaisach" class="form-control">
+                            <option value="0">Tất cả loại sách</option>
+                            @foreach (var item in ViewBag.list_loaisach)
+                            {
+                                <option value="@item.ID">@item.TENTHELOAI</option>
+
+                            }
                         </select>
                     </div>
                 </div>
                 <div class="col-md-3 col-sm-6">
                     <div class="form-group">
-                        <select name="category" id="category" class="form-control">
-                            <option>Tất cả lĩnh vực</option>
-                            <option>Lĩnh vực 01</option>
-                            <option>Lĩnh vực 02</option>
-                            <option>Lĩnh vực 03</option>
-                            <option>Lĩnh vực 04</option>
-                            <option>Lĩnh vực 05</option>
+                        <select name="linhvuc" id="linhvuc" class="form-control">
+                            <option value="0">Tất cả lĩnh vực</option>
+                            @foreach (var item in ViewBag.list_linhvuc)
+                            {
+                                <option value="@item.ID" >@item.TENLINHVUC</option>
+
+                            }
+                            
                         </select>
                     </div>
                 </div>
