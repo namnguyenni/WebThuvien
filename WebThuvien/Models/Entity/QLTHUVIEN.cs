@@ -12,6 +12,8 @@ namespace WebThuvien.Models.Entity
         {
         }
 
+        public virtual DbSet<BAIDANGTHONGTIN> BAIDANGTHONGTINs { get; set; }
+        public virtual DbSet<BINHLUAN> BINHLUANs { get; set; }
         public virtual DbSet<CHITIETMUONTRASACH> CHITIETMUONTRASACHes { get; set; }
         public virtual DbSet<DOCGIA> DOCGIAs { get; set; }
         public virtual DbSet<LINHVUC> LINHVUCs { get; set; }
@@ -21,12 +23,33 @@ namespace WebThuvien.Models.Entity
         public virtual DbSet<NHANVIEN> NHANVIENs { get; set; }
         public virtual DbSet<NHAXUATBAN> NHAXUATBANs { get; set; }
         public virtual DbSet<SACH> SACHes { get; set; }
+        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<TACGIA> TACGIAs { get; set; }
         public virtual DbSet<TAIKHOAN> TAIKHOANs { get; set; }
         public virtual DbSet<THETHUVIEN> THETHUVIENs { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<BAIDANGTHONGTIN>()
+                .Property(e => e.TACGIA)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<BAIDANGTHONGTIN>()
+                .Property(e => e.HINHANH1)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<BAIDANGTHONGTIN>()
+                .Property(e => e.HINHANH2)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<BINHLUAN>()
+                .Property(e => e.MASACH)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<BINHLUAN>()
+                .Property(e => e.MANGUOIBINHLUAN)
+                .IsUnicode(false);
+
             modelBuilder.Entity<DOCGIA>()
                 .Property(e => e.MADOCGIA)
                 .IsUnicode(false);
@@ -142,6 +165,16 @@ namespace WebThuvien.Models.Entity
             modelBuilder.Entity<TAIKHOAN>()
                 .Property(e => e.EMAIL)
                 .IsUnicode(false);
+
+            modelBuilder.Entity<TAIKHOAN>()
+                .HasMany(e => e.BAIDANGTHONGTINs)
+                .WithOptional(e => e.TAIKHOAN)
+                .HasForeignKey(e => e.TACGIA);
+
+            modelBuilder.Entity<TAIKHOAN>()
+                .HasMany(e => e.BINHLUANs)
+                .WithOptional(e => e.TAIKHOAN)
+                .HasForeignKey(e => e.MANGUOIBINHLUAN);
 
             modelBuilder.Entity<TAIKHOAN>()
                 .HasMany(e => e.DOCGIAs)

@@ -12,6 +12,8 @@ namespace WebThuvien.Models.Entity
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public TAIKHOAN()
         {
+            BAIDANGTHONGTINs = new HashSet<BAIDANGTHONGTIN>();
+            BINHLUANs = new HashSet<BINHLUAN>();
             DOCGIAs = new HashSet<DOCGIA>();
             NHANVIENs = new HashSet<NHANVIEN>();
         }
@@ -33,6 +35,15 @@ namespace WebThuvien.Models.Entity
 
         [StringLength(100)]
         public string SOTHICHDOC { get; set; }
+
+        [StringLength(50)]
+        public string HOTEN { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<BAIDANGTHONGTIN> BAIDANGTHONGTINs { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<BINHLUAN> BINHLUANs { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DOCGIA> DOCGIAs { get; set; }

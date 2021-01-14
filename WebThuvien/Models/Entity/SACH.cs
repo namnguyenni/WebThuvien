@@ -12,6 +12,7 @@ namespace WebThuvien.Models.Entity
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public SACH()
         {
+            BINHLUANs = new HashSet<BINHLUAN>();
             MUONTRASACHes = new HashSet<MUONTRASACH>();
         }
 
@@ -34,9 +35,6 @@ namespace WebThuvien.Models.Entity
         public int? LUOTXEM { get; set; }
 
         public int? TRANGTHAI { get; set; }
-        public DateTime? NGAYTAILEN { get; set; }
-        [StringLength(1000)]
-        public string GHICHU { get; set; }
 
         [StringLength(100)]
         public string NGONNGU { get; set; }
@@ -52,6 +50,15 @@ namespace WebThuvien.Models.Entity
 
         [StringLength(20)]
         public string MANHAXUATBAN { get; set; }
+
+        [Column(TypeName = "date")]
+        public DateTime? NGAYTAILEN { get; set; }
+
+        [StringLength(1000)]
+        public string GHICHU { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<BINHLUAN> BINHLUANs { get; set; }
 
         public virtual LINHVUC LINHVUC { get; set; }
 

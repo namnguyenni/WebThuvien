@@ -1,8 +1,15 @@
 ﻿
 @{
-    ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Trang chủ";
+    Layout = "~/Views/Shared/_LayoutHomeClient.cshtml";
 }
 
-<h2>Index</h2>
 
+@{Html.RenderAction("HeaderSection", "Home"); }
+@{Html.RenderAction("SliderSection", "Home"); }
+@{Html.RenderAction("SearchSection", "Home"); }
+@{Html.RenderAction("CatagorySection", "Home"); }
+@{Html.RenderAction("FeaturesSection", "Home"); }
+@{Html.RenderAction("EventSection", "Home"); }
+@{Html.RenderAction("CountBook", "Home"); }
+@{Html.RenderAction("HeaderSection", "Home"); }
