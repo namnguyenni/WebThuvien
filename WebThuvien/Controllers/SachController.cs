@@ -12,8 +12,34 @@ namespace WebThuvien.Controllers
     public class SachController : Controller
     {
         // GET: Sach
-        public ActionResult Index()
+        public ActionResult Index(int pageNumber=1)
         {
+            QLTHUVIEN db = new QLTHUVIEN();
+            List<SACH> SearchSach = db.SACHes.ToList();
+
+            //phân trang và tính toán
+            if (SearchSach.Count < 9)
+            {
+                ViewBag.SearchSach = SearchSach;
+            }
+            else if (SearchSach.Count - (pageNumber - 1) * 9 > 0 && SearchSach.Count - (pageNumber - 1) * 9 < 9)
+            {
+                ViewBag.SearchSach = SearchSach.GetRange((pageNumber - 1) * 9, SearchSach.Count - (pageNumber - 1) * 9);
+
+            }
+            else
+            {
+                ViewBag.SearchSach = SearchSach.GetRange((pageNumber - 1) * 9, 9);
+            }
+            //số lượng trang
+            int countPage = SearchSach.Count() / 9;
+            if (countPage * 9 < SearchSach.Count())
+            {
+                countPage += 1;
+            }
+
+            ViewBag.countPage = countPage;
+            ViewBag.currentPage = pageNumber;
             return View();
         }
 
@@ -64,35 +90,86 @@ namespace WebThuvien.Controllers
         }
 
 
-        public ActionResult Timkiemsach(string noidungnhap,int linhvuc,int loaisach)
+        public ActionResult Timkiemsach(string noidungnhap,int linhvuc,int loaisach,int pageNumber=1)
         {
+
             string noidung = noidungnhap.ToUpper();
             QLTHUVIEN db = new QLTHUVIEN();
             List<SACH> SearchSach = new List<SACH>();
+
             //tim kiem gần đúng trên tên sách
             List<SACH> SearchSachName = db.SACHes.Where(x => x.TENSACH.Contains(noidung) == true).ToList();
             SearchSach.AddRange(SearchSachName);
+
             //tim kiem gần đúng mã sách
             List<SACH> SearchSachMa = db.SACHes.Where(x => x.MASACH.Contains(noidung) == true).ToList();
-            SearchSach.AddRange(SearchSachName);
+            AddSach(SearchSach, SearchSachMa);
+
             //tìm kiếm vào tên tác giả
             SqlParameter noidungparam = new SqlParameter("@noidung", noidung);
             noidungparam.SqlDbType = SqlDbType.NVarChar;
             List<SACH> SearchSachTacgia = db.Database.SqlQuery<SACH>("exec dbo.SearchSachTacgia '"+ noidung+"'").ToList();
-            SearchSach.AddRange(SearchSachTacgia);
+            AddSach(SearchSach, SearchSachTacgia);
+
             //tim kiếm theo lĩnh vực
             List<LINHVUC> Linhvulienquan = db.LINHVUCs.Where(x => x.TENLINHVUC.Contains(noidung) == true).ToList();
 
             foreach (var item in Linhvulienquan)
             {
                 List<SACH> sach = db.SACHes.Where(x => x.MALINHVUC == item.MALINHVUC).ToList();//tìm kiếm sách có lĩnh vực
-                SearchSach.AddRange(sach);//thêm vào sách search
+                AddSach(SearchSach, sach);//thêm vào sách search
             }
 
-            ViewBag.SearchSach = SearchSach;
+            //phân trang và tính toán
+            if (SearchSach.Count<9)
+            {
+                ViewBag.SearchSach = SearchSach;
+            }
+            else if(SearchSach.Count - (pageNumber - 1) * 9 > 0 && SearchSach.Count - (pageNumber - 1) * 9 < 9)
+            {
+                ViewBag.SearchSach = SearchSach.GetRange((pageNumber - 1) * 9, SearchSach.Count - (pageNumber-1) * 9);
 
+            }
+            else
+            {
+                ViewBag.SearchSach = SearchSach.GetRange((pageNumber - 1)*9 , 9);
+            }
+            //số lượng trang
+            int countPage = SearchSach.Count()/9;
+            if (countPage*9 < SearchSach.Count())
+            {
+                countPage += 1;
+            }
+            
+            ViewBag.countPage = countPage;
+            ViewBag.currentPage = pageNumber;
+            ViewBag.noidungnhap = noidungnhap;
+            ViewBag.linhvuc = linhvuc;
+            ViewBag.loaisach = loaisach;
 
             return View();
+        }
+
+
+        private void AddSach(List<SACH> list1,List<SACH> list2)
+        {
+            
+            foreach (var item2 in list2)
+            {
+                bool exist = false;
+                foreach (var item1 in list1)
+                {
+                    if (item2.MASACH == item1.MASACH)
+                    {
+                        exist = true;
+                        break;
+                    }
+                }
+                if (!exist)
+                {
+                    list1.Add(item2);
+                }
+            }
         }
 
     }

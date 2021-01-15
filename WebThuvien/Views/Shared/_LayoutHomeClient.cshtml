@@ -228,6 +228,13 @@
 
     <!-- Custom Scripts -->
     <script type="text/javascript" src="~/Content/ClientContent/js/main.js"></script>
+
+    <script>
+        var x = '@ViewBag.noidung';
+        $(document).ready(function () {
+            $('#noidungnhap').val(x)
+        })
+    </script>
 </body>
 
 </html>

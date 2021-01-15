@@ -5,12 +5,12 @@
 <section class="search-filters">
     <div class="container">
         <div class="filter-box">
-            <h3>Tìm cuốn sách bạn yêu thích?</h3>
+            <h3>Tìm cuốn sách bạn yêu thích?@ViewBag.countPage</h3>
             <form action="/Sach/Timkiemsach" method="get" enctype="multipart/form-data">
                 <div class="col-md-4 col-sm-6">
                     <div class="form-group">
                         <label class="sr-only" for="keywords">Tìm kiếm bằng từ khóa</label>
-                        <input class="form-control" placeholder="Nhập từ khóa tìm kiếm" id="noidungnhap" name="noidungnhap" type="text">
+                        <input value="" class="form-control" placeholder="Nhập từ khóa tìm kiếm" id="noidungnhap" name="noidungnhap" type="text">
                     </div>
                 </div>
                 <div class="col-md-3 col-sm-6">
