@@ -83,7 +83,16 @@ namespace WebThuvien.Controllers
 
         public ActionResult CountBook()
         {
-
+            QLTHUVIEN db = new QLTHUVIEN();
+            List<LOAISACH> list_loai = db.LOAISACHes.ToList();
+            ViewBag.list_loaisach = list_loai;
+            List<int> soluong = new List<int>();
+            foreach (var item in list_loai)
+            {
+                int soluong_sub = db.SACHes.Count(x => x.MALOAISACH == item.MATHELOAI);
+                soluong.Add(soluong_sub);
+            }
+            ViewBag.soluong = soluong;
             return View();
         }
         public ActionResult EventSection()

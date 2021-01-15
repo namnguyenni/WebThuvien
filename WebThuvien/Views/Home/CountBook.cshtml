@@ -6,38 +6,21 @@
         <div class="container">
             <div class="row">
                 <ul>
-                    <li class="color-light-green">
-                        <div class="fact-item">
-                            <div class="fact-icon">
-                                <i class="ebook"></i>
+                    @{ int i = 0;}
+                    @foreach (var item in ViewBag.list_loaisach)
+                    {
+                        <li class="color-@item.KIHIEU">
+                            <div class="fact-item">
+                                <div class="fact-icon">
+                                    <i class="ebook"></i>
+                                </div>
+                                <span>@item.TENTHELOAI<strong class="fact-counter">@ViewBag.soluong[i]</strong></span>
                             </div>
-                            <span>eBooks<strong class="fact-counter">45780</strong></span>
-                        </div>
-                    </li>
-                    <li class="color-green">
-                        <div class="fact-item">
-                            <div class="fact-icon">
-                                <i class="eaudio"></i>
-                            </div>
-                            <span>eAudio<strong class="fact-counter">32450</strong></span>
-                        </div>
-                    </li>
-                    <li class="color-red">
-                        <div class="fact-item">
-                            <div class="fact-icon">
-                                <i class="magazine"></i>
-                            </div>
-                            <span>Magazine<strong class="fact-counter">14450</strong></span>
-                        </div>
-                    </li>
-                    <li class="color-blue">
-                        <div class="fact-item">
-                            <div class="fact-icon">
-                                <i class="videos"></i>
-                            </div>
-                            <span>Videos<strong class="fact-counter">32450</strong></span>
-                        </div>
-                    </li>
+                        </li>
+                        i = i + 1;
+
+                    }
+                    
                 </ul>
             </div>
         </div>

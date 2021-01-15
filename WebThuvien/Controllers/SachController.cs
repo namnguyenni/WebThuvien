@@ -90,7 +90,7 @@ namespace WebThuvien.Controllers
         }
 
 
-        public ActionResult Timkiemsach(string noidungnhap,int linhvuc,int loaisach,int pageNumber=1)
+        public ActionResult Timkiemsach(string noidungnhap="",string linhvuc="",string loaisach="",int pageNumber=1)
         {
 
             string noidung = noidungnhap.ToUpper();
@@ -120,6 +120,21 @@ namespace WebThuvien.Controllers
                 AddSach(SearchSach, sach);//thêm vào sách search
             }
 
+            //lọc theo thể loại và lĩnh vực
+            List<SACH> LIST = new List<SACH>();
+            if (linhvuc != "0" || loaisach != "0")
+            {
+                foreach (var item in SearchSach)
+                {
+                    if (item.MALINHVUC == linhvuc || item.MALOAISACH == loaisach)
+                    {
+                        LIST.Add(item);
+                    }
+                }
+                SearchSach = LIST;
+
+            }
+
             //phân trang và tính toán
             if (SearchSach.Count<9)
             {
@@ -134,6 +149,7 @@ namespace WebThuvien.Controllers
             {
                 ViewBag.SearchSach = SearchSach.GetRange((pageNumber - 1)*9 , 9);
             }
+
             //số lượng trang
             int countPage = SearchSach.Count()/9;
             if (countPage*9 < SearchSach.Count())

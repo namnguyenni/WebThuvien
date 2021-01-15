@@ -235,6 +235,31 @@
             $('#noidungnhap').val(x)
         })
     </script>
+    <script>
+    function setSelectedPageNav() {
+        var pathName = location.pathname.toLowerCase();
+        var patt1 = new RegExp("/home");
+        var patt2 = new RegExp("/sach");
+        var patt3 = new RegExp("/thongke");
+        var patt4 = new RegExp("/hoatdong");
+        var patt5 = new RegExp("/baocao");
+        // || pathName == "/"
+        if (patt1.exec(pathName) != null) {
+            $("#home-nav").css("color", "#84bb45");
+        }
+        else if (patt2.exec(pathName) != null) {
+            $("#sach-nav").css("color", "#84bb45");
+        }
+        else {
+            $("#home1-nav").css("color", "#84bb45");
+        }
+
+    }
+
+    $(document).ready(function () {
+        setSelectedPageNav();
+    })
+    </script>
 </body>
 
 </html>

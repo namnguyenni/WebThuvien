@@ -1,0 +1,103 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link href="~/Content/ClientContent/images/favicon.ico" rel="icon" type="image/x-icon" />
+
+    @*<link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700" rel="stylesheet">*@
+
+    <title>@ViewBag.Title</title>
+    
+    <!-- Bootstrap core CSS -->
+    <link href="~/Content/AdminContent/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Additional CSS Files -->
+    <link rel="stylesheet" href="~/Content/AdminContent/assets/css/fontawesome.css">
+    <link rel="stylesheet" href="~/Content/AdminContent/assets/css/templatemo-style.css">
+    <link rel="stylesheet" href="~/Content/AdminContent/assets/css/owl.css">
+
+</head>
+
+<body class="is-preload">
+
+    <!-- Wrapper -->
+    <div id="wrapper">
+
+
+
+                <!-- Services -->
+                @RenderBody()
+
+
+
+        <!-- Sidebar -->
+        <div id="sidebar">
+
+            <div class="inner">
+
+                <!-- Search Box -->
+                <section id="search" class="alt">
+                    <form method="get" action="#">
+                        <input type="text" name="search" id="search" placeholder="Tìm kiếm..." />
+                    </form>
+                </section>
+
+                <!-- Menu -->
+                <nav id="menu">
+                    <ul>
+                        <li><a href="/Admin">TRANG CHỦ</a></li>
+                        <li><a href="/Admin/Scan">QUÉT VĂN BÁN</a></li>
+                        <li>
+                            <span class="opener">QUẢN LÝ THƯ VIỆN ĐIỆN TỬ</span>
+                            <ul>
+                                <li><a href="#">BIÊN MỤC</a></li>
+                                <li><a href="#">TRA CỨU</a></li>
+                                <li><a href="#">QUẢN LÝ</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <span class="opener">QUẢN LÝ THƯ VIỆN SỐ</span>
+                            <ul>
+                                <li><a href="#">QUẢN LÝ KHO TÀI LIỆU SỐ</a></li>
+                                <li><a href="#">BIÊN TẬP TÀI LIỆU SỐ</a></li>
+                                <li><a href="#">QUẢN LÝ LƯU THÔNG VÀ TRÌNH DIỄN TÀI LIỆU SỐ</a></li>
+                                <li><a href="#">TRA CỨU & TÌM KIẾM TOÀN VĂN TÀI LIỆU SỐ</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="/Home">CỔNG THÔNG TIN THƯ VIỆN</a></li>
+                    </ul>
+                </nav>
+                <!-- Footer -->
+                <footer id="footer">
+                    <p class="copyright">
+                        Copyright &copy; 2021 MTA
+                        
+                    </p>
+                </footer>
+
+            </div>
+        </div>
+
+    </div>
+    
+
+    <!-- Scripts -->
+    <!-- Bootstrap core JavaScript -->
+    <script src="~/Content/AdminContent/vendor/jquery/jquery.min.js"></script>
+    <script src="~/Content/AdminContent/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <script src="~/Content/AdminContent/assets/js/browser.min.js"></script>
+    <script src="~/Content/AdminContent/assets/js/breakpoints.min.js"></script>
+    <script src="~/Content/AdminContent/assets/js/transition.js"></script>
+    <script src="~/Content/AdminContent/assets/js/owl-carousel.js"></script>
+    <script src="~/Content/AdminContent/assets/js/custom.js"></script>
+
+
+</body>
+
+</html>

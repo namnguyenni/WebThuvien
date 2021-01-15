@@ -145,6 +145,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\CustomClass\BoLoc.cs" />
     <Compile Include="Models\Entity\BAIDANGTHONGTIN.cs" />
     <Compile Include="Models\Entity\BINHLUAN.cs" />
     <Compile Include="Models\Entity\CHITIETMUONTRASACH.cs" />
@@ -449,18 +450,22 @@
     <Content Include="Views\Sach\Index.cshtml" />
     <Content Include="Views\Sach\Chitietsach.cshtml" />
     <Content Include="Views\Sach\Timkiemsach.cshtml" />
+    <Content Include="Views\Shared\_LayoutAdmin.cshtml" />
+    <Content Include="Views\Admin\Index.cshtml" />
+    <Content Include="Views\Admin\Scan.cshtml" />
+    <Content Include="Views\Admin\Sach.cshtml" />
+    <Content Include="Views\Admin\XemChiTietSach.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\AdminContent\assets\" />
+    <Folder Include="Content\AdminContent\TaiLieuTaiLen\" />
     <Folder Include="Content\AdminContent\vendor\" />
     <Folder Include="Content\ClientContent\css\" />
     <Folder Include="Content\ClientContent\fonts\" />
     <Folder Include="Content\ClientContent\images\Books\" />
     <Folder Include="Content\ClientContent\js\" />
-    <Folder Include="Models\CustomClass\" />
     <Folder Include="Views\Account\" />
-    <Folder Include="Views\Admin\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

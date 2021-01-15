@@ -1,0 +1,120 @@
+﻿
+@{
+    ViewBag.Title = "Tài liệu thư viện - Trang "+ViewBag.countPage;
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<!-- Main -->
+<div id="main">
+    <div class="inner">
+
+        <!-- Header -->
+        <header id="header">
+            <div class="logo">
+                <a href="index.html">Thư viện số</a>
+            </div>
+        </header>
+
+        <!-- Page Heading -->
+        <div class="page-heading">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h1>Danh sách tài liệu trong thư viện</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tables -->
+        <section class="tables">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div>
+                            <table id="table">
+                                <thead>
+                                    <tr>
+                                        <th>STT</th>
+                                        <th>Mã</th>
+                                        <th>Tên tài liệu</th>
+                                        <th>Tác giả</th>
+                                        <th>Lĩnh vực</th>
+                                        <th>Loại sách</th>
+                                        <th>Hình ảnh</th>
+                                        <th>Công cụ</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @{ int stt = (ViewBag.currentPage-1)*30;}
+                                    @foreach (var item in ViewBag.Sach as List<WebThuvien.Models.Entity.SACH>)
+                                    {
+                                        stt = stt + 1;
+                                        <tr>
+                                            <td>@stt</td>
+                                            <td>@item.MASACH</td>
+                                            <td>@item.TENSACH</td>
+                                            <td>@item.TENSACH</td>
+                                            <td>@item.TENSACH</td>
+                                            <td>@item.TENSACH</td>
+                                            <td><img style="width:50px;height:50px;" src="~/Content/ClientContent/images/Books/@item.HINHANH" /></td>
+                                            <td><a href="/Admin/XemChiTietSach?MaSach=@item.MASACH" class="btn btn-primary"><i class="fa fa-info"></i></a></td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                            @if (@ViewBag.countPage == 0)
+                            {
+                                <h1>Không tìm thấy kết quả nào!!</h1>
+                            }
+                            <ul class="table-pagination">
+                                @{
+                                    if (ViewBag.currentPage != 1)
+                                    {
+                                        int prevPage = @ViewBag.currentPage - 1;
+                                        <li><a href="/Admin/Sach?pagenumber=@prevPage">Trang trước</a></li>
+                                    }
+                                    else
+                                    {
+                                        <li><a href="#">Trang trước</a></li>
+
+                                    }
+
+                                }
+                                @for (int i = 1 ; i <= ViewBag.countPage; i++)
+                                {
+                                    if (@i == ViewBag.currentPage)
+                                    {
+                                        <li class="active"><a href="#.">@i</a></li>
+
+                                    }
+                                    else
+                                    {
+                                        <li><a href="/Admin/Sach?pagenumber=@i">@i</a></li>
+                                    }
+                                }
+
+
+                                @{
+                                    if (@ViewBag.currentPage != @ViewBag.countPage)
+                                    {
+                                        int nextPage = @ViewBag.currentPage + 1;
+                                        <li><a href="/Admin/Sach?pagenumber=@nextPage">Trang sau</a></li>
+
+                                    }
+                                    else
+                                    {
+                                        <li><a href="#">Trang sau</a></li>
+                                    }
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        </div>
+    </div>
+
+
