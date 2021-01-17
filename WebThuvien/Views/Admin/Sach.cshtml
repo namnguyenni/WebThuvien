@@ -1,120 +1,273 @@
 ﻿
 @{
-    ViewBag.Title = "Tài liệu thư viện - Trang "+ViewBag.countPage;
+    ViewBag.Title = "Tài liệu thư viện - Trang " + ViewBag.countPage;
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<!-- Main -->
-<div id="main">
-    <div class="inner">
-
-        <!-- Header -->
-        <header id="header">
-            <div class="logo">
-                <a href="index.html">Thư viện số</a>
-            </div>
-        </header>
-
-        <!-- Page Heading -->
-        <div class="page-heading">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-md-12">
-                        <h1>Danh sách tài liệu trong thư viện</h1>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Tables -->
-        <section class="tables">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div>
-                            <table id="table">
-                                <thead>
-                                    <tr>
-                                        <th>STT</th>
-                                        <th>Mã</th>
-                                        <th>Tên tài liệu</th>
-                                        <th>Tác giả</th>
-                                        <th>Lĩnh vực</th>
-                                        <th>Loại sách</th>
-                                        <th>Hình ảnh</th>
-                                        <th>Công cụ</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @{ int stt = (ViewBag.currentPage-1)*30;}
-                                    @foreach (var item in ViewBag.Sach as List<WebThuvien.Models.Entity.SACH>)
-                                    {
-                                        stt = stt + 1;
-                                        <tr>
-                                            <td>@stt</td>
-                                            <td>@item.MASACH</td>
-                                            <td>@item.TENSACH</td>
-                                            <td>@item.TENSACH</td>
-                                            <td>@item.TENSACH</td>
-                                            <td>@item.TENSACH</td>
-                                            <td><img style="width:50px;height:50px;" src="~/Content/ClientContent/images/Books/@item.HINHANH" /></td>
-                                            <td><a href="/Admin/XemChiTietSach?MaSach=@item.MASACH" class="btn btn-primary"><i class="fa fa-info"></i></a></td>
-                                        </tr>
-                                    }
-                                </tbody>
-                            </table>
-                            @if (@ViewBag.countPage == 0)
-                            {
-                                <h1>Không tìm thấy kết quả nào!!</h1>
-                            }
-                            <ul class="table-pagination">
-                                @{
-                                    if (ViewBag.currentPage != 1)
-                                    {
-                                        int prevPage = @ViewBag.currentPage - 1;
-                                        <li><a href="/Admin/Sach?pagenumber=@prevPage">Trang trước</a></li>
-                                    }
-                                    else
-                                    {
-                                        <li><a href="#">Trang trước</a></li>
-
-                                    }
-
-                                }
-                                @for (int i = 1 ; i <= ViewBag.countPage; i++)
-                                {
-                                    if (@i == ViewBag.currentPage)
-                                    {
-                                        <li class="active"><a href="#.">@i</a></li>
-
-                                    }
-                                    else
-                                    {
-                                        <li><a href="/Admin/Sach?pagenumber=@i">@i</a></li>
-                                    }
-                                }
 
 
-                                @{
-                                    if (@ViewBag.currentPage != @ViewBag.countPage)
-                                    {
-                                        int nextPage = @ViewBag.currentPage + 1;
-                                        <li><a href="/Admin/Sach?pagenumber=@nextPage">Trang sau</a></li>
 
-                                    }
-                                    else
-                                    {
-                                        <li><a href="#">Trang sau</a></li>
-                                    }
-                                }
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
 
-        </div>
+<div class="module">
+    <div class="module-head">
+        <h3>
+            Sách trong thư viện
+        </h3>
+        
     </div>
 
+    @* ssssssssss *@
+    <form class="form-horizontal row-fluid">
+        <div class="control-group">
+            <label class="control-label" for="basicinput">Tác giả</label>
+            <div class="controls">
+                <input type="text" id="basicinput" placeholder="Nhập tên tác giả" class="span3">
+            </div>
+        </div>
 
+        <div class="control-group">
+            <label class="control-label" for="basicinput">Loại sách</label>
+            <div class="controls">
+                <div class="dropdown">
+                    <a class="dropdown-toggle btn" data-toggle="dropdown" href="#">Loại sạch<i class="icon-caret-down"></i></a>
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                        <li><a href="#">Loại sách 1</a></li>
+                        <li><a href="#">Loại sách 1</a></li>
+                        <li><a href="#">Loại sách 1</a></li>
+                        <li><a href="#">Loại sách 1</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label class="control-label" for="basicinput">Dropdown</label>
+            <div class="controls">
+                <select tabindex="1" data-placeholder="Select here.." class="span8">
+                    <option value="">Select here..</option>
+                    <option value="Category 1">First Row</option>
+                    <option value="Category 2">Second Row</option>
+                    <option value="Category 3">Third Row</option>
+                    <option value="Category 4">Fourth Row</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label class="control-label">Radiobuttons</label>
+            <div class="controls">
+                <label class="radio">
+                    <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked="">
+                    Option one
+                </label>
+                <label class="radio">
+                    <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
+                    Option two
+                </label>
+                <label class="radio">
+                    <input type="radio" name="optionsRadios" id="optionsRadios3" value="option3">
+                    Option three
+                </label>
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label class="control-label">Inline Radiobuttons</label>
+            <div class="controls">
+                <label class="radio inline">
+                    <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked="">
+                    Option one
+                </label>
+                <label class="radio inline">
+                    <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
+                    Option two
+                </label>
+                <label class="radio inline">
+                    <input type="radio" name="optionsRadios" id="optionsRadios3" value="option3">
+                    Option three
+                </label>
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label class="control-label">Checkboxes</label>
+            <div class="controls">
+                <label class="checkbox">
+                    <input type="checkbox" value="">
+                    Option one
+                </label>
+                <label class="checkbox">
+                    <input type="checkbox" value="">
+                    Option two
+                </label>
+                <label class="checkbox">
+                    <input type="checkbox" value="">
+                    Option three
+                </label>
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label class="control-label">Inline Checkboxes</label>
+            <div class="controls">
+                <label class="checkbox inline">
+                    <input type="checkbox" value="">
+                    Option one
+                </label>
+                <label class="checkbox inline">
+                    <input type="checkbox" value="">
+                    Option two
+                </label>
+                <label class="checkbox inline">
+                    <input type="checkbox" value="">
+                    Option three
+                </label>
+            </div>
+        </div>
+
+        <div class="control-group">
+            <div class="controls">
+                <button type="submit" class="btn">Submit Form</button>
+            </div>
+        </div>
+    </form>
+
+
+    @* sssssssss *@
+    <div>
+        <table class="styled-table display" style="width:100%;">
+            <thead>
+                <tr>
+                    <th>
+                        STT
+                    </th>
+                    <th>
+                        Mã sách
+                    </th>
+                    <th>
+                        Tên sách
+                    </th>
+                    <th>
+                        Tác giả
+                    </th>
+                    <th>
+                        Hình ảnh
+                    </th>
+                    <th>
+                        Công cụ
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @{ int stt = 0;}
+                @foreach (var item in ViewBag.Sach as List<WebThuvien.Models.Entity.SACH>)
+                {
+                    stt = stt + 1;
+                    <tr class="even gradeA">
+                        <td>
+                            @stt
+                        </td>
+                        <td>
+                            @item.MASACH
+                        </td>
+                        <td>
+                            @item.TENSACH
+                        </td>
+                        <td class="center">
+                            @item.TACGIA.TENTACGIA
+                        </td>
+                        <td class="center">
+                            <img src="~/Content/ClientContent/images/Books/@item.HINHANH" style="width:50px; height:50px;" />
+                        </td>
+                        <td class="center"><div class="btn btn-primary">Chi tiết</div></td>
+                    </tr>
+                }
+            </tbody>
+            <tfoot>
+
+            </tfoot>
+        </table>
+        <nav class="navigation pagination text-center">
+            <div class="nav-links">
+                @{
+                    if (ViewBag.currentPage != 1)
+                    {
+                        int prevPage = @ViewBag.currentPage - 1;
+                        <a class="prev page-numbers" href="/Sach/Timkiemsach?noidungnhap=@ViewBag.noidungnhap&loaisach=@ViewBag.loaisach&linhvuc=@ViewBag.linhvuc&pagenumber=@prevPage"><i class="fa fa-long-arrow-left"></i> Trang trước</a>
+                    }
+                    else
+                    {
+                        <a class="prev page-numbers" href="#."><i class="fa fa-long-arrow-left"></i> Trang trước</a>
+                    }
+
+                }
+                @for (int i = 1; i <= ViewBag.countPage; i++)
+                {
+                    if (@i == ViewBag.currentPage)
+                    {
+                        <a href="/Sach/Timkiemsach?noidungnhap=@ViewBag.noidungnhap&loaisach=@ViewBag.loaisach&linhvuc=@ViewBag.linhvuc&pagenumber=@i"><span class="page-numbers current">@i</span></a>
+
+                    }
+                    else
+                    {
+                        <a href="/Sach/Timkiemsach?noidungnhap=@ViewBag.noidungnhap&loaisach=@ViewBag.loaisach&linhvuc=@ViewBag.linhvuc&pagenumber=@i"><span class="page-numbers">@i</span></a>
+                    }
+                }
+                @{
+                    if (@ViewBag.currentPage != @ViewBag.countPage)
+                    {
+                        int nextPage = @ViewBag.currentPage + 1;
+                        <a class="next page-numbers" href="/Sach/Timkiemsach?noidungnhap=@ViewBag.noidungnhap&loaisach=@ViewBag.loaisach&linhvuc=@ViewBag.linhvuc&pagenumber=@nextPage">Trang sau <i class="fa fa-long-arrow-right"></i></a>
+
+                    }
+                    else
+                    {
+                        <a class="next page-numbers" href="#.">Trang sau <i class="fa fa-long-arrow-right"></i></a>
+
+                    }
+                }
+            </div>
+        </nav>
+
+
+
+    </div>
+</div>
+<!--/.module-->
+
+<style>
+    .styled-table {
+    border-collapse: collapse;
+    margin: 25px 0;
+    font-size: 0.9em;
+    font-family: sans-serif;
+    min-width: 400px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+    .styled-table thead tr {
+    background-color: #009879;
+    color: #ffffff;
+    text-align: left;
+}
+
+    .styled-table th,
+.styled-table td {
+    padding: 12px 15px;
+}
+    .styled-table tbody tr {
+    border-bottom: 1px solid #dddddd;
+}
+
+.styled-table tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+}
+
+.styled-table tbody tr:last-of-type {
+    border-bottom: 2px solid #009879;
+}
+
+.styled-table tbody tr.active-row {
+    font-weight: bold;
+    color: #009879;
+}
+</style>

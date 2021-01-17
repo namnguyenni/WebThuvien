@@ -5,7 +5,7 @@ namespace WebThuvien.Models.Entity
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
-
+     
     [Table("SACH")]
     public partial class SACH
     {
@@ -53,6 +53,9 @@ namespace WebThuvien.Models.Entity
 
         [Column(TypeName = "date")]
         public DateTime? NGAYTAILEN { get; set; }
+
+        [Column(TypeName = "date")]
+        public DateTime? NAMXUATBAN { get; set; }
 
         [StringLength(1000)]
         public string GHICHU { get; set; }

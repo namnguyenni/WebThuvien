@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using WebThuvien.Models.Entity;
+using System.IO;
 namespace WebThuvien.Controllers
 {
     public class AdminController : Controller
@@ -69,7 +70,11 @@ namespace WebThuvien.Controllers
             return View(sach);
         }
 
-        //
+        //bảng thông skee trang chủ admi
+        public ActionResult ThongKe1()
+        {
+            return View();
+        }
 
         public string SaveScan()
         {
@@ -77,6 +82,7 @@ namespace WebThuvien.Controllers
             return "Lưu thành công";
 
         }
+
 
         //đăng nhập admin
         [HttpGet]
@@ -87,19 +93,44 @@ namespace WebThuvien.Controllers
         }
 
         [HttpPost]
-        public ActionResult Login(string tentaikhoan,string matkhau)
+        public ActionResult Login(string tentaikhoan,string matkhau,bool luumk)
         {
             QLTHUVIEN db = new QLTHUVIEN();
             TAIKHOAN taikhoan = db.TAIKHOANs.Single(x => x.TENTAIKHOAN == tentaikhoan);
             if (taikhoan != null && taikhoan.MATKHAU == matkhau)
             {
                 //tạo session
+                Session["Taikhoan"] = taikhoan;
+                if (luumk)
+                {
+                    HttpCookie taikhoan_ck = new HttpCookie("tentaikhoan", tentaikhoan);
+                    HttpCookie matkhau_ck = new HttpCookie("matkhau", matkhau);
 
-                
+                    taikhoan_ck.Expires = DateTime.Now.AddDays(30);
+                    matkhau_ck.Expires = DateTime.Now.AddDays(30);
+
+                    Response.Cookies.Add(taikhoan_ck);
+                    Response.Cookies.Add(matkhau_ck);
+
+                }
+
             }
             return View();
         }
 
+        private bool CheckSession(int role)
+        {
+            if (Session["Taikhoan"] != null)
+            {
+                TAIKHOAN taikhoan = Session["Taikhoan"] as TAIKHOAN;
+
+                if (taikhoan.LOAITAIKHOAN == role)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
         //giao diện thêm sách, tải sách từ máy lên
         public ActionResult UploadSach()
         {
@@ -108,9 +139,56 @@ namespace WebThuvien.Controllers
         }
         //hàm xử lí thêm sách vào thư viện
         [HttpPost]
-        public ActionResult UploadSach(SACH sach)
+        public ActionResult UploadSach(SACH sach,HttpPostedFileBase filepdf=null)
         {
-            return View();
+            QLTHUVIEN db = new QLTHUVIEN();
+            try
+            {
+                if (filepdf!=null)
+                {
+                    filepdf.SaveAs(Server.MapPath("~/Content/ClientContent/FILE_PDF/" + sach.TENSACH + "_" + sach.NAMXUATBAN));
+                    sach.FILEPATH = sach.TENSACH + "_" + sach.NAMXUATBAN;
+                }
+
+                //ma sach
+                string masach;
+                do
+                {
+                    var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+                    var charsnumber = "1234567890";
+
+                    var stringChars = new char[2];
+                    var numberChars = new char[6];
+                    var random = new Random();
+
+                    for (int i = 0; i < stringChars.Length; i++)
+                    {
+                        stringChars[i] = chars[random.Next(chars.Length)];
+                    }
+
+
+                    for (int i = 0; i < numberChars.Length; i++)
+                    {
+                        numberChars[i] = chars[random.Next(charsnumber.Length)];
+                    }
+
+                    //hai chu dau tien
+                    masach = new String(stringChars) + new String(numberChars);
+                    sach.MASACH = masach;
+                    
+                }
+                while (db.SACHes.SingleOrDefault(x => x.MASACH == masach) != null);
+
+
+                db.SACHes.Add(sach);
+                db.SaveChanges();
+            }
+            catch (Exception)
+            {
+                ViewBag.Error = "Không thể thêm sách do thiếu thông tin hoặc đã tồn tại sách";
+                return Redirect("/Admin/UploadSach?MaSach=");
+            }
+            return Redirect("/Sach/UploadSach?MaSach=");
         }
 
         //giao diện thêm sách, tải sách từ máy lên
@@ -120,8 +198,39 @@ namespace WebThuvien.Controllers
         }
         //hàm sửa sách
         [HttpPost]
-        public ActionResult EditSach(SACH sach)
+        public ActionResult EditSach(SACH sach,HttpPostedFileBase filepdf=null,HttpPostedFileBase hinhanh=null)
         {
+            QLTHUVIEN db = new QLTHUVIEN();
+            try
+            {
+                SACH sach_old = db.SACHes.Single(x => x.MASACH == sach.MASACH);
+                if (filepdf != null)
+                {
+                    
+                    System.IO.File.Delete(Server.MapPath("~/Content/ClientContent/FILE_PDF/" + sach_old.FILEPATH));
+                    filepdf.SaveAs(Server.MapPath("~/Content/ClientContent/FILE_PDF/" + sach.TENSACH + "_" + sach.NAMXUATBAN));
+                    sach.FILEPATH = sach.TENSACH + "_" + sach.NAMXUATBAN;
+
+                }
+
+                if (hinhanh != null)
+                {
+
+                    System.IO.File.Delete(Server.MapPath("~/Content/ClientContent/images/Books/" + sach_old.HINHANH));
+                    filepdf.SaveAs(Server.MapPath("~/Content/ClientContent/images/Books/" + sach.TENSACH + "_" + sach.HINHANH));
+                    sach.FILEPATH = sach.TENSACH + "_" + sach.NAMXUATBAN;
+
+                }
+
+                sach_old = sach;
+
+                return View();
+            }
+            catch (Exception)
+            {
+
+            }
+
             return View();
         }
 

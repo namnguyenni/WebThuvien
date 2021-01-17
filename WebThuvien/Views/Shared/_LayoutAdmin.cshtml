@@ -1,103 +1,77 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>@ViewBag.Title</title>
+        <link type="text/css" href="~/Content/AdminContent/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+        <link type="text/css" href="~/Content/AdminContent/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet">
+        <link type="text/css" href="~/Content/AdminContent/css/theme.css" rel="stylesheet">
+        <link type="text/css" href="~/Content/AdminContent/images/icons/css/font-awesome.css" rel="stylesheet">
+        <link type="text/css" href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,600'
+              rel='stylesheet'>
+    </head>
+    <body>
+        <div class="navbar navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="container">
+                    <a class="btn btn-navbar" data-toggle="collapse" data-target=".navbar-inverse-collapse">
+                        <i class="icon-reorder shaded"></i>
+                    </a><a class="brand" href="index.html">Thư viện số - Admin </a>
+                    <div class="nav-collapse collapse navbar-inverse-collapse">
+                        <ul class="nav">
+                            <li style="width:100px;text-align:center;" class="active"><a href="#">Trang chủ</a></li>
+                            <li style="width:100px;text-align:center;"><a href="#">Sách</a></li>
+                            <li style="width:100px;text-align:center;"><a href="#">Bạn đọc</a></li>
+                            <li style="width:100px;text-align:center;"><a href="#">Thống kê</a></li>
 
-<head>
+                        </ul>
+                        <form class="navbar-search pull-left input-append" action="#">
+                            <input type="text" class="span3">
+                            <button class="btn" type="button">
+                                <i class="icon-search"></i>
+                            </button>
+                        </form>
+                        <ul class="nav pull-right">
+                            
+                            <li><a href="#">Support </a></li>
+                            <li class="nav-user dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                    <img src="~/Content/AdminContent/images/user.png" class="nav-avatar" />
+                                    <b class="caret"></b>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#">Your Profile</a></li>
+                                    <li><a href="#">Edit Profile</a></li>
+                                    <li><a href="#">Account Settings</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="#">Logout</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- /.nav-collapse -->
+                </div>
+            </div>
+            <!-- /navbar-inner -->
+        </div>
+        <!-- /navbar -->
+        @RenderBody()
 
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link href="~/Content/ClientContent/images/favicon.ico" rel="icon" type="image/x-icon" />
-
-    @*<link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700" rel="stylesheet">*@
-
-    <title>@ViewBag.Title</title>
-    
-    <!-- Bootstrap core CSS -->
-    <link href="~/Content/AdminContent/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Additional CSS Files -->
-    <link rel="stylesheet" href="~/Content/AdminContent/assets/css/fontawesome.css">
-    <link rel="stylesheet" href="~/Content/AdminContent/assets/css/templatemo-style.css">
-    <link rel="stylesheet" href="~/Content/AdminContent/assets/css/owl.css">
-
-</head>
-
-<body class="is-preload">
-
-    <!-- Wrapper -->
-    <div id="wrapper">
-
-
-
-                <!-- Services -->
-                @RenderBody()
-
-
-
-        <!-- Sidebar -->
-        <div id="sidebar">
-
-            <div class="inner">
-
-                <!-- Search Box -->
-                <section id="search" class="alt">
-                    <form method="get" action="#">
-                        <input type="text" name="search" id="search" placeholder="Tìm kiếm..." />
-                    </form>
-                </section>
-
-                <!-- Menu -->
-                <nav id="menu">
-                    <ul>
-                        <li><a href="/Admin">TRANG CHỦ</a></li>
-                        <li><a href="/Admin/Scan">QUÉT VĂN BÁN</a></li>
-                        <li>
-                            <span class="opener">QUẢN LÝ THƯ VIỆN ĐIỆN TỬ</span>
-                            <ul>
-                                <li><a href="#">BIÊN MỤC</a></li>
-                                <li><a href="#">TRA CỨU</a></li>
-                                <li><a href="#">QUẢN LÝ</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <span class="opener">QUẢN LÝ THƯ VIỆN SỐ</span>
-                            <ul>
-                                <li><a href="#">QUẢN LÝ KHO TÀI LIỆU SỐ</a></li>
-                                <li><a href="#">BIÊN TẬP TÀI LIỆU SỐ</a></li>
-                                <li><a href="#">QUẢN LÝ LƯU THÔNG VÀ TRÌNH DIỄN TÀI LIỆU SỐ</a></li>
-                                <li><a href="#">TRA CỨU & TÌM KIẾM TOÀN VĂN TÀI LIỆU SỐ</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="/Home">CỔNG THÔNG TIN THƯ VIỆN</a></li>
-                    </ul>
-                </nav>
-                <!-- Footer -->
-                <footer id="footer">
-                    <p class="copyright">
-                        Copyright &copy; 2021 MTA
-                        
-                    </p>
-                </footer>
-
+        
+        <!--/.wrapper-->
+        <div class="footer">
+            <div class="container">
+                <b class="copyright">&copy; 2021-Quản lí thư viện điện tử </b>-Trang quản trị.
             </div>
         </div>
+        <script src="~/Content/AdminContent/scripts/jquery-1.9.1.min.js" type="text/javascript"></script>
+        <script src="~/Content/AdminContent/scripts/jquery-ui-1.10.1.custom.min.js" type="text/javascript"></script>
+        <script src="~/Content/AdminContent/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+        <script src="~/Content/AdminContent/scripts/flot/jquery.flot.js" type="text/javascript"></script>
+        <script src="~/Content/AdminContent/scripts/flot/jquery.flot.resize.js" type="text/javascript"></script>
+        <script src="~/Content/AdminContent/scripts/datatables/jquery.dataTables.js" type="text/javascript"></script>
+        <script src="~/Content/AdminContent/scripts/common.js" type="text/javascript"></script>
 
-    </div>
-    
-
-    <!-- Scripts -->
-    <!-- Bootstrap core JavaScript -->
-    <script src="~/Content/AdminContent/vendor/jquery/jquery.min.js"></script>
-    <script src="~/Content/AdminContent/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-    <script src="~/Content/AdminContent/assets/js/browser.min.js"></script>
-    <script src="~/Content/AdminContent/assets/js/breakpoints.min.js"></script>
-    <script src="~/Content/AdminContent/assets/js/transition.js"></script>
-    <script src="~/Content/AdminContent/assets/js/owl-carousel.js"></script>
-    <script src="~/Content/AdminContent/assets/js/custom.js"></script>
-
-
-</body>
-
+    </body>
 </html>

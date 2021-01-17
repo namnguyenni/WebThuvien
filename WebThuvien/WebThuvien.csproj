@@ -166,6 +166,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\AdminContent\css\theme.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -338,7 +339,6 @@
     <Content Include="Content\DataTables\css\semanticui.scss" />
     <Content Include="Content\DataTables\css\mixins.scss" />
     <Content Include="Content\DataTables\css\common.scss" />
-    <Content Include="Content\AdminContent\prepros-6.config" />
     <Content Include="Content\ClientContent\FILE_PDF\SACH1.pdf" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\DataTables\autoFill.bootstrap.js" />
@@ -455,12 +455,14 @@
     <Content Include="Views\Admin\Scan.cshtml" />
     <Content Include="Views\Admin\Sach.cshtml" />
     <Content Include="Views\Admin\XemChiTietSach.cshtml" />
+    <Content Include="Views\Admin\ThongKe1.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Content\AdminContent\assets\" />
+    <Folder Include="Content\AdminContent\bootstrap\" />
+    <Folder Include="Content\AdminContent\images\" />
+    <Folder Include="Content\AdminContent\scripts\" />
     <Folder Include="Content\AdminContent\TaiLieuTaiLen\" />
-    <Folder Include="Content\AdminContent\vendor\" />
     <Folder Include="Content\ClientContent\css\" />
     <Folder Include="Content\ClientContent\fonts\" />
     <Folder Include="Content\ClientContent\images\Books\" />
