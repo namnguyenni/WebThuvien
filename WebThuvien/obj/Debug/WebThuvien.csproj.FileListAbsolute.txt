@@ -60,3 +60,4 @@ E:\Github Clone\WebThuvien\WebThuvien\bin\Microsoft.CodeDom.Providers.DotNetComp
 E:\Github Clone\WebThuvien\WebThuvien\obj\Debug\WebThuvien.csprojResolveAssemblyReference.cache
 E:\Github Clone\WebThuvien\WebThuvien\obj\Debug\WebThuvien.dll
 E:\Github Clone\WebThuvien\WebThuvien\obj\Debug\WebThuvien.pdb
+E:\Github Clone\WebThuvien\WebThuvien\bin\Zen.Barcode.Core.dll

@@ -27,10 +27,10 @@ namespace WebThuvien.Models.Function
         }
 
 
-        private string GenerateQRCode(string qrcodeText)
+        public string GenerateQRCode(string qrcodeText)
         {
             string folderPath = "~/Content/Images/";
-            string imagePath = "~/Content/Images/QrCode.jpg";
+            string imagePath = "~/Content/Images/"+ qrcodeText + ".jpg";
             // If the directory doesn't exist then create it.
             if (!Directory.Exists(HttpContext.Current.Server.MapPath(folderPath)))
             {
@@ -38,7 +38,8 @@ namespace WebThuvien.Models.Function
             }
 
             var barcodeWriter = new BarcodeWriter();
-            barcodeWriter.Format = BarcodeFormat.QR_CODE;
+            barcodeWriter.Format = BarcodeFormat.CODE_128;
+            barcodeWriter.Options = new ZXing.Common.EncodingOptions() { Width = 250, Height = 60 };
             var result = barcodeWriter.Write(qrcodeText);
 
             string barcodePath = HttpContext.Current.Server.MapPath(imagePath);
@@ -54,5 +55,6 @@ namespace WebThuvien.Models.Function
             }
             return imagePath;
         }
+
     }
 }

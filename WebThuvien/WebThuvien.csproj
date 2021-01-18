@@ -120,6 +120,10 @@
       <Private>True</Private>
       <HintPath>packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
+    <Reference Include="Zen.Barcode.Core, Version=3.1.0.0, Culture=neutral, PublicKeyToken=b5ae55aa76d2d9de, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Job Project\Web Thư viện điện tử\Zen.Barcode.Core_\Zen.Barcode.Core.dll</HintPath>
+    </Reference>
     <Reference Include="zxing, Version=0.16.6.0, Culture=neutral, PublicKeyToken=4e88037ac681fe60, processorArchitecture=MSIL">
       <HintPath>packages\ZXing.Net.0.16.6\lib\net45\zxing.dll</HintPath>
       <Private>True</Private>
@@ -166,7 +170,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\AdminContent\css\theme.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -459,10 +462,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Content\AdminContent\bootstrap\" />
-    <Folder Include="Content\AdminContent\images\" />
-    <Folder Include="Content\AdminContent\scripts\" />
+    <Folder Include="Content\AdminContent\src\" />
     <Folder Include="Content\AdminContent\TaiLieuTaiLen\" />
+    <Folder Include="Content\AdminContent\vendors\" />
     <Folder Include="Content\ClientContent\css\" />
     <Folder Include="Content\ClientContent\fonts\" />
     <Folder Include="Content\ClientContent\images\Books\" />

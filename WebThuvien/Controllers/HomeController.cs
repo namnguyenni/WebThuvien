@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using WebThuvien.Models.Function;
 using WebThuvien.Models.Entity;
 namespace WebThuvien.Controllers
 {

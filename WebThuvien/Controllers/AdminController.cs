@@ -6,6 +6,8 @@ using System.Web;
 using System.Web.Mvc;
 using WebThuvien.Models.Entity;
 using System.IO;
+using WebThuvien.Models.Function;
+
 namespace WebThuvien.Controllers
 {
     public class AdminController : Controller
@@ -139,7 +141,7 @@ namespace WebThuvien.Controllers
         }
         //hàm xử lí thêm sách vào thư viện
         [HttpPost]
-        public ActionResult UploadSach(SACH sach,HttpPostedFileBase filepdf=null)
+        public ActionResult UploadSach(SACH sach,HttpPostedFileBase filepdf=null,HttpPostedFileBase hinhanh=null)
         {
             QLTHUVIEN db = new QLTHUVIEN();
             try
@@ -147,7 +149,12 @@ namespace WebThuvien.Controllers
                 if (filepdf!=null)
                 {
                     filepdf.SaveAs(Server.MapPath("~/Content/ClientContent/FILE_PDF/" + sach.TENSACH + "_" + sach.NAMXUATBAN));
-                    sach.FILEPATH = sach.TENSACH + "_" + sach.NAMXUATBAN;
+                    sach.FILEPATH = sach.TENSACH + "_" + sach.NAMXUATBAN+ Path.GetExtension(filepdf.FileName);
+                }
+                if (hinhanh != null)
+                {
+                    filepdf.SaveAs(Server.MapPath("~/Content/ClientContent/images/Books/" + sach.TENSACH + "_" + sach.NAMXUATBAN));
+                    sach.HINHANH = sach.TENSACH + "_" + sach.NAMXUATBAN+ Path.GetExtension(hinhanh.FileName);
                 }
 
                 //ma sach
@@ -179,7 +186,7 @@ namespace WebThuvien.Controllers
                 }
                 while (db.SACHes.SingleOrDefault(x => x.MASACH == masach) != null);
 
-
+                new QRCode().GenerateQRCode(masach);
                 db.SACHes.Add(sach);
                 db.SaveChanges();
             }
@@ -192,13 +199,27 @@ namespace WebThuvien.Controllers
         }
 
         //giao diện thêm sách, tải sách từ máy lên
-        public ActionResult EditSach()
+        public ActionResult ChinhsuaSach(string MaSach)
         {
+            QLTHUVIEN db = new QLTHUVIEN();
+            try
+            {
+                SACH sach = db.SACHes.Single(x => x.MASACH == MaSach);
+                ViewBag.sach = sach;
+
+            }
+            catch (Exception)
+            {
+
+                return Redirect("/Admin");
+            }
+
+
             return View();
         }
         //hàm sửa sách
         [HttpPost]
-        public ActionResult EditSach(SACH sach,HttpPostedFileBase filepdf=null,HttpPostedFileBase hinhanh=null)
+        public ActionResult ChinhsuaSach(SACH sach,HttpPostedFileBase filepdf=null,HttpPostedFileBase hinhanh=null)
         {
             QLTHUVIEN db = new QLTHUVIEN();
             try
@@ -209,7 +230,7 @@ namespace WebThuvien.Controllers
                     
                     System.IO.File.Delete(Server.MapPath("~/Content/ClientContent/FILE_PDF/" + sach_old.FILEPATH));
                     filepdf.SaveAs(Server.MapPath("~/Content/ClientContent/FILE_PDF/" + sach.TENSACH + "_" + sach.NAMXUATBAN));
-                    sach.FILEPATH = sach.TENSACH + "_" + sach.NAMXUATBAN;
+                    sach.FILEPATH = sach.TENSACH + "_" + sach.NAMXUATBAN + Path.GetExtension(filepdf.FileName);
 
                 }
 
@@ -217,12 +238,12 @@ namespace WebThuvien.Controllers
                 {
 
                     System.IO.File.Delete(Server.MapPath("~/Content/ClientContent/images/Books/" + sach_old.HINHANH));
-                    filepdf.SaveAs(Server.MapPath("~/Content/ClientContent/images/Books/" + sach.TENSACH + "_" + sach.HINHANH));
-                    sach.FILEPATH = sach.TENSACH + "_" + sach.NAMXUATBAN;
-
+                    filepdf.SaveAs(Server.MapPath("~/Content/ClientContent/images/Books/" + sach.TENSACH + "_" + sach.NAMXUATBAN));
+                    sach.HINHANH = sach.TENSACH + "_" + sach.NAMXUATBAN + Path.GetExtension(hinhanh.FileName);
                 }
 
                 sach_old = sach;
+                db.SaveChanges();
 
                 return View();
             }
@@ -236,13 +257,116 @@ namespace WebThuvien.Controllers
 
         //hàm xóa cuốn sách ra khỏi thư viện
         [HttpPost]
-        public ActionResult DeleteSach(SACH sach)
+        public ActionResult Xoasach(string MaSach)
         {
+            try
+            {
+                QLTHUVIEN db = new QLTHUVIEN();
+                SACH sach = db.SACHes.Single(x => x.MASACH == MaSach);
+                db.SACHes.Remove(sach);
+                db.SaveChanges();
+            }
+            catch (Exception)
+            {
+                ViewBag.Error = "Không xóa được cuốn sách này";
+            }
             return View();
         }
 
         #region Xử lí mượn trả sách
+        //tìm kiếm tất cả sách đang mượn thư viện
+        public ActionResult TatcaSachDangMuon()
+        {
+            return View();
+        }
 
+        //giao diện cho mượn sách
+        public ActionResult MuonSach()
+        {
+            return View();
+        }
+
+        //cho mượn sách
+        public ActionResult MuonSach(string mathe,string[] lstmasach,int[] lstthoigianmuon)
+        {
+            //thêm dữ liệu vào bảng muontra và bảng chi tiết mượn trả
+            QLTHUVIEN db = new QLTHUVIEN();
+            try
+            {
+                THETHUVIEN the = db.THETHUVIENs.Single(x => x.MATHE == mathe);
+                if (the != null)
+                    for (int i = 0; i < lstmasach.Length; i++)
+                    {
+                        SACH sach = db.SACHes.SingleOrDefault(x => x.MASACH == lstmasach[i]);
+                        if (sach != null)
+                        {
+                            MUONTRASACH muontra = new MUONTRASACH();
+                            muontra.MASACH = lstmasach[i];
+                            muontra.MATHE = mathe;
+                            db.MUONTRASACHes.Add(muontra);
+                            db.SaveChanges();
+                            //lay lại id muontrasach
+                            int id = db.MUONTRASACHes.Single(x => x.MASACH == muontra.MASACH && x.MATHE == muontra.MATHE).ID;
+                            //dùng id này để thêm vào bảng chi tiết
+                            CHITIETMUONTRASACH chitiet = new CHITIETMUONTRASACH();
+                            chitiet.MAMUONTRASACH = id;
+                            chitiet.NGAYMUON = DateTime.UtcNow;
+                            chitiet.THOIGIANMUON = lstthoigianmuon[i];
+                            db.CHITIETMUONTRASACHes.Add(chitiet);
+                            db.SaveChanges();
+
+
+                        }
+                    }
+                ViewBag.Success = "Lưu hoàn tất !!!";
+            }
+            catch (Exception)
+            {
+                ViewBag.Error = "Lỗi dữ liệu";
+                return View();
+            }
+
+
+
+
+            return View();
+        }
+
+        public ActionResult TraSach(string[] masach)
+        {
+            //xóa  dữ liệu vào bảng muontra và bảng chi tiết mượn trả
+            QLTHUVIEN db = new QLTHUVIEN();
+            for (int i = 0; i < masach.Length; i++)
+            {
+                CHITIETMUONTRASACH chitiet = db.CHITIETMUONTRASACHes.SingleOrDefault(x => x.MUONTRASACH.MASACH == masach[i]);
+                if (chitiet!=null)
+                {
+                    //xóa chitiet
+                    int? idmuontra = chitiet.MAMUONTRASACH;
+                    db.CHITIETMUONTRASACHes.Remove(chitiet);
+                    //xoa muon tra
+                    
+                    MUONTRASACH muontra = db.MUONTRASACHes.SingleOrDefault(x => x.ID == idmuontra);
+                    if (muontra!=null)
+                    {
+                        db.MUONTRASACHes.Remove(muontra);
+                    }
+                }
+
+            }
+            return View();
+        }
+
+        //lấy thông tin bạn đọc mượn sách của thư viện dựa vào mã thẻ bạn đọc
+
+
+        //kiểm tra sách quá hạn
+
+
+        //In thông tin khách quá hạn
+
+
+        
 
         #endregion
 
