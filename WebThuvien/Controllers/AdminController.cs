@@ -366,7 +366,16 @@ namespace WebThuvien.Controllers
         //In thông tin khách quá hạn
 
 
-        
+
+
+        #endregion
+
+        #region danh sách partial
+
+        public ActionResult Thongketongquan()
+        {
+            return View();
+        }
 
         #endregion
 

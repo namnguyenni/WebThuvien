@@ -4,270 +4,113 @@
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-
-
-
-
-<div class="module">
-    <div class="module-head">
-        <h3>
-            Sách trong thư viện
-        </h3>
-        
-    </div>
-
-    @* ssssssssss *@
-    <form class="form-horizontal row-fluid">
-        <div class="control-group">
-            <label class="control-label" for="basicinput">Tác giả</label>
-            <div class="controls">
-                <input type="text" id="basicinput" placeholder="Nhập tên tác giả" class="span3">
-            </div>
+<div class="main-container">
+    <div class="xs-pd-20-10 pd-ltr-20">
+        <div class="title pb-20">
+            <h2 class="h3 mb-0">Danh mục sách thư viện</h2>
         </div>
-
-        <div class="control-group">
-            <label class="control-label" for="basicinput">Loại sách</label>
-            <div class="controls">
-                <div class="dropdown">
-                    <a class="dropdown-toggle btn" data-toggle="dropdown" href="#">Loại sạch<i class="icon-caret-down"></i></a>
-                    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                        <li><a href="#">Loại sách 1</a></li>
-                        <li><a href="#">Loại sách 1</a></li>
-                        <li><a href="#">Loại sách 1</a></li>
-                        <li><a href="#">Loại sách 1</a></li>
-                    </ul>
+       
+        <div class="row pb-10">
+            <form>
+                <div class="form-group row">
+                    <label class="col-sm-12 col-md-2 col-form-label">Text</label>
+                    <div class="col-sm-12 col-md-10">
+                        <input class="form-control" type="text" placeholder="Johnny Brown">
+                    </div>
                 </div>
-            </div>
+                <div class="form-group row">
+                    <label class="col-sm-12 col-md-2 col-form-label">Search</label>
+                    <div class="col-sm-12 col-md-10">
+                        <input class="form-control" placeholder="Search Here" type="search">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-12 col-md-2 col-form-label">Email</label>
+                    <div class="col-sm-12 col-md-10">
+                        <input class="form-control" value="bootstrap@example.com" type="email">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-12 col-md-2 col-form-label">URL</label>
+                    <div class="col-sm-12 col-md-10">
+                        <input class="form-control" value="https://getbootstrap.com" type="url">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-12 col-md-2 col-form-label">Telephone</label>
+                    <div class="col-sm-12 col-md-10">
+                        <input class="form-control" value="1-(111)-111-1111" type="tel">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-12 col-md-2 col-form-label">Password</label>
+                    <div class="col-sm-12 col-md-10">
+                        <input class="form-control" value="password" type="password">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-12 col-md-2 col-form-label">Number</label>
+                    <div class="col-sm-12 col-md-10">
+                        <input class="form-control" value="100" type="number">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="example-datetime-local-input" class="col-sm-12 col-md-2 col-form-label">Date and time</label>
+                    <div class="col-sm-12 col-md-10">
+                        <input class="form-control datetimepicker" placeholder="Choose Date anf time" type="text">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-12 col-md-2 col-form-label">Date</label>
+                    <div class="col-sm-12 col-md-10">
+                        <input class="form-control date-picker" placeholder="Select Date" type="text">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-12 col-md-2 col-form-label">Month</label>
+                    <div class="col-sm-12 col-md-10">
+                        <input class="form-control month-picker" placeholder="Select Month" type="text">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-12 col-md-2 col-form-label">Time</label>
+                    <div class="col-sm-12 col-md-10">
+                        <input class="form-control time-picker td-input" placeholder="Select time" type="text" readonly="">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-12 col-md-2 col-form-label">Select</label>
+                    <div class="col-sm-12 col-md-10">
+                        <select class="custom-select col-12">
+                            <option selected="">Choose...</option>
+                            <option value="1">One</option>
+                            <option value="2">Two</option>
+                            <option value="3">Three</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-12 col-md-2 col-form-label">Color</label>
+                    <div class="col-sm-12 col-md-10">
+                        <input class="form-control" value="#563d7c" type="color">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-12 col-md-2 col-form-label">Input Range</label>
+                    <div class="col-sm-12 col-md-10">
+                        <input class="form-control" value="50" type="range">
+                    </div>
+                </div>
+            </form>
         </div>
+          
+        
+        
 
-        <div class="control-group">
-            <label class="control-label" for="basicinput">Dropdown</label>
-            <div class="controls">
-                <select tabindex="1" data-placeholder="Select here.." class="span8">
-                    <option value="">Select here..</option>
-                    <option value="Category 1">First Row</option>
-                    <option value="Category 2">Second Row</option>
-                    <option value="Category 3">Third Row</option>
-                    <option value="Category 4">Fourth Row</option>
-                </select>
-            </div>
+        
+
+        <div class="footer-wrap pd-20 mb-20 card-box">
+            DeskApp - Bootstrap 4 Admin Template By <a href="https://github.com/dropways" target="_blank">Ankit Hingarajiya</a>
         </div>
-
-        <div class="control-group">
-            <label class="control-label">Radiobuttons</label>
-            <div class="controls">
-                <label class="radio">
-                    <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked="">
-                    Option one
-                </label>
-                <label class="radio">
-                    <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
-                    Option two
-                </label>
-                <label class="radio">
-                    <input type="radio" name="optionsRadios" id="optionsRadios3" value="option3">
-                    Option three
-                </label>
-            </div>
-        </div>
-
-        <div class="control-group">
-            <label class="control-label">Inline Radiobuttons</label>
-            <div class="controls">
-                <label class="radio inline">
-                    <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked="">
-                    Option one
-                </label>
-                <label class="radio inline">
-                    <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
-                    Option two
-                </label>
-                <label class="radio inline">
-                    <input type="radio" name="optionsRadios" id="optionsRadios3" value="option3">
-                    Option three
-                </label>
-            </div>
-        </div>
-
-        <div class="control-group">
-            <label class="control-label">Checkboxes</label>
-            <div class="controls">
-                <label class="checkbox">
-                    <input type="checkbox" value="">
-                    Option one
-                </label>
-                <label class="checkbox">
-                    <input type="checkbox" value="">
-                    Option two
-                </label>
-                <label class="checkbox">
-                    <input type="checkbox" value="">
-                    Option three
-                </label>
-            </div>
-        </div>
-
-        <div class="control-group">
-            <label class="control-label">Inline Checkboxes</label>
-            <div class="controls">
-                <label class="checkbox inline">
-                    <input type="checkbox" value="">
-                    Option one
-                </label>
-                <label class="checkbox inline">
-                    <input type="checkbox" value="">
-                    Option two
-                </label>
-                <label class="checkbox inline">
-                    <input type="checkbox" value="">
-                    Option three
-                </label>
-            </div>
-        </div>
-
-        <div class="control-group">
-            <div class="controls">
-                <button type="submit" class="btn">Submit Form</button>
-            </div>
-        </div>
-    </form>
-
-
-    @* sssssssss *@
-    <div>
-        <table class="styled-table display" style="width:100%;">
-            <thead>
-                <tr>
-                    <th>
-                        STT
-                    </th>
-                    <th>
-                        Mã sách
-                    </th>
-                    <th>
-                        Tên sách
-                    </th>
-                    <th>
-                        Tác giả
-                    </th>
-                    <th>
-                        Hình ảnh
-                    </th>
-                    <th>
-                        Công cụ
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                @{ int stt = 0;}
-                @foreach (var item in ViewBag.Sach as List<WebThuvien.Models.Entity.SACH>)
-                {
-                    stt = stt + 1;
-                    <tr class="even gradeA">
-                        <td>
-                            @stt
-                        </td>
-                        <td>
-                            @item.MASACH
-                        </td>
-                        <td>
-                            @item.TENSACH
-                        </td>
-                        <td class="center">
-                            @item.TACGIA.TENTACGIA
-                        </td>
-                        <td class="center">
-                            <img src="~/Content/ClientContent/images/Books/@item.HINHANH" style="width:50px; height:50px;" />
-                        </td>
-                        <td class="center"><div class="btn btn-primary">Chi tiết</div></td>
-                    </tr>
-                }
-            </tbody>
-            <tfoot>
-
-            </tfoot>
-        </table>
-        <nav class="navigation pagination text-center">
-            <div class="nav-links">
-                @{
-                    if (ViewBag.currentPage != 1)
-                    {
-                        int prevPage = @ViewBag.currentPage - 1;
-                        <a class="prev page-numbers" href="/Sach/Timkiemsach?noidungnhap=@ViewBag.noidungnhap&loaisach=@ViewBag.loaisach&linhvuc=@ViewBag.linhvuc&pagenumber=@prevPage"><i class="fa fa-long-arrow-left"></i> Trang trước</a>
-                    }
-                    else
-                    {
-                        <a class="prev page-numbers" href="#."><i class="fa fa-long-arrow-left"></i> Trang trước</a>
-                    }
-
-                }
-                @for (int i = 1; i <= ViewBag.countPage; i++)
-                {
-                    if (@i == ViewBag.currentPage)
-                    {
-                        <a href="/Sach/Timkiemsach?noidungnhap=@ViewBag.noidungnhap&loaisach=@ViewBag.loaisach&linhvuc=@ViewBag.linhvuc&pagenumber=@i"><span class="page-numbers current">@i</span></a>
-
-                    }
-                    else
-                    {
-                        <a href="/Sach/Timkiemsach?noidungnhap=@ViewBag.noidungnhap&loaisach=@ViewBag.loaisach&linhvuc=@ViewBag.linhvuc&pagenumber=@i"><span class="page-numbers">@i</span></a>
-                    }
-                }
-                @{
-                    if (@ViewBag.currentPage != @ViewBag.countPage)
-                    {
-                        int nextPage = @ViewBag.currentPage + 1;
-                        <a class="next page-numbers" href="/Sach/Timkiemsach?noidungnhap=@ViewBag.noidungnhap&loaisach=@ViewBag.loaisach&linhvuc=@ViewBag.linhvuc&pagenumber=@nextPage">Trang sau <i class="fa fa-long-arrow-right"></i></a>
-
-                    }
-                    else
-                    {
-                        <a class="next page-numbers" href="#.">Trang sau <i class="fa fa-long-arrow-right"></i></a>
-
-                    }
-                }
-            </div>
-        </nav>
-
-
-
     </div>
 </div>
-<!--/.module-->
-
-<style>
-    .styled-table {
-    border-collapse: collapse;
-    margin: 25px 0;
-    font-size: 0.9em;
-    font-family: sans-serif;
-    min-width: 400px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
-}
-    .styled-table thead tr {
-    background-color: #009879;
-    color: #ffffff;
-    text-align: left;
-}
-
-    .styled-table th,
-.styled-table td {
-    padding: 12px 15px;
-}
-    .styled-table tbody tr {
-    border-bottom: 1px solid #dddddd;
-}
-
-.styled-table tbody tr:nth-of-type(even) {
-    background-color: #f3f3f3;
-}
-
-.styled-table tbody tr:last-of-type {
-    border-bottom: 2px solid #009879;
-}
-
-.styled-table tbody tr.active-row {
-    font-weight: bold;
-    color: #009879;
-}
-</style>

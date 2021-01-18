@@ -1,0 +1,483 @@
+USE [QLTHUVIEN]
+GO
+/****** Object:  Table [dbo].[BAIDANGTHONGTIN]    Script Date: 1/17/2021 4:18:06 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[BAIDANGTHONGTIN](
+	[MABAIDANG] [int] IDENTITY(1,1) NOT NULL,
+	[TIEUDE] [nvarchar](50) NULL,
+	[NGAYDANG] [date] NULL,
+	[TACGIA] [varchar](20) NULL,
+	[NOIDUNG] [nvarchar](3000) NULL,
+	[HINHANH1] [varchar](50) NULL,
+	[HINHANH2] [varchar](50) NULL,
+ CONSTRAINT [PK__BAIDANGT__C0BF98A2EF57F43D] PRIMARY KEY CLUSTERED 
+(
+	[MABAIDANG] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[BINHLUAN]    Script Date: 1/17/2021 4:18:06 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[BINHLUAN](
+	[MABINHLUAN] [int] IDENTITY(1,1) NOT NULL,
+	[MASACH] [varchar](20) NULL,
+	[MANGUOIBINHLUAN] [varchar](20) NULL,
+	[NOIDUNG] [nvarchar](1000) NULL,
+	[THOIGIAN] [date] NULL,
+	[MAREPBINHLUAN] [int] NULL,
+ CONSTRAINT [PK__BINHLUAN__1D9D3DB0BCB6E20F] PRIMARY KEY CLUSTERED 
+(
+	[MABINHLUAN] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[CHITIETMUONTRASACH]    Script Date: 1/17/2021 4:18:06 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[CHITIETMUONTRASACH](
+	[ID] [int] IDENTITY(1,1) NOT NULL,
+	[MAMUONTRASACH] [int] NULL,
+	[THOIGIANMUON] [int] NULL,
+	[NGAYMUON] [date] NULL,
+	[NGAYTRA] [date] NULL,
+	[GHICHUMUONTRA] [nvarchar](100) NULL,
+ CONSTRAINT [PK__CHITIETM__3214EC2734EDCD0E] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[DOCGIA]    Script Date: 1/17/2021 4:18:06 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[DOCGIA](
+	[ID] [int] IDENTITY(1,1) NOT NULL,
+	[MADOCGIA] [varchar](20) NOT NULL,
+	[TENDOCGIA] [nvarchar](100) NULL,
+	[DIACHI] [nvarchar](100) NULL,
+	[MATAIKHOAN] [varchar](20) NULL,
+	[MASOTHE] [varchar](20) NULL,
+ CONSTRAINT [PK__DOCGIA__8CA726FC3F8ED9B7] PRIMARY KEY CLUSTERED 
+(
+	[MADOCGIA] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[LINHVUC]    Script Date: 1/17/2021 4:18:06 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[LINHVUC](
+	[ID] [int] IDENTITY(1,1) NOT NULL,
+	[MALINHVUC] [varchar](20) NOT NULL,
+	[TENLINHVUC] [nvarchar](100) NULL,
+ CONSTRAINT [PK__LINHVUC__DAD704015364DBF5] PRIMARY KEY CLUSTERED 
+(
+	[MALINHVUC] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[LOAISACH]    Script Date: 1/17/2021 4:18:06 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[LOAISACH](
+	[ID] [int] IDENTITY(1,1) NOT NULL,
+	[MATHELOAI] [varchar](20) NOT NULL,
+	[TENTHELOAI] [nvarchar](100) NULL,
+	[GHICHU] [nvarchar](300) NULL,
+	[KIHIEU] [nvarchar](30) NULL,
+ CONSTRAINT [PK__LOAISACH__AC8D7C2BDC938B7C] PRIMARY KEY CLUSTERED 
+(
+	[MATHELOAI] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[LOAITAIKHOAN]    Script Date: 1/17/2021 4:18:06 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[LOAITAIKHOAN](
+	[MALOAI] [int] NOT NULL,
+	[TENLOAITAIKHOAN] [nvarchar](20) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[MALOAI] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[MUONTRASACH]    Script Date: 1/17/2021 4:18:06 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[MUONTRASACH](
+	[ID] [int] IDENTITY(1,1) NOT NULL,
+	[MATHE] [varchar](20) NULL,
+	[MASACH] [varchar](20) NULL,
+ CONSTRAINT [PK__MUONTRAS__3214EC274E498EF3] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[NHANVIEN]    Script Date: 1/17/2021 4:18:06 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[NHANVIEN](
+	[ID] [int] IDENTITY(1,1) NOT NULL,
+	[MANHANVIEN] [varchar](20) NOT NULL,
+	[TENNHANVIEN] [nvarchar](100) NULL,
+	[NGAYSINH] [date] NULL,
+	[SODIENTHOAI] [varchar](10) NULL,
+	[MATAIKHOAN] [varchar](20) NULL,
+ CONSTRAINT [PK__NHANVIEN__7E46DD913AC67679] PRIMARY KEY CLUSTERED 
+(
+	[MANHANVIEN] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[NHAXUATBAN]    Script Date: 1/17/2021 4:18:06 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[NHAXUATBAN](
+	[ID] [int] IDENTITY(1,1) NOT NULL,
+	[MANXB] [varchar](20) NOT NULL,
+	[TENNXB] [nvarchar](100) NULL,
+	[DIACHI] [nvarchar](100) NULL,
+	[EMAIL] [varchar](100) NULL,
+	[NGUOIDAIDIEN] [nvarchar](200) NULL,
+	[TRANGWEB] [varchar](100) NULL,
+ CONSTRAINT [PK__NHAXUATB__7ABD9EF23F98066F] PRIMARY KEY CLUSTERED 
+(
+	[MANXB] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[SACH]    Script Date: 1/17/2021 4:18:06 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[SACH](
+	[ID] [int] IDENTITY(1,1) NOT NULL,
+	[MASACH] [varchar](20) NOT NULL,
+	[TENSACH] [nvarchar](100) NULL,
+	[SOTRANG] [int] NULL,
+	[FILEPATH] [varchar](max) NULL,
+	[HINHANH] [nvarchar](max) NULL,
+	[LUOTXEM] [int] NULL,
+	[TRANGTHAI] [int] NULL,
+	[NGONNGU] [nvarchar](100) NULL,
+	[MALOAISACH] [varchar](20) NULL,
+	[MALINHVUC] [varchar](20) NULL,
+	[MATACGIA] [varchar](20) NULL,
+	[MANHAXUATBAN] [varchar](20) NULL,
+	[NGAYTAILEN] [date] NULL,
+	[GHICHU] [nvarchar](1000) NULL,
+ CONSTRAINT [PK__SACH__3FC48E4CF37049B7] PRIMARY KEY CLUSTERED 
+(
+	[MASACH] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[TACGIA]    Script Date: 1/17/2021 4:18:06 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[TACGIA](
+	[ID] [int] IDENTITY(1,1) NOT NULL,
+	[MATACGIA] [varchar](20) NOT NULL,
+	[TENTACGIA] [nvarchar](100) NULL,
+	[LINKWEBSITE] [varchar](max) NULL,
+	[GHICHU] [nvarchar](200) NULL,
+ CONSTRAINT [PK__TACGIA__C57C166D60C4B9C0] PRIMARY KEY CLUSTERED 
+(
+	[MATACGIA] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[TAIKHOAN]    Script Date: 1/17/2021 4:18:06 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[TAIKHOAN](
+	[ID] [int] IDENTITY(1,1) NOT NULL,
+	[TENTAIKHOAN] [varchar](20) NOT NULL,
+	[MATKHAU] [varchar](20) NULL,
+	[EMAIL] [varchar](20) NULL,
+	[LOAITAIKHOAN] [int] NULL,
+	[SOTHICHDOC] [nvarchar](100) NULL,
+	[HOTEN] [nvarchar](50) NULL,
+ CONSTRAINT [PK__TAIKHOAN__DE94905B50CE25E0] PRIMARY KEY CLUSTERED 
+(
+	[TENTAIKHOAN] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[THETHUVIEN]    Script Date: 1/17/2021 4:18:06 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[THETHUVIEN](
+	[ID] [int] IDENTITY(1,1) NOT NULL,
+	[MATHE] [varchar](20) NOT NULL,
+	[TENCHUTHE] [nvarchar](100) NULL,
+	[NGAYSINH] [datetime] NULL,
+	[DIACHI] [nvarchar](100) NULL,
+	[NGAYCAP] [date] NULL,
+	[NGAYHETHAN] [date] NULL,
+ CONSTRAINT [PK__THETHUVI__58248210A4987FA2] PRIMARY KEY CLUSTERED 
+(
+	[MATHE] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+SET IDENTITY_INSERT [dbo].[BINHLUAN] ON 
+GO
+INSERT [dbo].[BINHLUAN] ([MABINHLUAN], [MASACH], [MANGUOIBINHLUAN], [NOIDUNG], [THOIGIAN], [MAREPBINHLUAN]) VALUES (1, N'GG921733', N'tronglong123', N'sách này hay', CAST(N'2019-09-09' AS Date), 0)
+GO
+SET IDENTITY_INSERT [dbo].[BINHLUAN] OFF
+GO
+SET IDENTITY_INSERT [dbo].[CHITIETMUONTRASACH] ON 
+GO
+INSERT [dbo].[CHITIETMUONTRASACH] ([ID], [MAMUONTRASACH], [THOIGIANMUON], [NGAYMUON], [NGAYTRA], [GHICHUMUONTRA]) VALUES (1, 1, 100, CAST(N'2019-12-12' AS Date), NULL, NULL)
+GO
+INSERT [dbo].[CHITIETMUONTRASACH] ([ID], [MAMUONTRASACH], [THOIGIANMUON], [NGAYMUON], [NGAYTRA], [GHICHUMUONTRA]) VALUES (2, 2, 100, CAST(N'2019-12-12' AS Date), NULL, NULL)
+GO
+SET IDENTITY_INSERT [dbo].[CHITIETMUONTRASACH] OFF
+GO
+SET IDENTITY_INSERT [dbo].[DOCGIA] ON 
+GO
+INSERT [dbo].[DOCGIA] ([ID], [MADOCGIA], [TENDOCGIA], [DIACHI], [MATAIKHOAN], [MASOTHE]) VALUES (1, N'SV12132', N'NGUYỄN VĂN NAM', N'DUY HẢI', NULL, N'SV2019001')
+GO
+SET IDENTITY_INSERT [dbo].[DOCGIA] OFF
+GO
+SET IDENTITY_INSERT [dbo].[LINHVUC] ON 
+GO
+INSERT [dbo].[LINHVUC] ([ID], [MALINHVUC], [TENLINHVUC]) VALUES (1, N'1', N'VẬT LÝ')
+GO
+INSERT [dbo].[LINHVUC] ([ID], [MALINHVUC], [TENLINHVUC]) VALUES (2, N'2', N'HÓA HỌC')
+GO
+SET IDENTITY_INSERT [dbo].[LINHVUC] OFF
+GO
+SET IDENTITY_INSERT [dbo].[LOAISACH] ON 
+GO
+INSERT [dbo].[LOAISACH] ([ID], [MATHELOAI], [TENTHELOAI], [GHICHU], [KIHIEU]) VALUES (1, N'1', N'CHUYÊN KHẢO', N'Nhằm giúp bạn đọc biết nhiều hơn về một dân tộc đã giành được độc lập và tự do qua nhiều cuộc đấu tranh gian khổ cuốn Từ Điển Pháp Việt này đã được cho biên soạn.', N'red')
+GO
+INSERT [dbo].[LOAISACH] ([ID], [MATHELOAI], [TENTHELOAI], [GHICHU], [KIHIEU]) VALUES (2, N'2', N'GIÁO KHOA', N'Nhằm giúp bạn đọc biết nhiều hơn về một dân tộc đã giành được độc lập và tự do qua nhiều cuộc đấu tranh gian khổ cuốn Từ Điển Pháp Việt này đã được cho biên soạn.', N'green')
+GO
+INSERT [dbo].[LOAISACH] ([ID], [MATHELOAI], [TENTHELOAI], [GHICHU], [KIHIEU]) VALUES (3, N'3', N'THỰC HÀNH', N'Nhằm giúp bạn đọc biết nhiều hơn về một dân tộc đã giành được độc lập và tự do qua nhiều cuộc đấu tranh gian khổ cuốn Từ Điển Pháp Việt này đã được cho biên soạn.', N'red')
+GO
+INSERT [dbo].[LOAISACH] ([ID], [MATHELOAI], [TENTHELOAI], [GHICHU], [KIHIEU]) VALUES (4, N'4', N'CHUYÊN NGÀNH', N'Nhằm giúp bạn đọc biết nhiều hơn về một dân tộc đã giành được độc lập và tự do qua nhiều cuộc đấu tranh gian khổ cuốn Từ Điển Pháp Việt này đã được cho biên soạn.', N'green')
+GO
+SET IDENTITY_INSERT [dbo].[LOAISACH] OFF
+GO
+INSERT [dbo].[LOAITAIKHOAN] ([MALOAI], [TENLOAITAIKHOAN]) VALUES (1, N'BẠN ĐỌC')
+GO
+INSERT [dbo].[LOAITAIKHOAN] ([MALOAI], [TENLOAITAIKHOAN]) VALUES (2, N'NHÂN VIÊN')
+GO
+SET IDENTITY_INSERT [dbo].[MUONTRASACH] ON 
+GO
+INSERT [dbo].[MUONTRASACH] ([ID], [MATHE], [MASACH]) VALUES (1, N'SV2019001', N'GG921789')
+GO
+INSERT [dbo].[MUONTRASACH] ([ID], [MATHE], [MASACH]) VALUES (2, N'SV2019001', N'DF342342')
+GO
+SET IDENTITY_INSERT [dbo].[MUONTRASACH] OFF
+GO
+SET IDENTITY_INSERT [dbo].[NHANVIEN] ON 
+GO
+INSERT [dbo].[NHANVIEN] ([ID], [MANHANVIEN], [TENNHANVIEN], [NGAYSINH], [SODIENTHOAI], [MATAIKHOAN]) VALUES (1, N'NV001', N'NGUYỄN VĂN NAM', CAST(N'1998-12-02' AS Date), N'098123344', NULL)
+GO
+INSERT [dbo].[NHANVIEN] ([ID], [MANHANVIEN], [TENNHANVIEN], [NGAYSINH], [SODIENTHOAI], [MATAIKHOAN]) VALUES (2, N'NV002', N'NGUYỄN TÚ', CAST(N'1999-09-09' AS Date), N'0987564456', NULL)
+GO
+SET IDENTITY_INSERT [dbo].[NHANVIEN] OFF
+GO
+SET IDENTITY_INSERT [dbo].[NHAXUATBAN] ON 
+GO
+INSERT [dbo].[NHAXUATBAN] ([ID], [MANXB], [TENNXB], [DIACHI], [EMAIL], [NGUOIDAIDIEN], [TRANGWEB]) VALUES (1, N'NXB0001', N'KIM ĐỒNG', N'NGUYỄN VĂN TRỖI HÀ NÔI', N'KIMDONG@GMAIL.COM', N'NGUYỄN VĂN HAI', N'KIMDONG@GMAIL.COM')
+GO
+SET IDENTITY_INSERT [dbo].[NHAXUATBAN] OFF
+GO
+SET IDENTITY_INSERT [dbo].[SACH] ON 
+GO
+INSERT [dbo].[SACH] ([ID], [MASACH], [TENSACH], [SOTRANG], [FILEPATH], [HINHANH], [LUOTXEM], [TRANGTHAI], [NGONNGU], [MALOAISACH], [MALINHVUC], [MATACGIA], [MANHAXUATBAN], [NGAYTAILEN], [GHICHU]) VALUES (8, N'DF234243', N'KINH TẾ CHÍNH TRỊ', 129, N'SACH1.pdf', N'team-img-06.jpg', 1, 1, N'TIẾNG ANH', N'1', N'1', N'TACGIA0001', N'NXB0001', CAST(N'2020-01-10' AS Date), N'Một câu chuyện đan xen giữa quá khứ và thực tại.Có lẽ điều đặc biệt đầu tiên mà bất cứ bạn đọc nào có ý định tìm đọc sách cần lưu ý chính là: diễn biến tác phẩm thực sự rất, rất chậm.Một câu chuyện đan xen giữa quá khứ và thực tại.Có lẽ điều đặc biệt đầu tiên mà bất cứ bạn đọc nào có ý định tìm đọc sách cần lưu ý chính là: diễn biến tác phẩm thực sự rất, rất chậm. Một câu chuyện đan xen giữa quá khứ và thực tại.Có lẽ điều đặc biệt đầu tiên mà bất cứ bạn đọc nào có ý định tìm đọc sách cần lưu ý chính là: diễn biến tác phẩm thực sự rất, rất chậm.  ')
+GO
+INSERT [dbo].[SACH] ([ID], [MASACH], [TENSACH], [SOTRANG], [FILEPATH], [HINHANH], [LUOTXEM], [TRANGTHAI], [NGONNGU], [MALOAISACH], [MALINHVUC], [MATACGIA], [MANHAXUATBAN], [NGAYTAILEN], [GHICHU]) VALUES (3, N'DF342342', N'CÔNG TÁC ĐẢNG', 123, N'SACH1.pdf', N'header-slide.jpg', 5, 1, N'TIẾNG VIỆT', N'1', N'1', N'TACGIA0001', N'NXB0001', CAST(N'2020-01-09' AS Date), N'Một câu chuyện đan xen giữa quá khứ và thực tại.Có lẽ điều đặc biệt đầu tiên mà bất cứ bạn đọc nào có ý định tìm đọc sách cần lưu ý chính là: diễn biến tác phẩm thực sự rất, rất chậm.Một câu chuyện đan xen giữa quá khứ và thực tại.Có lẽ điều đặc biệt đầu tiên mà bất cứ bạn đọc nào có ý định tìm đọc sách cần lưu ý chính là: diễn biến tác phẩm thực sự rất, rất chậm. Một câu chuyện đan xen giữa quá khứ và thực tại.Có lẽ điều đặc biệt đầu tiên mà bất cứ bạn đọc nào có ý định tìm đọc sách cần lưu ý chính là: diễn biến tác phẩm thực sự rất, rất chậm.  ')
+GO
+INSERT [dbo].[SACH] ([ID], [MASACH], [TENSACH], [SOTRANG], [FILEPATH], [HINHANH], [LUOTXEM], [TRANGTHAI], [NGONNGU], [MALOAISACH], [MALINHVUC], [MATACGIA], [MANHAXUATBAN], [NGAYTAILEN], [GHICHU]) VALUES (10, N'DF365456', N'KINH TẾ CHÍNH TRỊ', 129, N'SACH1.pdf', N'team-img-06.jpg', 1, 1, N'TIẾNG ANH', N'1', N'1', N'TACGIA0001', N'NXB0001', CAST(N'2020-01-10' AS Date), N'Một câu chuyện đan xen giữa quá khứ và thực tại.Có lẽ điều đặc biệt đầu tiên mà bất cứ bạn đọc nào có ý định tìm đọc sách cần lưu ý chính là: diễn biến tác phẩm thực sự rất, rất chậm.Một câu chuyện đan xen giữa quá khứ và thực tại.Có lẽ điều đặc biệt đầu tiên mà bất cứ bạn đọc nào có ý định tìm đọc sách cần lưu ý chính là: diễn biến tác phẩm thực sự rất, rất chậm. Một câu chuyện đan xen giữa quá khứ và thực tại.Có lẽ điều đặc biệt đầu tiên mà bất cứ bạn đọc nào có ý định tìm đọc sách cần lưu ý chính là: diễn biến tác phẩm thực sự rất, rất chậm.  ')
+GO
+INSERT [dbo].[SACH] ([ID], [MASACH], [TENSACH], [SOTRANG], [FILEPATH], [HINHANH], [LUOTXEM], [TRANGTHAI], [NGONNGU], [MALOAISACH], [MALINHVUC], [MATACGIA], [MANHAXUATBAN], [NGAYTAILEN], [GHICHU]) VALUES (16, N'DF4234', N'KINH TẾ CHÍNH TRỊ', 129, N'SACH1.pdf', N'team-img-06.jpg', 1, 1, N'TIẾNG ANH', N'1', N'1', N'TACGIA0001', N'NXB0001', CAST(N'2020-01-10' AS Date), N'Một câu chuyện đan xen giữa quá khứ và thực tại.Có lẽ điều đặc biệt đầu tiên mà bất cứ bạn đọc nào có ý định tìm đọc sách cần lưu ý chính là: diễn biến tác phẩm thực sự rất, rất chậm.Một câu chuyện đan xen giữa quá khứ và thực tại.Có lẽ điều đặc biệt đầu tiên mà bất cứ bạn đọc nào có ý định tìm đọc sách cần lưu ý chính là: diễn biến tác phẩm thực sự rất, rất chậm. Một câu chuyện đan xen giữa quá khứ và thực tại.Có lẽ điều đặc biệt đầu tiên mà bất cứ bạn đọc nào có ý định tìm đọc sách cần lưu ý chính là: diễn biến tác phẩm thực sự rất, rất chậm.  ')
+GO
+INSERT [dbo].[SACH] ([ID], [MASACH], [TENSACH], [SOTRANG], [FILEPATH], [HINHANH], [LUOTXEM], [TRANGTHAI], [NGONNGU], [MALOAISACH], [MALINHVUC], [MATACGIA], [MANHAXUATBAN], [NGAYTAILEN], [GHICHU]) VALUES (13, N'DF545645', N'THUỐC NAM', 129, N'SACH1.pdf', N'team-img-06.jpg', 1, 1, N'TIẾNG ANH', N'1', N'1', N'TACGIA0001', N'NXB0001', CAST(N'2020-01-10' AS Date), N'Một câu chuyện đan xen giữa quá khứ và thực tại.Có lẽ điều đặc biệt đầu tiên mà bất cứ bạn đọc nào có ý định tìm đọc sách cần lưu ý chính là: diễn biến tác phẩm thực sự rất, rất chậm.Một câu chuyện đan xen giữa quá khứ và thực tại.Có lẽ điều đặc biệt đầu tiên mà bất cứ bạn đọc nào có ý định tìm đọc sách cần lưu ý chính là: diễn biến tác phẩm thực sự rất, rất chậm. Một câu chuyện đan xen giữa quá khứ và thực tại.Có lẽ điều đặc biệt đầu tiên mà bất cứ bạn đọc nào có ý định tìm đọc sách cần lưu ý chính là: diễn biến tác phẩm thực sự rất, rất chậm.  ')
+GO
+INSERT [dbo].[SACH] ([ID], [MASACH], [TENSACH], [SOTRANG], [FILEPATH], [HINHANH], [LUOTXEM], [TRANGTHAI], [NGONNGU], [MALOAISACH], [MALINHVUC], [MATACGIA], [MANHAXUATBAN], [NGAYTAILEN], [GHICHU]) VALUES (6, N'ER234234', N'TOÁN HỌC', 231, N'SACH1.pdf', N'team-img-06.jpg', 24, 2, NULL, N'3', N'2', N'TACGIA0001', N'NXB0001', CAST(N'2020-01-10' AS Date), N'Một câu chuyện đan xen giữa quá khứ và thực tại.Có lẽ điều đặc biệt đầu tiên mà bất cứ bạn đọc nào có ý định tìm đọc sách cần lưu ý chính là: diễn biến tác phẩm thực sự rất, rất chậm.Một câu chuyện đan xen giữa quá khứ và thực tại.Có lẽ điều đặc biệt đầu tiên mà bất cứ bạn đọc nào có ý định tìm đọc sách cần lưu ý chính là: diễn biến tác phẩm thực sự rất, rất chậm. Một câu chuyện đan xen giữa quá khứ và thực tại.Có lẽ điều đặc biệt đầu tiên mà bất cứ bạn đọc nào có ý định tìm đọc sách cần lưu ý chính là: diễn biến tác phẩm thực sự rất, rất chậm.  ')
+GO
+INSERT [dbo].[SACH] ([ID], [MASACH], [TENSACH], [SOTRANG], [FILEPATH], [HINHANH], [LUOTXEM], [TRANGTHAI], [NGONNGU], [MALOAISACH], [MALINHVUC], [MATACGIA], [MANHAXUATBAN], [NGAYTAILEN], [GHICHU]) VALUES (7, N'FG4345345', N'TÁC CHIẾN KHÔNG GIAN MẠNG', NULL, N'SACH1.pdf', N'team-img-06.jpg', 2, 1, NULL, N'3', N'2', N'TACGIA0001', N'NXB0001', CAST(N'2020-01-10' AS Date), N'Một câu chuyện đan xen giữa quá khứ và thực tại.Có lẽ điều đặc biệt đầu tiên mà bất cứ bạn đọc nào có ý định tìm đọc sách cần lưu ý chính là: diễn biến tác phẩm thực sự rất, rất chậm.Một câu chuyện đan xen giữa quá khứ và thực tại.Có lẽ điều đặc biệt đầu tiên mà bất cứ bạn đọc nào có ý định tìm đọc sách cần lưu ý chính là: diễn biến tác phẩm thực sự rất, rất chậm. Một câu chuyện đan xen giữa quá khứ và thực tại.Có lẽ điều đặc biệt đầu tiên mà bất cứ bạn đọc nào có ý định tìm đọc sách cần lưu ý chính là: diễn biến tác phẩm thực sự rất, rất chậm.  ')
+GO
+INSERT [dbo].[SACH] ([ID], [MASACH], [TENSACH], [SOTRANG], [FILEPATH], [HINHANH], [LUOTXEM], [TRANGTHAI], [NGONNGU], [MALOAISACH], [MALINHVUC], [MATACGIA], [MANHAXUATBAN], [NGAYTAILEN], [GHICHU]) VALUES (11, N'FGH4655', N'KINH TẾ CHÍNH TRỊ', 129, N'SACH1.pdf', N'team-img-06.jpg', 1, 1, N'TIẾNG ANH', N'1', N'1', N'TACGIA0001', N'NXB0001', CAST(N'2020-01-10' AS Date), N'Một câu chuyện đan xen giữa quá khứ và thực tại.Có lẽ điều đặc biệt đầu tiên mà bất cứ bạn đọc nào có ý định tìm đọc sách cần lưu ý chính là: diễn biến tác phẩm thực sự rất, rất chậm.Một câu chuyện đan xen giữa quá khứ và thực tại.Có lẽ điều đặc biệt đầu tiên mà bất cứ bạn đọc nào có ý định tìm đọc sách cần lưu ý chính là: diễn biến tác phẩm thực sự rất, rất chậm. Một câu chuyện đan xen giữa quá khứ và thực tại.Có lẽ điều đặc biệt đầu tiên mà bất cứ bạn đọc nào có ý định tìm đọc sách cần lưu ý chính là: diễn biến tác phẩm thực sự rất, rất chậm.  ')
+GO
+INSERT [dbo].[SACH] ([ID], [MASACH], [TENSACH], [SOTRANG], [FILEPATH], [HINHANH], [LUOTXEM], [TRANGTHAI], [NGONNGU], [MALOAISACH], [MALINHVUC], [MATACGIA], [MANHAXUATBAN], [NGAYTAILEN], [GHICHU]) VALUES (9, N'FH3453', N'KINH TẾ CHÍNH TRỊ', 129, N'SACH1.pdf', N'team-img-06.jpg', 1, 1, N'TIẾNG ANH', N'1', N'1', N'TACGIA0001', N'NXB0001', CAST(N'2020-01-10' AS Date), N'Một câu chuyện đan xen giữa quá khứ và thực tại.Có lẽ điều đặc biệt đầu tiên mà bất cứ bạn đọc nào có ý định tìm đọc sách cần lưu ý chính là: diễn biến tác phẩm thực sự rất, rất chậm.Một câu chuyện đan xen giữa quá khứ và thực tại.Có lẽ điều đặc biệt đầu tiên mà bất cứ bạn đọc nào có ý định tìm đọc sách cần lưu ý chính là: diễn biến tác phẩm thực sự rất, rất chậm. Một câu chuyện đan xen giữa quá khứ và thực tại.Có lẽ điều đặc biệt đầu tiên mà bất cứ bạn đọc nào có ý định tìm đọc sách cần lưu ý chính là: diễn biến tác phẩm thực sự rất, rất chậm.  ')
+GO
+INSERT [dbo].[SACH] ([ID], [MASACH], [TENSACH], [SOTRANG], [FILEPATH], [HINHANH], [LUOTXEM], [TRANGTHAI], [NGONNGU], [MALOAISACH], [MALINHVUC], [MATACGIA], [MANHAXUATBAN], [NGAYTAILEN], [GHICHU]) VALUES (5, N'GG921733', N'KINH TẾ CHÍNH TRỊ', 129, N'SACH1.pdf', N'team-img-06.jpg', 3, 2, N'TIẾNG LÀO', N'2', N'1', N'TACGIA0001', N'NXB0001', CAST(N'2020-01-10' AS Date), N'Một câu chuyện đan xen giữa quá khứ và thực tại.Có lẽ điều đặc biệt đầu tiên mà bất cứ bạn đọc nào có ý định tìm đọc sách cần lưu ý chính là: diễn biến tác phẩm thực sự rất, rất chậm.Một câu chuyện đan xen giữa quá khứ và thực tại.Có lẽ điều đặc biệt đầu tiên mà bất cứ bạn đọc nào có ý định tìm đọc sách cần lưu ý chính là: diễn biến tác phẩm thực sự rất, rất chậm. Một câu chuyện đan xen giữa quá khứ và thực tại.Có lẽ điều đặc biệt đầu tiên mà bất cứ bạn đọc nào có ý định tìm đọc sách cần lưu ý chính là: diễn biến tác phẩm thực sự rất, rất chậm.  ')
+GO
+INSERT [dbo].[SACH] ([ID], [MASACH], [TENSACH], [SOTRANG], [FILEPATH], [HINHANH], [LUOTXEM], [TRANGTHAI], [NGONNGU], [MALOAISACH], [MALINHVUC], [MATACGIA], [MANHAXUATBAN], [NGAYTAILEN], [GHICHU]) VALUES (2, N'GG921789', N'KINH TẾ CHÍNH TRỊ', 129, N'SACH1.pdf', N'team-img-06.jpg', 1, 1, N'TIẾNG ANH', N'1', N'1', N'TACGIA0001', N'NXB0001', CAST(N'2020-01-10' AS Date), N'Một câu chuyện đan xen giữa quá khứ và thực tại.Có lẽ điều đặc biệt đầu tiên mà bất cứ bạn đọc nào có ý định tìm đọc sách cần lưu ý chính là: diễn biến tác phẩm thực sự rất, rất chậm.Một câu chuyện đan xen giữa quá khứ và thực tại.Có lẽ điều đặc biệt đầu tiên mà bất cứ bạn đọc nào có ý định tìm đọc sách cần lưu ý chính là: diễn biến tác phẩm thực sự rất, rất chậm. Một câu chuyện đan xen giữa quá khứ và thực tại.Có lẽ điều đặc biệt đầu tiên mà bất cứ bạn đọc nào có ý định tìm đọc sách cần lưu ý chính là: diễn biến tác phẩm thực sự rất, rất chậm.  ')
+GO
+INSERT [dbo].[SACH] ([ID], [MASACH], [TENSACH], [SOTRANG], [FILEPATH], [HINHANH], [LUOTXEM], [TRANGTHAI], [NGONNGU], [MALOAISACH], [MALINHVUC], [MATACGIA], [MANHAXUATBAN], [NGAYTAILEN], [GHICHU]) VALUES (18, N'RE4545', N'KINH TẾ CHÍNH TRỊ', 129, N'SACH1.pdf', N'team-img-06.jpg', 1, 1, N'TIẾNG ANH', N'1', N'1', N'TACGIA0001', N'NXB0001', CAST(N'2020-01-10' AS Date), N'Một câu chuyện đan xen giữa quá khứ và thực tại.Có lẽ điều đặc biệt đầu tiên mà bất cứ bạn đọc nào có ý định tìm đọc sách cần lưu ý chính là: diễn biến tác phẩm thực sự rất, rất chậm.Một câu chuyện đan xen giữa quá khứ và thực tại.Có lẽ điều đặc biệt đầu tiên mà bất cứ bạn đọc nào có ý định tìm đọc sách cần lưu ý chính là: diễn biến tác phẩm thực sự rất, rất chậm. Một câu chuyện đan xen giữa quá khứ và thực tại.Có lẽ điều đặc biệt đầu tiên mà bất cứ bạn đọc nào có ý định tìm đọc sách cần lưu ý chính là: diễn biến tác phẩm thực sự rất, rất chậm.  ')
+GO
+INSERT [dbo].[SACH] ([ID], [MASACH], [TENSACH], [SOTRANG], [FILEPATH], [HINHANH], [LUOTXEM], [TRANGTHAI], [NGONNGU], [MALOAISACH], [MALINHVUC], [MATACGIA], [MANHAXUATBAN], [NGAYTAILEN], [GHICHU]) VALUES (14, N'RT56456', N'KINH TẾ CHÍNH TRỊ', 129, N'SACH1.pdf', N'team-img-06.jpg', 1, 1, N'TIẾNG ANH', N'1', N'1', N'TACGIA0001', N'NXB0001', CAST(N'2020-01-10' AS Date), N'Một câu chuyện đan xen giữa quá khứ và thực tại.Có lẽ điều đặc biệt đầu tiên mà bất cứ bạn đọc nào có ý định tìm đọc sách cần lưu ý chính là: diễn biến tác phẩm thực sự rất, rất chậm.Một câu chuyện đan xen giữa quá khứ và thực tại.Có lẽ điều đặc biệt đầu tiên mà bất cứ bạn đọc nào có ý định tìm đọc sách cần lưu ý chính là: diễn biến tác phẩm thực sự rất, rất chậm. Một câu chuyện đan xen giữa quá khứ và thực tại.Có lẽ điều đặc biệt đầu tiên mà bất cứ bạn đọc nào có ý định tìm đọc sách cần lưu ý chính là: diễn biến tác phẩm thực sự rất, rất chậm.  ')
+GO
+INSERT [dbo].[SACH] ([ID], [MASACH], [TENSACH], [SOTRANG], [FILEPATH], [HINHANH], [LUOTXEM], [TRANGTHAI], [NGONNGU], [MALOAISACH], [MALINHVUC], [MATACGIA], [MANHAXUATBAN], [NGAYTAILEN], [GHICHU]) VALUES (12, N'TY54564', N'KINH TẾ CHÍNH TRỊ', 129, N'SACH1.pdf', N'team-img-06.jpg', 1, 1, N'TIẾNG ANH', N'1', N'1', N'TACGIA0001', N'NXB0001', CAST(N'2020-01-10' AS Date), N'Một câu chuyện đan xen giữa quá khứ và thực tại.Có lẽ điều đặc biệt đầu tiên mà bất cứ bạn đọc nào có ý định tìm đọc sách cần lưu ý chính là: diễn biến tác phẩm thực sự rất, rất chậm.Một câu chuyện đan xen giữa quá khứ và thực tại.Có lẽ điều đặc biệt đầu tiên mà bất cứ bạn đọc nào có ý định tìm đọc sách cần lưu ý chính là: diễn biến tác phẩm thực sự rất, rất chậm. Một câu chuyện đan xen giữa quá khứ và thực tại.Có lẽ điều đặc biệt đầu tiên mà bất cứ bạn đọc nào có ý định tìm đọc sách cần lưu ý chính là: diễn biến tác phẩm thực sự rất, rất chậm.  ')
+GO
+INSERT [dbo].[SACH] ([ID], [MASACH], [TENSACH], [SOTRANG], [FILEPATH], [HINHANH], [LUOTXEM], [TRANGTHAI], [NGONNGU], [MALOAISACH], [MALINHVUC], [MATACGIA], [MANHAXUATBAN], [NGAYTAILEN], [GHICHU]) VALUES (15, N'UI6567', N'KINH TẾ CHÍNH TRỊ', 129, N'SACH1.pdf', N'team-img-06.jpg', 1, 1, N'TIẾNG ANH', N'1', N'1', N'TACGIA0001', N'NXB0001', CAST(N'2020-01-10' AS Date), N'Một câu chuyện đan xen giữa quá khứ và thực tại.Có lẽ điều đặc biệt đầu tiên mà bất cứ bạn đọc nào có ý định tìm đọc sách cần lưu ý chính là: diễn biến tác phẩm thực sự rất, rất chậm.Một câu chuyện đan xen giữa quá khứ và thực tại.Có lẽ điều đặc biệt đầu tiên mà bất cứ bạn đọc nào có ý định tìm đọc sách cần lưu ý chính là: diễn biến tác phẩm thực sự rất, rất chậm. Một câu chuyện đan xen giữa quá khứ và thực tại.Có lẽ điều đặc biệt đầu tiên mà bất cứ bạn đọc nào có ý định tìm đọc sách cần lưu ý chính là: diễn biến tác phẩm thực sự rất, rất chậm.  ')
+GO
+SET IDENTITY_INSERT [dbo].[SACH] OFF
+GO
+SET IDENTITY_INSERT [dbo].[TACGIA] ON 
+GO
+INSERT [dbo].[TACGIA] ([ID], [MATACGIA], [TENTACGIA], [LINKWEBSITE], [GHICHU]) VALUES (1, N'TACGIA0001', N'LÊ VĂN NAM', N'LEVANNAM.COM', N'TAC GIẢ SÁCH')
+GO
+SET IDENTITY_INSERT [dbo].[TACGIA] OFF
+GO
+SET IDENTITY_INSERT [dbo].[TAIKHOAN] ON 
+GO
+INSERT [dbo].[TAIKHOAN] ([ID], [TENTAIKHOAN], [MATKHAU], [EMAIL], [LOAITAIKHOAN], [SOTHICHDOC], [HOTEN]) VALUES (1, N'tronglong123', N'LONGLONG123', N'LONG@GMAIL.COM', 1, N'SÁCH TRINH THÁM', NULL)
+GO
+SET IDENTITY_INSERT [dbo].[TAIKHOAN] OFF
+GO
+SET IDENTITY_INSERT [dbo].[THETHUVIEN] ON 
+GO
+INSERT [dbo].[THETHUVIEN] ([ID], [MATHE], [TENCHUTHE], [NGAYSINH], [DIACHI], [NGAYCAP], [NGAYHETHAN]) VALUES (1, N'SV2019001', N'NGUYỄN A', CAST(N'1999-09-08T00:00:00.000' AS DateTime), N'NGUYỄN', CAST(N'2019-09-09' AS Date), CAST(N'2025-09-09' AS Date))
+GO
+SET IDENTITY_INSERT [dbo].[THETHUVIEN] OFF
+GO
+ALTER TABLE [dbo].[BAIDANGTHONGTIN]  WITH CHECK ADD  CONSTRAINT [FK__BAIDANGTH__TACGI__02084FDA] FOREIGN KEY([TACGIA])
+REFERENCES [dbo].[TAIKHOAN] ([TENTAIKHOAN])
+GO
+ALTER TABLE [dbo].[BAIDANGTHONGTIN] CHECK CONSTRAINT [FK__BAIDANGTH__TACGI__02084FDA]
+GO
+ALTER TABLE [dbo].[BINHLUAN]  WITH CHECK ADD  CONSTRAINT [FK__BINHLUAN__MANGUO__7F2BE32F] FOREIGN KEY([MANGUOIBINHLUAN])
+REFERENCES [dbo].[TAIKHOAN] ([TENTAIKHOAN])
+GO
+ALTER TABLE [dbo].[BINHLUAN] CHECK CONSTRAINT [FK__BINHLUAN__MANGUO__7F2BE32F]
+GO
+ALTER TABLE [dbo].[BINHLUAN]  WITH CHECK ADD  CONSTRAINT [FK__BINHLUAN__MASACH__7E37BEF6] FOREIGN KEY([MASACH])
+REFERENCES [dbo].[SACH] ([MASACH])
+GO
+ALTER TABLE [dbo].[BINHLUAN] CHECK CONSTRAINT [FK__BINHLUAN__MASACH__7E37BEF6]
+GO
+ALTER TABLE [dbo].[CHITIETMUONTRASACH]  WITH CHECK ADD  CONSTRAINT [FK__CHITIETMU__MAMUO__4316F928] FOREIGN KEY([MAMUONTRASACH])
+REFERENCES [dbo].[MUONTRASACH] ([ID])
+GO
+ALTER TABLE [dbo].[CHITIETMUONTRASACH] CHECK CONSTRAINT [FK__CHITIETMU__MAMUO__4316F928]
+GO
+ALTER TABLE [dbo].[DOCGIA]  WITH CHECK ADD  CONSTRAINT [FK__DOCGIA__MASOTHE__2F10007B] FOREIGN KEY([MASOTHE])
+REFERENCES [dbo].[THETHUVIEN] ([MATHE])
+GO
+ALTER TABLE [dbo].[DOCGIA] CHECK CONSTRAINT [FK__DOCGIA__MASOTHE__2F10007B]
+GO
+ALTER TABLE [dbo].[DOCGIA]  WITH CHECK ADD  CONSTRAINT [FK__DOCGIA__MATAIKHO__2E1BDC42] FOREIGN KEY([MATAIKHOAN])
+REFERENCES [dbo].[TAIKHOAN] ([TENTAIKHOAN])
+GO
+ALTER TABLE [dbo].[DOCGIA] CHECK CONSTRAINT [FK__DOCGIA__MATAIKHO__2E1BDC42]
+GO
+ALTER TABLE [dbo].[MUONTRASACH]  WITH CHECK ADD  CONSTRAINT [FK__MUONTRASA__MASAC__403A8C7D] FOREIGN KEY([MASACH])
+REFERENCES [dbo].[SACH] ([MASACH])
+GO
+ALTER TABLE [dbo].[MUONTRASACH] CHECK CONSTRAINT [FK__MUONTRASA__MASAC__403A8C7D]
+GO
+ALTER TABLE [dbo].[MUONTRASACH]  WITH CHECK ADD  CONSTRAINT [FK__MUONTRASA__MATHE__3F466844] FOREIGN KEY([MATHE])
+REFERENCES [dbo].[THETHUVIEN] ([MATHE])
+GO
+ALTER TABLE [dbo].[MUONTRASACH] CHECK CONSTRAINT [FK__MUONTRASA__MATHE__3F466844]
+GO
+ALTER TABLE [dbo].[NHANVIEN]  WITH CHECK ADD  CONSTRAINT [FK__NHANVIEN__MATAIK__29572725] FOREIGN KEY([MATAIKHOAN])
+REFERENCES [dbo].[TAIKHOAN] ([TENTAIKHOAN])
+GO
+ALTER TABLE [dbo].[NHANVIEN] CHECK CONSTRAINT [FK__NHANVIEN__MATAIK__29572725]
+GO
+ALTER TABLE [dbo].[SACH]  WITH CHECK ADD  CONSTRAINT [FK__SACH__MALINHVUC__3A81B327] FOREIGN KEY([MALINHVUC])
+REFERENCES [dbo].[LINHVUC] ([MALINHVUC])
+GO
+ALTER TABLE [dbo].[SACH] CHECK CONSTRAINT [FK__SACH__MALINHVUC__3A81B327]
+GO
+ALTER TABLE [dbo].[SACH]  WITH CHECK ADD  CONSTRAINT [FK__SACH__MALOAISACH__398D8EEE] FOREIGN KEY([MALOAISACH])
+REFERENCES [dbo].[LOAISACH] ([MATHELOAI])
+GO
+ALTER TABLE [dbo].[SACH] CHECK CONSTRAINT [FK__SACH__MALOAISACH__398D8EEE]
+GO
+ALTER TABLE [dbo].[SACH]  WITH CHECK ADD  CONSTRAINT [FK__SACH__MANHAXUATB__3C69FB99] FOREIGN KEY([MANHAXUATBAN])
+REFERENCES [dbo].[NHAXUATBAN] ([MANXB])
+GO
+ALTER TABLE [dbo].[SACH] CHECK CONSTRAINT [FK__SACH__MANHAXUATB__3C69FB99]
+GO
+ALTER TABLE [dbo].[SACH]  WITH CHECK ADD  CONSTRAINT [FK__SACH__MATACGIA__3B75D760] FOREIGN KEY([MATACGIA])
+REFERENCES [dbo].[TACGIA] ([MATACGIA])
+GO
+ALTER TABLE [dbo].[SACH] CHECK CONSTRAINT [FK__SACH__MATACGIA__3B75D760]
+GO
+ALTER TABLE [dbo].[TAIKHOAN]  WITH CHECK ADD  CONSTRAINT [FK__TAIKHOAN__LOAITA__267ABA7A] FOREIGN KEY([LOAITAIKHOAN])
+REFERENCES [dbo].[LOAITAIKHOAN] ([MALOAI])
+GO
+ALTER TABLE [dbo].[TAIKHOAN] CHECK CONSTRAINT [FK__TAIKHOAN__LOAITA__267ABA7A]
+GO
+/****** Object:  StoredProcedure [dbo].[SearchSachTacgia]    Script Date: 1/17/2021 4:18:06 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE proc [dbo].[SearchSachTacgia] @noidung nvarchar(100)
+AS 
+BEGIN
+
+SELECT  SACH.* FROM TACGIA,SACH
+where SACH.MATACGIA = TACGIA.MATACGIA
+and TACGIA.TENTACGIA like '%'+@noidung+'%'
+END
+GO
+/****** Object:  StoredProcedure [dbo].[TOPNEWBOOK10]    Script Date: 1/17/2021 4:18:06 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE proc [dbo].[TOPNEWBOOK10] 
+AS 
+BEGIN
+
+SELECT top(10) * FROM SACH
+ORDER BY SACH.NGAYTAILEN DESC
+END
+GO
+/****** Object:  StoredProcedure [dbo].[TOPPOPULARBOOK]    Script Date: 1/17/2021 4:18:06 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE proc [dbo].[TOPPOPULARBOOK]
+AS 
+BEGIN
+
+SELECT top(10) * FROM SACH
+ORDER BY SACH.LUOTXEM DESC
+END
+GO
