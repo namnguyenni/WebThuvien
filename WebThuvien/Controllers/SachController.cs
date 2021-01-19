@@ -14,6 +14,11 @@ namespace WebThuvien.Controllers
         // GET: Sach
         public ActionResult Index(int pageNumber=1)
         {
+            if (Session["TaikhoanBanDoc"] == null)
+            {
+                return Redirect("/Home/Login");
+            }
+
             QLTHUVIEN db = new QLTHUVIEN();
             List<SACH> SearchSach = db.SACHes.ToList();
 
@@ -45,6 +50,11 @@ namespace WebThuvien.Controllers
         //tải sách
         public ActionResult TaiSach(string MaSach)
         {
+            if (Session["TaikhoanBanDoc"] == null)
+            {
+                return Redirect("/Home/Login");
+            }
+
             string filename = MaSach+".pdf";
             string filepath = AppDomain.CurrentDomain.BaseDirectory + "Content/ClientContent/FILE_PDF/" + filename;
             byte[] filedata = System.IO.File.ReadAllBytes(filepath);
@@ -56,6 +66,11 @@ namespace WebThuvien.Controllers
 
         public ActionResult Chitietsach(string MaSach)
         {
+            if (Session["TaikhoanBanDoc"] == null)
+            {
+                return Redirect("/Home/Login");
+            }
+
             QLTHUVIEN db = new QLTHUVIEN();
 
             
@@ -101,6 +116,10 @@ namespace WebThuvien.Controllers
 
         public ActionResult Timkiemsach(string noidungnhap="",string linhvuc="",string loaisach="",int pageNumber=1)
         {
+            if (Session["TaikhoanBanDoc"] == null)
+            {
+                return Redirect("/Home/Login");
+            }
 
             string noidung = noidungnhap.ToUpper();
             QLTHUVIEN db = new QLTHUVIEN();

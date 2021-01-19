@@ -15,6 +15,11 @@ namespace WebThuvien.Controllers
         //trang chủ trang web
         public ActionResult Index()
         {
+            if (Session["TaikhoanBanDoc"] == null)
+            {
+                return Redirect("/Home/Login");
+            }
+
             QLTHUVIEN db = new QLTHUVIEN();
             //SÁCH MỚI CẬP NHẬT : 10 sách
             //List<SACH> TOPNEWBOOK10 = db.Database.SqlQuery<SACH>("exec dbo.TOPNEWBOOK10").ToList();
@@ -26,6 +31,29 @@ namespace WebThuvien.Controllers
             ViewBag.TatcaSach = db.SACHes.ToList();
             return View();
         }
+
+        [HttpGet]
+        public ActionResult Login()
+        {
+
+            return View();
+        }
+
+        public ActionResult Logout()
+        {
+            if (Session["TaikhoanBanDoc"] != null)
+            {
+                Session.Remove("TaikhoanBanDoc");
+            }
+
+            if (Session["Taikhoan"] != null)
+            {
+                Session.Remove("Taikhoan");
+            }
+            return View("Login");
+        }
+
+
         #region partial trang home client
 
         public ActionResult HeaderSection()

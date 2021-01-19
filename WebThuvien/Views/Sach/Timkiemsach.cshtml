@@ -2,6 +2,7 @@
 @{
     ViewBag.Title = "Tìm kiếm : "+ViewBag.noidungnhap + " - Trang "+ViewBag.currentPage ;
     ViewBag.noidung = ViewBag.noidungnhap;
+  
     Layout = "~/Views/Shared/_LayoutHomeClient.cshtml";
 }
 
@@ -112,7 +113,7 @@
                         }
                     </div>
                     <nav class="navigation pagination text-center">
-                        <h2 class="screen-reader-text">Posts navigation</h2>
+                        <h2 class="screen-reader-text">Trang</h2>
                         <div class="nav-links">
                                 @{
                                     if (ViewBag.currentPage != 1)

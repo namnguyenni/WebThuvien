@@ -104,10 +104,26 @@
     <script type="text/javascript" src="~/Content/ClientContent/js/main.js"></script>
 
     <script>
-        var x = '@ViewBag.noidung';
+        var x = '@ViewBag.noidungnhap';
+        var y = '@ViewBag.linhvuc';
+        var z = '@ViewBag.loaisach';
+
         $(document).ready(function () {
-            $('#noidungnhap').val(x)
+            $('#noidungnhap').val(x);
+
+            if (y == undefined || y == null || y == '') {
+                y = '0';
+            }
+            $('#loaisach option[value=' + y + ']').attr('selected', 'selected');
+
+
+            if (z == undefined || z == null || z == '') {
+                z = '0';
+            }
+            $('#linhvuc option[value=' + z + ']').attr('selected', 'selected');
+
         })
+
     </script>
     <script>
     function setSelectedPageNav() {

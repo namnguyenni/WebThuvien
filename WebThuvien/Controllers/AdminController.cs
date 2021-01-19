@@ -19,6 +19,12 @@ namespace WebThuvien.Controllers
         public ActionResult Index()
         {
             //kiểm tra sự tồn tại session
+            if (Session["Taikhoan"] == null)
+            {
+                return Redirect("/Home/Login");
+            }
+
+            //
             QLTHUVIEN db = new QLTHUVIEN();
             List<SACH> lstSach = db.Database.SqlQuery<SACH>("exec dbo.TOPPOPULARBOOK ").ToList();
             List<SACH> lst = new List<SACH>();
@@ -41,6 +47,12 @@ namespace WebThuvien.Controllers
 
         public ActionResult Sach(int pageNumber=1)
         {
+            //kiểm tra sự tồn tại session
+            if (Session["Taikhoan"] == null)
+            {
+                return Redirect("/Home/Login");
+            }
+
             QLTHUVIEN db = new QLTHUVIEN();
             List<SACH> Sach = new List<SACH>();
 
@@ -55,8 +67,14 @@ namespace WebThuvien.Controllers
         //xem chi tiết sách
         public ActionResult XemChiTietSach(string MaSach)
         {
+            //kiểm tra sự tồn tại session
+            if (Session["Taikhoan"] == null)
+            {
+                return Redirect("/Home/Login");
+            }
+
             QLTHUVIEN db = new QLTHUVIEN();
-            SACH sach = db.SACHes.Single(x => x.MASACH == MaSach);
+            SACH sach = db.SACHes.SingleOrDefault(x => x.MASACH == MaSach);
             ViewBag.Sach = sach;
             ViewBag.Loaisach = db.LOAISACHes.ToList();
             ViewBag.Linhvuc = db.LINHVUCs.ToList();
@@ -79,57 +97,55 @@ namespace WebThuvien.Controllers
 
         }
 
-
-        //đăng nhập admin
-        [HttpGet]
-        public ActionResult Login()
-        {
-            
-            return View();
-        }
-
         [HttpPost]
-        public ActionResult Login(string tentaikhoan,string matkhau,bool luumk)
+        public ActionResult Login(string tentaikhoan,string matkhau,bool luumk=false)
         {
             QLTHUVIEN db = new QLTHUVIEN();
-            TAIKHOAN taikhoan = db.TAIKHOANs.Single(x => x.TENTAIKHOAN == tentaikhoan);
+            TAIKHOAN taikhoan = db.TAIKHOANs.SingleOrDefault(x => x.TENTAIKHOAN == tentaikhoan);
             if (taikhoan != null && taikhoan.MATKHAU == matkhau)
             {
                 //tạo session
-                Session["Taikhoan"] = taikhoan;
-                if (luumk)
+                if (taikhoan.LOAITAIKHOAN == 1)
                 {
-                    HttpCookie taikhoan_ck = new HttpCookie("tentaikhoan", tentaikhoan);
-                    HttpCookie matkhau_ck = new HttpCookie("matkhau", matkhau);
-
-                    taikhoan_ck.Expires = DateTime.Now.AddDays(30);
-                    matkhau_ck.Expires = DateTime.Now.AddDays(30);
-
-                    Response.Cookies.Add(taikhoan_ck);
-                    Response.Cookies.Add(matkhau_ck);
-
+                    Session["TaikhoanBanDoc"] = taikhoan;
+                    return Redirect("/Home");
                 }
+                else
+                {
+                    Session["Taikhoan"] = taikhoan;
+                    Session["TaikhoanBanDoc"] = taikhoan;
+                    return Redirect("/Admin");
+                }
+                //if (luumk)
+                //{
+                //    HttpCookie taikhoan_ck = new HttpCookie("tentaikhoan", tentaikhoan);
+                //    HttpCookie matkhau_ck = new HttpCookie("matkhau", matkhau);
 
+                //    taikhoan_ck.Expires = DateTime.Now.AddDays(30);
+                //    matkhau_ck.Expires = DateTime.Now.AddDays(30);
+
+                //    Response.Cookies.Add(taikhoan_ck);
+                //    Response.Cookies.Add(matkhau_ck);
+                //}
+                
+                
             }
-            return View();
-        }
-
-        private bool CheckSession(int role)
-        {
-            if (Session["Taikhoan"] != null)
+            else
             {
-                TAIKHOAN taikhoan = Session["Taikhoan"] as TAIKHOAN;
-
-                if (taikhoan.LOAITAIKHOAN == role)
-                {
-                    return true;
-                }
+                TempData["Thongbao"] = "Thông tin tài khoản hoặc mật khẩu không chính xác!!!";
+                return Redirect("/Home/Login");
             }
-            return false;
+            
         }
         //giao diện thêm sách, tải sách từ máy lên
         public ActionResult UploadSach()
         {
+            //kiểm tra sự tồn tại session
+            if (Session["Taikhoan"] == null)
+            {
+                return Redirect("/Home/Login");
+            }
+
             QLTHUVIEN db = new QLTHUVIEN();
             ViewBag.Loaisach = db.LOAISACHes.ToList();
             ViewBag.Linhvuc = db.LINHVUCs.ToList();
@@ -145,7 +161,7 @@ namespace WebThuvien.Controllers
             try
             {
                
-                if (sach.MASACH.Trim() != "")
+                if (sach.MASACH.Trim() == "")
                 {
                     //ma sach
                     string masach = "";
@@ -272,7 +288,7 @@ namespace WebThuvien.Controllers
         public ActionResult ChinhsuaSach(SACH sach,HttpPostedFileBase filepdf=null,HttpPostedFileBase hinhanh=null, string TENTACGIA="Chưa xác định")
         {
             QLTHUVIEN db = new QLTHUVIEN();
-            SACH sach_old = db.SACHes.Single(x => x.ID == sach.ID);
+            SACH sach_old = db.SACHes.SingleOrDefault(x => x.ID == sach.ID);
             try
             {
                 
@@ -383,6 +399,11 @@ namespace WebThuvien.Controllers
 
         public ActionResult Timkiemsach(string noidungnhap = "", string linhvuc = "", string loaisach = "", string tacgia="")
         {
+            //kiểm tra sự tồn tại session
+            if (Session["Taikhoan"] == null)
+            {
+                return Redirect("/Home/Login");
+            }
 
             string noidung = noidungnhap.ToUpper();
             QLTHUVIEN db = new QLTHUVIEN();
@@ -413,7 +434,7 @@ namespace WebThuvien.Controllers
 
             //lọc theo thể loại và lĩnh vực
             List<SACH> LIST = new List<SACH>();
-            if (linhvuc != "Tất cả" || loaisach != "Tất cả" || tacgia != "Tất cả")
+            if (linhvuc != "" || loaisach != "" || tacgia != "")
             {
                 foreach (var item in SearchSach)
                 {
@@ -432,7 +453,7 @@ namespace WebThuvien.Controllers
             ViewBag.linhvuc = linhvuc;
             ViewBag.loaisach = loaisach;
             ViewBag.tacgia = tacgia;
-            return Redirect("/Admin/Sach");
+            return View();
         }
 
         private void AddSach(List<SACH> list1, List<SACH> list2)
@@ -462,7 +483,7 @@ namespace WebThuvien.Controllers
             try
             {
                 QLTHUVIEN db = new QLTHUVIEN();
-                SACH sach = db.SACHes.Single(x => x.MASACH == MaSach);
+                SACH sach = db.SACHes.SingleOrDefault(x => x.MASACH == MaSach);
                 db.SACHes.Remove(sach);
                 db.SaveChanges();
                 TempData["Error"] = "0";
@@ -495,7 +516,7 @@ namespace WebThuvien.Controllers
             QLTHUVIEN db = new QLTHUVIEN();
             try
             {
-                THETHUVIEN the = db.THETHUVIENs.Single(x => x.MATHE == mathe);
+                THETHUVIEN the = db.THETHUVIENs.SingleOrDefault(x => x.MATHE == mathe);
                 if (the != null)
                     for (int i = 0; i < lstmasach.Length; i++)
                     {
@@ -508,7 +529,7 @@ namespace WebThuvien.Controllers
                             db.MUONTRASACHes.Add(muontra);
                             db.SaveChanges();
                             //lay lại id muontrasach
-                            int id = db.MUONTRASACHes.Single(x => x.MASACH == muontra.MASACH && x.MATHE == muontra.MATHE).ID;
+                            int id = db.MUONTRASACHes.SingleOrDefault(x => x.MASACH == muontra.MASACH && x.MATHE == muontra.MATHE).ID;
                             //dùng id này để thêm vào bảng chi tiết
                             CHITIETMUONTRASACH chitiet = new CHITIETMUONTRASACH();
                             chitiet.MAMUONTRASACH = id;

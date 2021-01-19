@@ -46,7 +46,7 @@
             <div class="menu-icon dw dw-menu"></div>
             <div class="search-toggle-icon dw dw-search2" data-toggle="header_search"></div>
             <div class="header-search">
-                <form>
+                <form action="/Admin/Timkiemsach" method="post" enctype="multipart/form-data">
                     <div class="form-group mb-0">
                         <i class="dw dw-search2 search-icon"></i>
                         <input type="text" class="form-control search-input" placeholder="Nhập thông tin tìm kiếm" name="noidungnhap">
@@ -83,14 +83,17 @@
             </div>
         </div>
         <div class="header-right">
-            
+            @{ 
+                var session = Session["Taikhoan"] as WebThuvien.Models.Entity.TAIKHOAN;
+            }
             <div class="user-info-dropdown">
                 <div class="dropdown">
                     <a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown">
                         <span class="user-icon">
                             <img src="~/Content/AdminContent/vendors/images/photo1.jpg" alt="">
                         </span>
-                        <span class="user-name">Quản trị viên</span>
+
+                        <span class="user-name">@session.TENTAIKHOAN</span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
                         <a class="dropdown-item" href="#"><i class="dw dw-user1"></i>Thông tin</a>

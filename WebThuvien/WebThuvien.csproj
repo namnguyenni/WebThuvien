@@ -170,6 +170,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\AdminContent\Book.jpg" />
+    <Content Include="Content\AdminContent\literature.jpg" />
+    <Content Include="Content\AdminContent\saturn.jpg" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -461,6 +464,8 @@
     <Content Include="Views\Admin\ThongKe1.cshtml" />
     <Content Include="Views\Admin\UploadSach.cshtml" />
     <Content Include="Views\Admin\MuonSach.cshtml" />
+    <Content Include="Views\Admin\Timkiemsach.cshtml" />
+    <Content Include="Views\Home\Login.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

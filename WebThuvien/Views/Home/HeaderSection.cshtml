@@ -1,6 +1,9 @@
 ﻿@{ 
     Layout = null;
 }    
+@{
+    var session = Session["TaikhoanBanDoc"] as WebThuvien.Models.Entity.TAIKHOAN;
+}
 <!-- Start: Header Section -->
 <header id="header" class="navbar-wrapper">
     <div class="container">
@@ -14,12 +17,21 @@
                                 <div class="topbar-info">
                                     <a href="tel:+84 123123123"><i class="fa fa-phone"></i>+84 123123123</a>
                                     <span>/</span>
-                                    <a href="mailto:tungdranix@gmail.com"><i class="fa fa-envelope"></i>tungdranix@gmail.com</a>
+                                    <a href="mailto:bancoyeuchinhphu@gmail.com"><i class="fa fa-envelope"></i>bancoyeuchinhphu@gmail.com</a>
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="topbar-links">
-                                    <a href="signin.html"><i class="fa fa-lock"></i>Đăng nhập | Đăng ký</a>
+                                    @if (session != null)
+                                    {
+                                        <span>Xin chào @session.TENTAIKHOAN | </span>
+                                        <a href="/Home/Logout"><i class="fa fa-lock"></i>Đăng xuất</a>
+                                    }
+                                    else
+                                    {
+                                        <a href="/Home/Login"><i class="fa fa-lock"></i>Đăng nhập</a>
+                                    }
+
                                     <span>|</span>
                                 </div>
                             </div>
@@ -46,8 +58,8 @@
                                         <li class="dropdown">
                                             <a data-toggle="dropdown" class="dropdown-toggle disabled" href="/news">Tin tức &amp; Sự kiện</a>
                                         </li>
-                                        <li><a href="/services">Dịch vụ</a></li>
-                                        <li><a href="/contact">Liên hệ</a></li>
+                                        <li><a href="/">Dịch vụ</a></li>
+                                        <li><a href="/">Liên hệ</a></li>
                                     </ul>
                                 </div>
                             </div>
