@@ -5,6 +5,9 @@ using System.Web;
 using System.Web.Mvc;
 using WebThuvien.Models.Function;
 using WebThuvien.Models.Entity;
+using System.Data.SqlClient;
+using System.Data;
+
 namespace WebThuvien.Controllers
 {
     public class HomeController : Controller
@@ -33,16 +36,9 @@ namespace WebThuvien.Controllers
         public ActionResult SliderSection()
         {
             QLTHUVIEN db = new QLTHUVIEN();
-            //SÁCH LOẠI 1
-            SACH sach1 = db.SACHes.First(x=>x.MALOAISACH == "1");
-            //SÁCH LOẠI 2
-            SACH sach2 = db.SACHes.First(x => x.MALOAISACH == "2");
-            //SÁCH LOẠI 3
-            SACH sach3 = db.SACHes.First(x => x.MALOAISACH == "3");
 
-            ViewBag.sach1 = sach1;
-            ViewBag.sach2 = sach2;
-            ViewBag.sach3 = sach3;
+            List<SACH> SliderSach = db.Database.SqlQuery<SACH>("exec dbo.GetTopSach_LuotXem ").ToList();
+            ViewBag.Sach = SliderSach;
 
             return View();
         }

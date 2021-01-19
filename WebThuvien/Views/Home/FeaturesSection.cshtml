@@ -5,7 +5,7 @@
     <div class="container">
         <ul>
             @{ var index = 1;}
-            @foreach (var item in ViewBag.Loaisach)
+            @foreach (var item in ViewBag.Loaisach as List<WebThuvien.Models.Entity.LOAISACH>)
             {
                 if (index % 2 == 0)
                 {
@@ -15,7 +15,7 @@
                             <h3>@item.TENTHELOAI</h3>
                             <p>@item.GHICHU.</p>
 
-                            <a class="light-green" href="/Sach/Search?TheLoaiSach">
+                            <a class="light-green" href="Sach/Timkiemsach?noidungnhap=&loaisach=@item.MATHELOAI&linhvuc=0">
                                 Xem chi tiết <i class="fa fa-long-arrow-right"></i>
                             </a>
                         </div>
@@ -29,7 +29,7 @@
                             <i class="@item.KIHIEU"></i>
                             <h3>@item.TENTHELOAI</h3>
                             <p>@item.GHICHU.</p>
-                            <a class="green" href="/Sach/Search?TheLoaiSach">
+                            <a class="green" href="Sach/Timkiemsach?noidungnhap=&loaisach=@item.MATHELOAI&linhvuc=0">
                                 Xem chi tiết <i class="fa fa-long-arrow-right"></i>
                             </a>
                         </div>

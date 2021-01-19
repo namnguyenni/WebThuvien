@@ -13,7 +13,7 @@
                 <div class="container">
                     <!-- Start: Search Section -->
                     <!-- End: Search Section -->
-
+                    <!--
                     <div class="filter-options margin-list">
                         <div class="row">
                             <div class="col-md-3 col-sm-3">
@@ -60,9 +60,10 @@
                             </div>
                         </div>
                     </div>
+                    -->
                     <div class="booksmedia-fullwidth">
                         <ul>
-                            @foreach (var item in ViewBag.SearchSach)
+                            @foreach (var item in ViewBag.SearchSach as List<WebThuvien.Models.Entity.SACH>)
                             {
                                 <li>
                                     <div class="book-list-icon light-green-icon"></div>
@@ -71,39 +72,29 @@
                                         <figcaption>
                                             <header>
                                                 <h4><a href="/Sach/Chitietsach?MaSach=@item.MASACH">@item.TENSACH</a></h4>
-                                                <p><strong>Author:</strong>  F. Scott Fitzgerald</p>
-                                                <p><strong>ISBN:</strong>  9781581573268</p>
+                                                <p><strong>Tác giả:</strong>  @item.TACGIA.MATACGIA</p>
+                                                <p><strong>Lĩnh vực :</strong>  @item.LINHVUC.TENLINHVUC</p>
                                             </header>
-                                            <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. Pellentesque dolor turpis, pulvinar varius.</p>
+                                            <p>@item.GHICHU</p>
                                             <div class="actions">
                                                 <ul>
                                                     <li>
-                                                        <a href="#" target="_blank" data-toggle="blog-tags" data-placement="top" title="Add TO CART">
-                                                            <i class="fa fa-shopping-cart"></i>
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#" target="_blank" data-toggle="blog-tags" data-placement="top" title="Like">
+                                                        <a href="#" target="_blank" data-toggle="blog-tags" data-placement="top" title="Yêu thích">
                                                             <i class="fa fa-heart"></i>
                                                         </a>
                                                     </li>
                                                     <li>
-                                                        <a href="#" target="_blank" data-toggle="blog-tags" data-placement="top" title="Mail">
-                                                            <i class="fa fa-envelope"></i>
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#" target="_blank" data-toggle="blog-tags" data-placement="top" title="Search">
+                                                        <a href="#" target="_blank" data-toggle="blog-tags" data-placement="top" title="Tìm kiếm">
                                                             <i class="fa fa-search"></i>
                                                         </a>
                                                     </li>
                                                     <li>
-                                                        <a href="#" target="_blank" data-toggle="blog-tags" data-placement="top" title="Print">
+                                                        <a href="#" target="_blank" data-toggle="blog-tags" data-placement="top" title="In">
                                                             <i class="fa fa-print"></i>
                                                         </a>
                                                     </li>
                                                     <li>
-                                                        <a href="#" target="_blank" data-toggle="blog-tags" data-placement="top" title="Share">
+                                                        <a href="#" target="_blank" data-toggle="blog-tags" data-placement="top" title="Chia sẻ">
                                                             <i class="fa fa-share-alt"></i>
                                                         </a>
                                                     </li>
@@ -170,57 +161,3 @@
 </div>
 <!-- End: Products Section -->
 <!-- Start: Social Network -->
-<section class="social-network section-padding">
-    <div class="container">
-        <div class="center-content">
-            <h2 class="section-title">Follow Us</h2>
-            <span class="underline center"></span>
-            <p class="lead">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-        </div>
-        <ul>
-            <li>
-                <a class="facebook" href="#" target="_blank">
-                    <span>
-                        <i class="fa fa-facebook-f"></i>
-                    </span>
-                </a>
-            </li>
-            <li>
-                <a class="twitter" href="#" target="_blank">
-                    <span>
-                        <i class="fa fa-twitter"></i>
-                    </span>
-                </a>
-            </li>
-            <li>
-                <a class="google" href="#" target="_blank">
-                    <span>
-                        <i class="fa fa-google-plus"></i>
-                    </span>
-                </a>
-            </li>
-            <li>
-                <a class="rss" href="#" target="_blank">
-                    <span>
-                        <i class="fa fa-rss"></i>
-                    </span>
-                </a>
-            </li>
-            <li>
-                <a class="linkedin" href="#" target="_blank">
-                    <span>
-                        <i class="fa fa-linkedin"></i>
-                    </span>
-                </a>
-            </li>
-            <li>
-                <a class="youtube" href="#" target="_blank">
-                    <span>
-                        <i class="fa fa-youtube"></i>
-                    </span>
-                </a>
-            </li>
-        </ul>
-    </div>
-</section>
-<!-- End: Social Network -->

@@ -7,54 +7,51 @@
 <div data-ride="carousel" class="carousel slide" id="home-v1-header-carousel">
     <!-- Carousel slides -->
     <div class="carousel-inner">
-        <div class="item active">
-            <figure>
-                <img width="500" height="600" class="slider-image" alt="Home Slide" src="~/Content/ClientContent/images/Books/@ViewBag.sach1.HINHANH" />
-            </figure>
-            <div class="container">
-                <div class="carousel-caption">
-                    <h3>Thế giới thư viện sách , khám phá ngay!</h3>
-                    <h2>Tri thức vô tận</h2>
-                    <p>Thư viện sách Online, cung cấp đến bạn những trải nghiệm tốt nhất , những cuốn sách tâm đắc nhất được tuyển chọn kĩ càng</p>
-                    <div class="slide-buttons hidden-sm hidden-xs">
-                        <a href="#" class="btn btn-primary">Xem thêm</a>
-                        
+        @{ int i = 0; }
+        @foreach (var item in ViewBag.Sach as List<WebThuvien.Models.Entity.SACH>)
+        {
+            i = i+1;
+            if (i == 1)
+            {
+                <div class="item active">
+                    <figure>
+                        <img style="height:700px" class="slider-image" alt="Home Slide" src="~/Content/ClientContent/images/Books/@item.HINHANH" />
+                    </figure>
+                    <div class="container">
+                        <div class="carousel-caption">
+                            <h3>Thế giới thư viện sách , khám phá ngay!</h3>
+                            <h2>@item.TENSACH</h2>
+                            <p>Thư viện sách Online, cung cấp đến bạn những trải nghiệm tốt nhất , những cuốn sách tâm đắc nhất được tuyển chọn kĩ càng</p>
+                            <div class="slide-buttons hidden-sm hidden-xs">
+                                <a href="/sach/chitietsach?masach=@item.MASACH" class="btn btn-primary">Xem thêm</a>
+
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
-        <div class="item">
-            <figure>
-                <img class="slider-image" alt="Home Slide" src="~/Content/ClientContent/images/Books/@ViewBag.sach2.HINHANH" />
-            </figure>
-            <div class="container">
-                <div class="carousel-caption">
-                    <h3>Thế giới thư viện sách , khám phá ngay!</h3>
-                    <h2>Tri thức vô tận</h2>
-                    <p>Thư viện sách Online, cung cấp đến bạn những trải nghiệm tốt nhất , những cuốn sách tâm đắc nhất được tuyển chọn kĩ càng</p>
-                    <div class="slide-buttons hidden-sm hidden-xs">
-                        <a href="#" class="btn btn-primary">Xem thêm</a>
-                        
+            }
+            else
+            {
+                <div class="item">
+                    <figure>
+                        <img style="height:700px" class="slider-image" alt="Home Slide" src="~/Content/ClientContent/images/Books/@item.HINHANH" />
+                    </figure>
+                    <div class="container">
+                        <div class="carousel-caption">
+                            <h3>Thế giới thư viện sách , khám phá ngay!</h3>
+                            <h2>@item.TENSACH</h2>
+                            <p>@item.GHICHU</p>
+                            <div class="slide-buttons hidden-sm hidden-xs">
+                                <a href="/sach/chitietsach?masach=@item.MASACH" class="btn btn-primary">Xem thêm</a>
+
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
-        <div class="item">
-            <figure>
-                <img class="slider-image" alt="Home Slide" src="~/Content/ClientContent/images/Books/@ViewBag.sach3.HINHANH" />
-            </figure>
-            <div class="container">
-                <div class="carousel-caption">
-                    <h3>Thế giới thư viện sách , khám phá ngay!</h3>
-                    <h2>Tri thức vô tận</h2>
-                    <p>Thư viện sách Online, cung cấp đến bạn những trải nghiệm tốt nhất , những cuốn sách tâm đắc nhất được tuyển chọn kĩ càng</p>
-                    <div class="slide-buttons hidden-sm hidden-xs">
-                        <a href="#" class="btn btn-primary">Xem thêm</a>
-                        
-                    </div>
-                </div>
-            </div>
-        </div>
+            }
+
+        }
+
     </div>
     <!-- Indicators -->
     <ol class="carousel-indicators">

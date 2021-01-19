@@ -49,32 +49,32 @@
                 <form>
                     <div class="form-group mb-0">
                         <i class="dw dw-search2 search-icon"></i>
-                        <input type="text" class="form-control search-input" placeholder="Tìm kiếm">
-                        <div class="dropdown">
-                            <a class="dropdown-toggle no-arrow" href="#" role="button" data-toggle="dropdown">
+                        <input type="text" class="form-control search-input" placeholder="Nhập thông tin tìm kiếm" name="noidungnhap">
+                        <div class="dropdown show">
+                            <a class="dropdown-toggle no-arrow" role="button" data-toggle="dropdown" aria-expanded="true">
                                 <i class="ion-arrow-down-c"></i>
                             </a>
-                            <div class="dropdown-menu dropdown-menu-right">
+                            <div class="dropdown-menu dropdown-menu-right show" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 3782px, 0px);" x-placement="bottom-end" x-out-of-boundaries="">
                                 <div class="form-group row">
-                                    <label class="col-sm-12 col-md-2 col-form-label">From</label>
+                                    <label class="col-sm-12 col-md-2 col-form-label">Loại sách</label>
                                     <div class="col-sm-12 col-md-10">
-                                        <input class="form-control form-control-sm form-control-line" type="text">
+                                        <input class="form-control form-control-sm form-control-line" type="text" name="loaisach">
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-sm-12 col-md-2 col-form-label">To</label>
+                                    <label class="col-sm-12 col-md-2 col-form-label">Lĩnh vực</label>
                                     <div class="col-sm-12 col-md-10">
-                                        <input class="form-control form-control-sm form-control-line" type="text">
+                                        <input class="form-control form-control-sm form-control-line" type="text" name="linhvuc">
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-sm-12 col-md-2 col-form-label">Subject</label>
+                                    <label class="col-sm-12 col-md-2 col-form-label">Tác giả</label>
                                     <div class="col-sm-12 col-md-10">
-                                        <input class="form-control form-control-sm form-control-line" type="text">
+                                        <input class="form-control form-control-sm form-control-line" type="text" name="tacgia">
                                     </div>
                                 </div>
                                 <div class="text-right">
-                                    <button class="btn btn-primary">Search</button>
+                                    <button class="btn btn-primary">Tìm</button>
                                 </div>
                             </div>
                         </div>
@@ -83,87 +83,21 @@
             </div>
         </div>
         <div class="header-right">
-            <div class="dashboard-setting user-notification">
-                <div class="dropdown">
-                    <a class="dropdown-toggle no-arrow" href="javascript:;" data-toggle="right-sidebar">
-                        <i class="dw dw-settings2"></i>
-                    </a>
-                </div>
-            </div>
-            <div class="user-notification">
-                <div class="dropdown">
-                    <a class="dropdown-toggle no-arrow" href="#" role="button" data-toggle="dropdown">
-                        <i class="icon-copy dw dw-notification"></i>
-                        <span class="badge notification-active"></span>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-right">
-                        <div class="notification-list mx-h-350 customscroll">
-                            <ul>
-                                <li>
-                                    <a href="#">
-                                        <img src="~/Content/AdminContent/vendors/images/img.jpg" alt="">
-                                        <h3>John Doe</h3>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed...</p>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <img src="~/Content/AdminContent/vendors/images/photo1.jpg" alt="">
-                                        <h3>Lea R. Frith</h3>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed...</p>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <img src="~/Content/AdminContent/vendors/images/photo2.jpg" alt="">
-                                        <h3>Erik L. Richards</h3>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed...</p>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <img src="~/Content/AdminContent/vendors/images/photo3.jpg" alt="">
-                                        <h3>John Doe</h3>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed...</p>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <img src="~/Content/AdminContent/vendors/images/photo4.jpg" alt="">
-                                        <h3>Renee I. Hansen</h3>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed...</p>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <img src="~/Content/AdminContent/vendors/images/img.jpg" alt="">
-                                        <h3>Vicki M. Coleman</h3>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed...</p>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            
             <div class="user-info-dropdown">
                 <div class="dropdown">
                     <a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown">
                         <span class="user-icon">
                             <img src="~/Content/AdminContent/vendors/images/photo1.jpg" alt="">
                         </span>
-                        <span class="user-name">Ross C. Lopez</span>
+                        <span class="user-name">Quản trị viên</span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-                        <a class="dropdown-item" href="profile.html"><i class="dw dw-user1"></i> Profile</a>
-                        <a class="dropdown-item" href="profile.html"><i class="dw dw-settings2"></i> Setting</a>
-                        <a class="dropdown-item" href="faq.html"><i class="dw dw-help"></i> Help</a>
-                        <a class="dropdown-item" href="login.html"><i class="dw dw-logout"></i> Log Out</a>
+                        <a class="dropdown-item" href="#"><i class="dw dw-user1"></i>Thông tin</a>
+                        <a class="dropdown-item" href="#"><i class="dw dw-help"></i> Thay đổi mật khẩu</a>
+                        <a class="dropdown-item" href="#"><i class="dw dw-logout"></i> Đăng xuất</a>
                     </div>
                 </div>
-            </div>
-            <div class="github-link">
-                <a href="https://github.com/dropways/deskapp" target="_blank"><img src="~/Content/AdminContent/vendors/images/github.svg" alt=""></a>
             </div>
         </div>
     </div>
@@ -239,7 +173,7 @@
     </div>
     <div class="left-side-bar">
         <div class="brand-logo">
-            <a href="index.html">
+            <a href="/">
                 <img src="~/Content/AdminContent/vendors/images/deskapp-logo.svg" alt="" class="dark-logo">
                 <img src="~/Content/AdminContent/vendors/images/deskapp-logo-white.svg" alt="" class="light-logo">
             </a>
@@ -251,26 +185,32 @@
             <div class="sidebar-menu">
                 <ul id="accordion-menu">
                     <li>
-                        <a href="sitemap.html" class="dropdown-toggle no-arrow">
+                        <a href="/Admin" class="dropdown-toggle no-arrow">
                             <span class="micon dw dw-house-1"></span><span class="mtext">Trang chủ</span>
                         </a>
                     </li>
                     <li class="dropdown">
                         <a href="javascript:;" class="dropdown-toggle">
-                            <span class="micon dw dw-house-1"></span><span class="mtext">Sách</span>
+                            <span class="micon dw dw-fast-forward-1"></span><span class="mtext">Sách</span>
                         </a>
                         <ul class="submenu">
-                            <li><a href="index.html">Danh mục sách</a></li>
-                            <li><a href="index2.html">Thêm mới sách</a></li>
+                            <li><a href="/Admin/Sach">Danh mục sách</a></li>
+                            <li><a href="/Admin/UploadSach">Thêm mới sách</a></li>
+                            <li><a href="/Admin/UploadSach">Mượn sách</a></li>
+                            <li><a href="/Admin/UploadSach">Trả sách</a></li>
+
+
                         </ul>
                     </li>
                     <li class="dropdown">
                         <a href="javascript:;" class="dropdown-toggle">
-                            <span class="micon dw dw-library"></span><span class="mtext">Người dùng</span>
+                            <span class="micon dw dw-user1"></span><span class="mtext">Người dùng và thẻ</span>
                         </a>
                         <ul class="submenu">
-                            <li><a href="basic-table.html">Basic Tables</a></li>
-                            <li><a href="datatable.html">DataTables</a></li>
+                            <li><a href="#">Danh sách người dùng</a></li>
+                            <li><a href="#">Thêm mới người dùng</a></li>
+                            <li><a href="#">Tạo và xuất mẫu thẻ</a></li>
+
                         </ul>
                     </li>
                     <li class="dropdown">
@@ -278,15 +218,14 @@
                             <span class="micon dw dw-analytics-21"></span><span class="mtext">Thống kê</span>
                         </a>
                         <ul class="submenu">
-                            <li><a href="highchart.html">Highchart</a></li>
-                            <li><a href="knob-chart.html">jQuery Knob</a></li>
-                            <li><a href="jvectormap.html">jvectormap</a></li>
-                            <li><a href="apexcharts.html">Apexcharts</a></li>
+                            <li><a href="#">Sách xem nhiều</a></li>
+                            <li><a href="#">Người dùng</a></li>
+                            <li><a href="#">Thống kê chung</a></li>
                         </ul>
                     </li>
                     
                     <li>
-                        <a href="https://dropways.github.io/deskapp-free-single-page-website-template/" target="_blank" class="dropdown-toggle no-arrow">
+                        <a href="/" target="_blank" class="dropdown-toggle no-arrow">
                             <span class="micon dw dw-paper-plane1"></span>
                             <span class="mtext"> Đăng xuất <img src="~/Content/AdminContent/vendors/images/coming-soon.png" alt="" width="25"></span>
                         </a>
@@ -298,8 +237,9 @@
 
     @RenderBody()
     <div class="mobile-menu-overlay"></div>
-    
+
     <!-- js -->
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
     <script src="~/Content/AdminContent/vendors/scripts/core.js"></script>
     <script src="~/Content/AdminContent/vendors/scripts/script.min.js"></script>
     <script src="~/Content/AdminContent/vendors/scripts/process.js"></script>
@@ -310,5 +250,15 @@
     <script src="~/Content/AdminContent/src/plugins/datatables/js/dataTables.responsive.min.js"></script>
     <script src="~/Content/AdminContent/src/plugins/datatables/js/responsive.bootstrap4.min.js"></script>
     <script src="~/Content/AdminContent/vendors/scripts/dashboard3.js"></script>
+    <script>
+        $(document).ready(function () {
+            if (error == '1') {
+                alert("XÓA SÁCH KHÔNG THÀNH CÔNG");
+            }
+            else if (error == '0') {
+                alert("XÓA SÁCH THÀNH CÔNG");
+            }
+        })
+    </script>
 </body>
 </html>

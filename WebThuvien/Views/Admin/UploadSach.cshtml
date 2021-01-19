@@ -1,97 +1,86 @@
 ﻿
 @{
-    ViewBag.Title = "Sách : "+ViewBag.Sach.TENSACH;
+    ViewBag.Title = "Thêm mới sách";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 
 <div class="main-container">
     <div class="xs-pd-20-10 pd-ltr-20">
         <div class="title pb-10">
-            <h2 class="h3 mb-0"> @ViewBag.Sach.TENSACH </h2>
+            <h2 class="h3 mb-0">Thêm mới sách  </h2>
             <div class="card card-box">
-                <img class="card-img-top" src="~/Content/ClientContent/images/Books/@ViewBag.Sach.HINHANH" alt="Hình ảnh sách">
             </div>
         </div>
 
         <div class="xs-pd-20-10 pd-ltr-20">
-            <form method="post" enctype="multipart/form-data" action="/Admin/ChinhsuaSach">
-                <input type="text" name="ID" style="display:none;" value="@ViewBag.Sach.ID" />
+            <form method="post" enctype="multipart/form-data" action="/Admin/UploadSach">
                 <div class="form-group row">
                     <label class="col-sm-12 col-md-2 col-form-label">Mã sách</label>
                     <div class="col-sm-12 col-md-10">
-                        <input required disabled class="form-control" type="text" placeholder="Ví dụ : GH123123" name="MASACH" value="@ViewBag.Sach.MASACH">
+                        <input required class="form-control" type="text" placeholder="Ví dụ : GH123123" name="MASACH">
                     </div>
                 </div>
                 <div class="form-group row">
                     <label class="col-sm-12 col-md-2 col-form-label">Tên sách</label>
                     <div class="col-sm-12 col-md-10">
-                        <input required class="form-control" value="@ViewBag.Sach.TENSACH" placeholder="Ví dụ: Kinh tế chính trị" type="text" name="TENSACH">
+                        <input required class="form-control" placeholder="Ví dụ: Kinh tế chính trị" type="text" name="TENSACH">
                     </div>
                 </div>
                 <div class="form-group row">
                     <label class="col-sm-12 col-md-2 col-form-label">Số trang</label>
                     <div class="col-sm-12 col-md-10">
-                        <input required class="form-control" value="@ViewBag.Sach.SOTRANG" type="number" name="SOTRANG">
+                        <input required class="form-control" type="number" name="SOTRANG">
                     </div>
                 </div>
                 <div class="form-group row">
                     <label class="col-sm-12 col-md-2 col-form-label">File PDF</label>
                     <div class="col-sm-12 col-md-10">
                         <input class="form-control" type="file" name="filepdf" accept="application/pdf">
-                        <input class="form-control" type="text" name="FILEPATH" style="display:none;" value="@ViewBag.Sach.FILEPATH">
+                        <input class="form-control" type="text" name="FILEPATH" style="display:none;" >
 
                     </div>
                 </div>
                 <div class="form-group row">
                     <label class="col-sm-12 col-md-2 col-form-label">Hình ảnh</label>
                     <div class="col-sm-12 col-md-10">
-                        <input class="form-control" value="" type="file" name="hinhanh" accept="image/*">
-                        <input class="form-control" type="text" name="HINHANH" style="display:none;" value="@ViewBag.Sach.HINHANH">
+                        <input required class="form-control" type="file" name="hinhanh" accept="image/*">
+                        <input class="form-control" type="text" name="HINHANH" style="display:none;" >
 
                     </div>
                 </div>
                 <div class="form-group row">
                     <label class="col-sm-12 col-md-2 col-form-label">Lượt xem</label>
                     <div class="col-sm-12 col-md-10">
-                        <input required class="form-control" value="@ViewBag.Sach.LUOTXEM" name="LUOTXEM" type="number">
+                        <input required class="form-control"  name="LUOTXEM" type="number">
                     </div>
                 </div>
                 <div class="form-group row">
                     <label class="col-sm-12 col-md-2 col-form-label">Ngôn ngữ</label>
                     <div class="col-sm-12 col-md-10">
-                        <input required class="form-control" value="@ViewBag.Sach.NGONNGU" name="NGONNGU" type="text">
+                        <input required class="form-control"  name="NGONNGU" type="text">
                     </div>
                 </div>
                 <div class="form-group row">
                     <label class="col-sm-12 col-md-2 col-form-label">Tác giả</label>
                     <div class="col-sm-12 col-md-10">
-                        <input class="form-control" value="@ViewBag.Sach.MATACGIA" type="text" name="MATACGIA" style="display:none;">
+                        <input class="form-control" type="text" name="MATACGIA" style="display:none;">
 
-                        <input required class="form-control" value="@ViewBag.Sach.TACGIA.TENTACGIA" name="TENTACGIA" type="text">
+                        <input required class="form-control" name="TENTACGIA" type="text">
                     </div>
                 </div>
                 <div class="form-group row">
                     <label class="col-sm-12 col-md-2 col-form-label">Ghi chú</label>
                     <div class="col-sm-12 col-md-10">
-                        <textarea required class="form-control" name="GHICHU" rows="5">@ViewBag.Sach.GHICHU</textarea>
+                        <textarea required class="form-control" name="GHICHU" rows="5"></textarea>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label class="col-sm-12 col-md-2 col-form-label">Trạng thái</label>
                     <div class="col-sm-12 col-md-10">
                         <select class="custom-select col-12" name="TRANGTHAI" required>
-                            @if (ViewBag.Sach.TRANGTHAI == 1)
-                            {
                                 <option value="1" label="Mới" selected></option>
                                 <option value="2" label="Hư hại"></option>
-                            }
-                            else
-                            {
-                                <option value="1" label="Mới" ></option>
 
-                                <option value="2" label="Hư hại" selected></option>
-
-                            }
 
                         </select>
                     </div>
@@ -101,15 +90,20 @@
                     <label class="col-sm-12 col-md-2 col-form-label">Loại sách</label>
                     <div class="col-sm-12 col-md-10">
                         <select class="custom-select col-12" name="MALOAISACH" required>
+                            @{ int index1 = 0;}
                             @foreach (var item in ViewBag.Loaisach as List<WebThuvien.Models.Entity.LOAISACH>)
                             {
-                                if (@item.MATHELOAI == ViewBag.Sach.MALOAISACH)
+                                index1 = index1 + 1;
+                                if (index1 == 1)
                                 {
-                                    <option value="@item.MATHELOAI" label="@item.TENTHELOAI" selected></option>
+                                    <option selected value="@item.MATHELOAI" label="@item.TENTHELOAI"></option>
 
                                 }
+                                else
+                                {
+                                <option value = "@item.MATHELOAI" label = "@item.TENTHELOAI" ></option>
 
-                                <option value="@item.MATHELOAI" label="@item.TENTHELOAI"></option>
+                                }
 
                             }
 
@@ -122,11 +116,7 @@
                         <select class="custom-select col-12" name="MALINHVUC" required>
                             @foreach (var item in ViewBag.Linhvuc as List<WebThuvien.Models.Entity.LINHVUC>)
                             {
-                                if (@item.MALINHVUC == ViewBag.Sach.MALINHVUC)
-                                {
-                                    <option value="@item.MALINHVUC" label="@item.TENLINHVUC" selected></option>
 
-                                }
 
                                 <option value="@item.MALINHVUC" label="@item.TENLINHVUC"></option>
 
@@ -141,11 +131,7 @@
                         <select class="custom-select col-12" name="MANHAXUATBAN" required>
                             @foreach (var item in ViewBag.NXB as List<WebThuvien.Models.Entity.NHAXUATBAN>)
                             {
-                                if (@item.MANXB == ViewBag.Sach.MANHAXUATBAN)
-                                {
-                                    <option value="@item.MANXB" label="@item.TENNXB" selected></option>
 
-                                }
 
                                 <option value="@item.MANXB" label="@item.TENNXB"></option>
 
@@ -157,27 +143,10 @@
                 <div class="form-group row">
                     <label class="col-sm-12 col-md-2 col-form-label">Năm xuất bản</label>
                     <div class="col-sm-12 col-md-10">
-                        @{ 
-                            //tính tháng
-                            var NAMXB = "";
-                            if (ViewBag.Sach.NAMXUATBAN != null)
-                            {
-                                string ngaysinhStr = ViewBag.Sach.NAMXUATBAN.ToString();
-                                DateTime date = (Convert.ToDateTime(ngaysinhStr));
-                                string month_kt = "-" + date.Month;
-                                if (date.Month < 10)
-                                {
-                                    month_kt = "-0" + date.Month;
-
-                                }
-
-                                NAMXB = date.Year + month_kt;
-                            }
-                        }
-                        <input required class="form-control" value="@NAMXB" name="NAMXUATBAN" placeholder="Nhập năm xuất bản" type="month">
+                        <input required class="form-control" name="NAMXUATBAN" placeholder="Nhập năm xuất bản" type="month">
                     </div>
                 </div>
-                <input type="submit" value="Lưu" class="form-control"/>
+                <input type="submit" value="Lưu" class="form-control" />
             </form>
         </div>
 
@@ -186,8 +155,8 @@
 
 
 
-            <div class="footer-wrap pd-20 mb-20 card-box">
-               Thư viện số hóa - <a href="/" target="_blank">Ban cơ yếu chính phủ</a>
-            </div>
+        <div class="footer-wrap pd-20 mb-20 card-box">
+            Thư viện số hóa - <a href="/" target="_blank">Ban cơ yếu chính phủ</a>
         </div>
+    </div>
 </div>

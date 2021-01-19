@@ -117,132 +117,10 @@
                                     <div class="container" style="width:100%">
                                         <div class="row">
                                             <div class="col-12">
-                                                <div class="comments">
-                                                    <div class="comments-details">
-                                                        <span class="total-comments comments-sort">100 Bình luận</span>
-                                                        <span class="dropdown">
-                                                            <button type="button" class="btn dropdown-toggle" data-toggle="dropdown">Sắp xếp <span class="caret"></span></button>
-                                                            <div class="dropdown-menu">
-                                                                <a href="#" class="dropdown-item">Theo tương tác</a>
-                                                                <a href="#" class="dropdown-item">Mới nhất</a>
-                                                            </div>
-                                                        </span>
-                                                    </div>
-                                                    <form action="GuiBinhLuan" enctype="multipart/form-data" method="post">
-                                                        @if (Session["TaiKhoan"] != null)
-                                                        {
-                                                            TAIKHOAN tv = (TAIKHOAN)Session["TaiKhoan"];
-                                                            <input name="MaThanhVien" style="display:none;" value="@tv.TENTAIKHOAN" />
-
-                                                        }
-                                                        else
-                                                        {
-                                                            <input name="MaThanhVien" style="display:none;" value="14" />
-
-                                                        }
-
-                                                        <input name="MaSP" style="display:none;" value="MaSP" />
-                                                        <input name="ThoiGian" style="display:none;" value="" id="ThoiGian" />
-
-                                                        <div class="comment-box add-comment">
-                                                            <span class="commenter-pic">
-                                                                <img src="~/Content/ClientContent/images/Anonymous.jpg" class="img-fluid">
-                                                            </span>
-                                                            <span class="commenter-name">
-                                                                <input type="text" placeholder="Nội dung bình luận" name="NoiDungBL">
-                                                                <button type="submit" class="btn btn-default">Gửi</button>
-                                                                <button type="cancel" class="btn btn-default">Hủy</button>
-                                                            </span>
-                                                        </div>
-                                                    </form>
-                                                    @* //////////// *@
-
-                                                    @foreach (var item in ViewBag.binhluan)
-                                                    {
-                                                        if (item.MAREPBINHLUAN == 0)
-                                                        {
-                                                            <div class="comment-box">
-                                                                <span class="commenter-pic">
-                                                                    <img src="~/Content/ClientContent/images/Anonymous.jpg" class="img-fluid">
-                                                                </span>
-                                                                <span class="commenter-name" style="padding-top:12px;">
-                                                                    <b>@item.MANGUOIBINHLUAN</b> <span class="comment-time">@item.THOIGIAN</span>
-                                                                </span>
-                                                                <p class="comment-txt more">@item.NOIDUNG</p>
-                                                                <div class="comment-meta">
-                                                                    <button onclick="ToggleRepBL(this)" data-bl="@item.MABINHLUAN" class="comment-reply reply-popup"><i class="fa fa-reply-all" aria-hidden="true"></i> Trả lời</button>
-                                                                </div>
-
-                                                                @foreach (var item2 in ViewBag.binhluan)
-                                                                {
-                                                                    if (item.MABINHLUAN == item2.MAREPBINHLUAN)
-                                                                    {
-                                                                        <div class="comment-box replied">
-                                                                            <span class="commenter-pic">
-                                                                                <img src="~/Content/ClientContent/images/Anonymous.jpg" class="img-fluid">
-                                                                            </span>
-                                                                            <span class="commenter-name" style="padding-top:12px;">
-                                                                                <b>@item2.MANGUOIBINHLUAN</b> <span class="comment-time">@item2.THOIGIAN</span>
-                                                                            </span>
-                                                                            <p class="comment-txt more">@item2.NOIDUNG</p>
-                                                                        </div>
-                                                                    }
-                                                                }
-                                                                <form action="GuiBinhLuan" enctype="multipart/form-data" method="post">
-                                                                    @if (Session["TaiKhoan"] != null)
-                                                                    {
-                                                                        TAIKHOAN tv = (TAIKHOAN)Session["TaiKhoan"];
-                                                                        <input name="MaThanhVien" style="display:none;" value="@tv.TENTAIKHOAN" />
-
-                                                                    }
-                                                                    else
-                                                                    {
-                                                                        <input name="MaThanhVien" style="display:none;" value="14" />
-
-                                                                    }
-                                                                    <input name="MaSP" style="display:none;" value="MaSP" />
-                                                                    <input name="TraLoiBinhLuan" style="display:none;" value="@item.MABINHLUAN" />
-                                                                    <div class="comment-box add-comment reply-box" data-bl="@item.MABINHLUAN" id="@item.MABINHLUAN">
-                                                                        <span class="commenter-pic">
-                                                                            <img src="~/Content/images/Anonymous.jpg" class="img-fluid">
-                                                                        </span>
-                                                                        <span class="commenter-name">
-                                                                            <input type="text" placeholder="Nội dung bình luận" name="NoiDungBL">
-                                                                            <button type="submit" class="btn btn-default">Gửi</button>
-                                                                            <button type="cancel" onclick="ToggleRepBL(this)" class="btn btn-default reply-popup" data-bl="@item.MABINHLUAN">Hủy</button>
-                                                                        </span>
-                                                                    </div>
-                                                                </form>
-                                                            </div>
-
-                                                        }
-                                                    }
-
-
-                                                </div>
+                                                
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div id="sectionB" class="tab-pane fade in">
-                                    <h5>Lorem Ipsum Dolor</h5>
-                                    <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet.</p>
-                                </div>
-                                <div id="sectionC" class="tab-pane fade in">
-                                    <h5>Lorem Ipsum Dolor</h5>
-                                    <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet.</p>
-                                </div>
-                                <div id="sectionD" class="tab-pane fade in">
-                                    <h5>Lorem Ipsum Dolor</h5>
-                                    <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet.</p>
-                                </div>
-                                <div id="sectionE" class="tab-pane fade in">
-                                    <h5>Lorem Ipsum Dolor</h5>
-                                    <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet.</p>
-                                </div>
-                                <div id="sectionF" class="tab-pane fade in">
-                                    <h5>Lorem Ipsum Dolor</h5>
-                                    <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet.</p>
                                 </div>
                             </div>
                         </div>
@@ -256,298 +134,55 @@
 
 <div class="booksmedia-fullwidth">
     <div class="container">
-        <h2 class="section-title text-center">Popular Items</h2>
+        <h2 class="section-title text-center">Sách liên quan</h2>
         <span class="underline center"></span>
         <p class="lead text-center">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
         <ul class="popular-items-detail-v2">
-            <li>
-                <div class="book-list-icon blue-icon"></div>
-                <figure>
-                    <img src="~/Content/ClientContent/images/books-media/layout-3/books-media-layout3-01.jpg" alt="Book">
-                    <figcaption>
-                        <header>
-                            <h4><a href="#.">The Great Gatsby</a></h4>
-                            <p><strong>Author:</strong>  F. Scott Fitzgerald</p>
-                            <p><strong>ISBN:</strong>  9781581573268</p>
-                        </header>
-                        <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. Pellentesque dolor turpis, pulvinar varius.</p>
-                        <div class="actions">
-                            <ul>
-                                <li>
-                                    <a href="#" target="_blank" data-toggle="blog-tags" data-placement="top" title="Add To Cart">
-                                        <i class="fa fa-shopping-cart"></i>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#" target="_blank" data-toggle="blog-tags" data-placement="top" title="Like">
-                                        <i class="fa fa-heart"></i>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#" target="_blank" data-toggle="blog-tags" data-placement="top" title="Mail">
-                                        <i class="fa fa-envelope"></i>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#" target="_blank" data-toggle="blog-tags" data-placement="top" title="Search">
-                                        <i class="fa fa-search"></i>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#" target="_blank" data-toggle="blog-tags" data-placement="top" title="Print">
-                                        <i class="fa fa-print"></i>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#" target="_blank" data-toggle="blog-tags" data-placement="top" title="Print">
-                                        <i class="fa fa-share-alt"></i>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </figcaption>
-                </figure>
-            </li>
-            <li>
-                <div class="book-list-icon yellow-icon"></div>
-                <figure>
-                    <img src="~/Content/ClientContent/images/books-media/layout-3/books-media-layout3-02.jpg" alt="Book">
-                    <figcaption>
-                        <header>
-                            <h4><a href="#.">The Great Gatsby</a></h4>
-                            <p><strong>Author:</strong>  F. Scott Fitzgerald</p>
-                            <p><strong>ISBN:</strong>  9781581573268</p>
-                        </header>
-                        <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. Pellentesque dolor turpis, pulvinar varius.</p>
-                        <div class="actions">
-                            <ul>
-                                <li>
-                                    <a href="#" target="_blank" data-toggle="blog-tags" data-placement="top" title="Add To Cart">
-                                        <i class="fa fa-shopping-cart"></i>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#" target="_blank" data-toggle="blog-tags" data-placement="top" title="Like">
-                                        <i class="fa fa-heart"></i>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#" target="_blank" data-toggle="blog-tags" data-placement="top" title="Mail">
-                                        <i class="fa fa-envelope"></i>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#" target="_blank" data-toggle="blog-tags" data-placement="top" title="Search">
-                                        <i class="fa fa-search"></i>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#" target="_blank" data-toggle="blog-tags" data-placement="top" title="Print">
-                                        <i class="fa fa-print"></i>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#" target="_blank" data-toggle="blog-tags" data-placement="top" title="Print">
-                                        <i class="fa fa-share-alt"></i>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </figcaption>
-                </figure>
-            </li>
-            <li>
-                <div class="book-list-icon green-icon"></div>
-                <figure>
-                    <img src="~/Content/ClientContent/images/books-media/layout-3/books-media-layout3-03.jpg" alt="Book">
-                    <figcaption>
-                        <header>
-                            <h4><a href="#.">The Great Gatsby</a></h4>
-                            <p><strong>Author:</strong>  F. Scott Fitzgerald</p>
-                            <p><strong>ISBN:</strong>  9781581573268</p>
-                        </header>
-                        <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. Pellentesque dolor turpis, pulvinar varius.</p>
-                        <div class="actions">
-                            <ul>
-                                <li>
-                                    <a href="#" target="_blank" data-toggle="blog-tags" data-placement="top" title="Add To Cart">
-                                        <i class="fa fa-shopping-cart"></i>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#" target="_blank" data-toggle="blog-tags" data-placement="top" title="Like">
-                                        <i class="fa fa-heart"></i>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#" target="_blank" data-toggle="blog-tags" data-placement="top" title="Mail">
-                                        <i class="fa fa-envelope"></i>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#" target="_blank" data-toggle="blog-tags" data-placement="top" title="Search">
-                                        <i class="fa fa-search"></i>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#" target="_blank" data-toggle="blog-tags" data-placement="top" title="Print">
-                                        <i class="fa fa-print"></i>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#" target="_blank" data-toggle="blog-tags" data-placement="top" title="Print">
-                                        <i class="fa fa-share-alt"></i>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </figcaption>
-                </figure>
-            </li>
-            <li>
-                <div class="book-list-icon blue-icon"></div>
-                <figure>
-                    <img src="~/Content/ClientContent/images/books-media/layout-3/books-media-layout3-01.jpg" alt="Book">
-                    <figcaption>
-                        <header>
-                            <h4><a href="#.">The Great Gatsby</a></h4>
-                            <p><strong>Author:</strong>  F. Scott Fitzgerald</p>
-                            <p><strong>ISBN:</strong>  9781581573268</p>
-                        </header>
-                        <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. Pellentesque dolor turpis, pulvinar varius.</p>
-                        <div class="actions">
-                            <ul>
-                                <li>
-                                    <a href="#" target="_blank" data-toggle="blog-tags" data-placement="top" title="Add To Cart">
-                                        <i class="fa fa-shopping-cart"></i>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#" target="_blank" data-toggle="blog-tags" data-placement="top" title="Like">
-                                        <i class="fa fa-heart"></i>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#" target="_blank" data-toggle="blog-tags" data-placement="top" title="Mail">
-                                        <i class="fa fa-envelope"></i>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#" target="_blank" data-toggle="blog-tags" data-placement="top" title="Search">
-                                        <i class="fa fa-search"></i>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#" target="_blank" data-toggle="blog-tags" data-placement="top" title="Print">
-                                        <i class="fa fa-print"></i>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#" target="_blank" data-toggle="blog-tags" data-placement="top" title="Print">
-                                        <i class="fa fa-share-alt"></i>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </figcaption>
-                </figure>
-            </li>
-            <li>
-                <div class="book-list-icon yellow-icon"></div>
-                <figure>
-                    <img src="~/Content/ClientContent/images/books-media/layout-3/books-media-layout3-02.jpg" alt="Book">
-                    <figcaption>
-                        <header>
-                            <h4><a href="#.">The Great Gatsby</a></h4>
-                            <p><strong>Author:</strong>  F. Scott Fitzgerald</p>
-                            <p><strong>ISBN:</strong>  9781581573268</p>
-                        </header>
-                        <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. Pellentesque dolor turpis, pulvinar varius.</p>
-                        <div class="actions">
-                            <ul>
-                                <li>
-                                    <a href="#" target="_blank" data-toggle="blog-tags" data-placement="top" title="Add To Cart">
-                                        <i class="fa fa-shopping-cart"></i>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#" target="_blank" data-toggle="blog-tags" data-placement="top" title="Like">
-                                        <i class="fa fa-heart"></i>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#" target="_blank" data-toggle="blog-tags" data-placement="top" title="Mail">
-                                        <i class="fa fa-envelope"></i>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#" target="_blank" data-toggle="blog-tags" data-placement="top" title="Search">
-                                        <i class="fa fa-search"></i>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#" target="_blank" data-toggle="blog-tags" data-placement="top" title="Print">
-                                        <i class="fa fa-print"></i>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#" target="_blank" data-toggle="blog-tags" data-placement="top" title="Print">
-                                        <i class="fa fa-share-alt"></i>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </figcaption>
-                </figure>
-            </li>
-            <li>
-                <div class="book-list-icon green-icon"></div>
-                <figure>
-                    <img src="~/Content/ClientContent/images/books-media/layout-3/books-media-layout3-03.jpg" alt="Book">
-                    <figcaption>
-                        <header>
-                            <h4><a href="#.">The Great Gatsby</a></h4>
-                            <p><strong>Author:</strong>  F. Scott Fitzgerald</p>
-                            <p><strong>ISBN:</strong>  9781581573268</p>
-                        </header>
-                        <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. Pellentesque dolor turpis, pulvinar varius.</p>
-                        <div class="actions">
-                            <ul>
-                                <li>
-                                    <a href="#" target="_blank" data-toggle="blog-tags" data-placement="top" title="Add To Cart">
-                                        <i class="fa fa-shopping-cart"></i>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#" target="_blank" data-toggle="blog-tags" data-placement="top" title="Like">
-                                        <i class="fa fa-heart"></i>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#" target="_blank" data-toggle="blog-tags" data-placement="top" title="Mail">
-                                        <i class="fa fa-envelope"></i>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#" target="_blank" data-toggle="blog-tags" data-placement="top" title="Search">
-                                        <i class="fa fa-search"></i>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#" target="_blank" data-toggle="blog-tags" data-placement="top" title="Print">
-                                        <i class="fa fa-print"></i>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#" target="_blank" data-toggle="blog-tags" data-placement="top" title="Print">
-                                        <i class="fa fa-share-alt"></i>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </figcaption>
-                </figure>
-            </li>
+            @foreach (var item in ViewBag.Sachlienquan as List<WebThuvien.Models.Entity.SACH>)
+            {
+                <li>
+                    <div class="book-list-icon blue-icon"></div>
+                    <figure>
+                        <img src="~/Content/ClientContent/images/Books/@item.HINHANH" alt="Book">
+                        <figcaption>
+                            <header>
+                                <h4><a href="/sach/chitietsach?masach=@item.MASACH">@item.TENSACH</a></h4>
+                                <p><strong>Tác giả:</strong>  @item.TACGIA.TENTACGIA</p>
+                                <p><strong>Mã sách :</strong>  @item.MASACH</p>
+                            </header>
+                            <p>@item.GHICHU</p>
+                            <div class="actions">
+                                <ul>
+                                    <li>
+                                        <a href="#" target="_blank" data-toggle="blog-tags" data-placement="top" title="Yêu thích">
+                                            <i class="fa fa-heart"></i>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#" target="_blank" data-toggle="blog-tags" data-placement="top" title="Tìm kiếm">
+                                            <i class="fa fa-search"></i>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#" target="_blank" data-toggle="blog-tags" data-placement="top" title="In">
+                                            <i class="fa fa-print"></i>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#" target="_blank" data-toggle="blog-tags" data-placement="top" title="Chia sẻ">
+                                            <i class="fa fa-share-alt"></i>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </figcaption>
+                    </figure>
+                </li>
+            }
+
+
+
+
         </ul>
     </div>
 </div>

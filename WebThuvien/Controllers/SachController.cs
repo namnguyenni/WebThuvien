@@ -71,21 +71,20 @@ namespace WebThuvien.Controllers
 
                 //những cuốn sách cùng loại
                 List<SACH> SachLienQuan_Loai = db.SACHes.Where(x => x.MALOAISACH == sach.MALOAISACH).Take(3).ToList();
-                ViewBag.SachLienQuanCungLoai = SachLienQuan_Loai;
 
                 //những cuốn sách liên quan về lĩnh vực
                 List<SACH> SachLienQuan_LinhVuc = db.SACHes.Where(x => x.MALINHVUC == sach.MALINHVUC).Take(3).ToList();
-                ViewBag.SachLienQuan_LinhVuc = SachLienQuan_LinhVuc;
 
                 //những sách cùng tác giả
                 List<SACH> SachLienQuan_Tacgia = db.SACHes.Where(x => x.MATACGIA == sach.MATACGIA).Take(3).ToList();
-                ViewBag.SachLienQuan_Tacgia = SachLienQuan_Tacgia;
 
                 //bình luận về cuốn sách này
                 List<BINHLUAN> binhluan = db.BINHLUANs.Where(x => x.MASACH == MaSach).ToList();
-                ViewBag.binhluan = binhluan;
+                List<SACH> Sachlienquan = SachLienQuan_Loai;
+                AddSach(Sachlienquan, SachLienQuan_LinhVuc);
+                AddSach(Sachlienquan, SachLienQuan_Tacgia);
 
-            
+            ViewBag.Sachlienquan = Sachlienquan;
             return View();
         }
 

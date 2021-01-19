@@ -7,6 +7,8 @@ using System.Web.Mvc;
 using WebThuvien.Models.Entity;
 using System.IO;
 using WebThuvien.Models.Function;
+using System.Data.SqlClient;
+using System.Data;
 
 namespace WebThuvien.Controllers
 {
@@ -37,29 +39,7 @@ namespace WebThuvien.Controllers
             List<SACH> SachName = db.SACHes.ToList();
             Sach.AddRange(SachName);
 
-            //phân trang và tính toán
-            if (Sach.Count < 30)
-            {
-                ViewBag.Sach = Sach;
-            }
-            else if (Sach.Count - (pageNumber - 1) * 30 > 0 && Sach.Count - (pageNumber - 1) * 30 < 30)
-            {
-                ViewBag.Sach = Sach.GetRange((pageNumber - 1) * 30, Sach.Count - (pageNumber - 1) * 30);
-            }
-            else
-            {
-                ViewBag.Sach = Sach.GetRange((pageNumber - 1) * 30, 30);
-            }
-            //số lượng trang
-            int countPage = Sach.Count() / 30;
-            if (countPage * 30 < Sach.Count())
-            {
-                countPage += 1;
-            }
-
-            ViewBag.countPage = countPage;
-            ViewBag.currentPage = pageNumber;
-
+            ViewBag.Sach = Sach;
             return View();
         }
 
@@ -68,8 +48,13 @@ namespace WebThuvien.Controllers
         {
             QLTHUVIEN db = new QLTHUVIEN();
             SACH sach = db.SACHes.Single(x => x.MASACH == MaSach);
+            ViewBag.Sach = sach;
+            ViewBag.Loaisach = db.LOAISACHes.ToList();
+            ViewBag.Linhvuc = db.LINHVUCs.ToList();
+            ViewBag.NXB = db.NHAXUATBANs.ToList();
+            ViewBag.Tacgia = db.TACGIAs.ToList();
 
-            return View(sach);
+            return View();
         }
 
         //bảng thông skee trang chủ admi
@@ -136,127 +121,333 @@ namespace WebThuvien.Controllers
         //giao diện thêm sách, tải sách từ máy lên
         public ActionResult UploadSach()
         {
-
+            QLTHUVIEN db = new QLTHUVIEN();
+            ViewBag.Loaisach = db.LOAISACHes.ToList();
+            ViewBag.Linhvuc = db.LINHVUCs.ToList();
+            ViewBag.NXB = db.NHAXUATBANs.ToList();
+            ViewBag.Tacgia = db.TACGIAs.ToList();
             return View();
         }
         //hàm xử lí thêm sách vào thư viện
         [HttpPost]
-        public ActionResult UploadSach(SACH sach,HttpPostedFileBase filepdf=null,HttpPostedFileBase hinhanh=null)
+        public ActionResult UploadSach(SACH sach,HttpPostedFileBase filepdf=null,HttpPostedFileBase hinhanh=null,string TENTACGIA="CHƯA XÁC ĐỊNH")
         {
             QLTHUVIEN db = new QLTHUVIEN();
             try
             {
-                if (filepdf!=null)
+               
+                if (sach.MASACH.Trim() != "")
                 {
-                    filepdf.SaveAs(Server.MapPath("~/Content/ClientContent/FILE_PDF/" + sach.TENSACH + "_" + sach.NAMXUATBAN));
-                    sach.FILEPATH = sach.TENSACH + "_" + sach.NAMXUATBAN+ Path.GetExtension(filepdf.FileName);
+                    //ma sach
+                    string masach = "";
+                    do
+                    {
+                        var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+                        var charsnumber = "1234567890";
+
+                        var stringChars = new char[2];
+                        var numberChars = new char[6];
+                        var random = new Random();
+
+                        for (int i = 0; i < stringChars.Length; i++)
+                        {
+                            stringChars[i] = chars[random.Next(chars.Length)];
+                        }
+
+
+                        for (int i = 0; i < numberChars.Length; i++)
+                        {
+                            numberChars[i] = numberChars[random.Next(charsnumber.Length)];
+                        }
+
+                        //hai chu dau tien
+                        string str1 = new String(stringChars);
+                        string str2 = new String(numberChars);
+
+                        masach = str1 + str2;
+                        sach.MASACH = masach;
+
+                    }
+                    while (db.SACHes.SingleOrDefault(x => x.MASACH == masach) != null);
                 }
+                new QRCode().GenerateQRCode(sach.MASACH);
+
+
+                if (filepdf != null)
+                {
+                    string fileExtend = System.IO.Path.GetExtension(filepdf.FileName);
+
+
+                    string targetFolder = Server.MapPath("~/Content/ClientContent/FILE_PDF/");
+                    string targetPath = Path.Combine(targetFolder, sach.MASACH + fileExtend);
+                    filepdf.SaveAs(targetPath);
+                    sach.FILEPATH = sach.MASACH + fileExtend;
+
+                }
+
                 if (hinhanh != null)
                 {
-                    filepdf.SaveAs(Server.MapPath("~/Content/ClientContent/images/Books/" + sach.TENSACH + "_" + sach.NAMXUATBAN));
-                    sach.HINHANH = sach.TENSACH + "_" + sach.NAMXUATBAN+ Path.GetExtension(hinhanh.FileName);
+                    string fileExtend = System.IO.Path.GetExtension(hinhanh.FileName);
+
+
+                    string targetFolder = Server.MapPath("~/Content/ClientContent/images/Books/");
+                    string targetPath = Path.Combine(targetFolder, sach.MASACH + fileExtend);
+                    hinhanh.SaveAs(targetPath);
+                    sach.HINHANH = sach.MASACH + fileExtend;
                 }
 
-                //ma sach
-                string masach;
-                do
+                if (db.TACGIAs.SingleOrDefault(x=>x.TENTACGIA == TENTACGIA.ToUpper()) == null)
                 {
-                    var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-                    var charsnumber = "1234567890";
+                    //THÊM MỚI TÁC GIẢ
+                    TACGIA newTACGIA = new TACGIA();
+                    newTACGIA.TENTACGIA = TENTACGIA.ToUpper();
 
-                    var stringChars = new char[2];
-                    var numberChars = new char[6];
-                    var random = new Random();
-
-                    for (int i = 0; i < stringChars.Length; i++)
+                    string matacgia;
+                    do
                     {
-                        stringChars[i] = chars[random.Next(chars.Length)];
+                        var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+                        var charsnumber = "1234567890";
+
+                        var stringChars = new char[2];
+                        var numberChars = new char[6];
+                        var random = new Random();
+
+                        for (int i = 0; i < stringChars.Length; i++)
+                        {
+                            stringChars[i] = chars[random.Next(chars.Length)];
+                        }
+
+
+                        for (int i = 0; i < numberChars.Length; i++)
+                        {
+                            numberChars[i] = charsnumber[random.Next(charsnumber.Length)];
+                        }
+
+                        //hai chu dau tien
+                        string str1 = new String(stringChars);
+                        string str2 = new String(numberChars);
+
+                        matacgia = str1 + str2;
+
+
                     }
 
 
-                    for (int i = 0; i < numberChars.Length; i++)
-                    {
-                        numberChars[i] = chars[random.Next(charsnumber.Length)];
-                    }
+                    while (db.TACGIAs.SingleOrDefault(x => x.MATACGIA == matacgia) != null);
 
-                    //hai chu dau tien
-                    masach = new String(stringChars) + new String(numberChars);
-                    sach.MASACH = masach;
-                    
+
+                    newTACGIA.MATACGIA = matacgia;
+
+                    db.TACGIAs.Add(newTACGIA);
+                    sach.MATACGIA = matacgia;
                 }
-                while (db.SACHes.SingleOrDefault(x => x.MASACH == masach) != null);
+                else
+                {
+                    sach.MATACGIA = db.TACGIAs.SingleOrDefault(x => x.TENTACGIA == TENTACGIA.ToUpper()).MATACGIA;
+                }
 
-                new QRCode().GenerateQRCode(masach);
+
                 db.SACHes.Add(sach);
                 db.SaveChanges();
             }
             catch (Exception)
             {
                 ViewBag.Error = "Không thể thêm sách do thiếu thông tin hoặc đã tồn tại sách";
-                return Redirect("/Admin/UploadSach?MaSach=");
-            }
-            return Redirect("/Sach/UploadSach?MaSach=");
-        }
-
-        //giao diện thêm sách, tải sách từ máy lên
-        public ActionResult ChinhsuaSach(string MaSach)
-        {
-            QLTHUVIEN db = new QLTHUVIEN();
-            try
-            {
-                SACH sach = db.SACHes.Single(x => x.MASACH == MaSach);
-                ViewBag.sach = sach;
-
-            }
-            catch (Exception)
-            {
-
                 return Redirect("/Admin");
             }
-
-
-            return View();
+            return Redirect("/Admin/XemchitietSach?MaSach="+sach.MASACH);
         }
+
         //hàm sửa sách
         [HttpPost]
-        public ActionResult ChinhsuaSach(SACH sach,HttpPostedFileBase filepdf=null,HttpPostedFileBase hinhanh=null)
+        public ActionResult ChinhsuaSach(SACH sach,HttpPostedFileBase filepdf=null,HttpPostedFileBase hinhanh=null, string TENTACGIA="Chưa xác định")
         {
             QLTHUVIEN db = new QLTHUVIEN();
+            SACH sach_old = db.SACHes.Single(x => x.ID == sach.ID);
             try
             {
-                SACH sach_old = db.SACHes.Single(x => x.MASACH == sach.MASACH);
+                
                 if (filepdf != null)
                 {
-                    
-                    System.IO.File.Delete(Server.MapPath("~/Content/ClientContent/FILE_PDF/" + sach_old.FILEPATH));
-                    filepdf.SaveAs(Server.MapPath("~/Content/ClientContent/FILE_PDF/" + sach.TENSACH + "_" + sach.NAMXUATBAN));
-                    sach.FILEPATH = sach.TENSACH + "_" + sach.NAMXUATBAN + Path.GetExtension(filepdf.FileName);
+                    if (System.IO.File.Exists(Server.MapPath("~/Content/ClientContent/FILE_PDF/" + sach_old.FILEPATH)))
+                    {
+                        System.IO.File.Delete(Server.MapPath("~/Content/ClientContent/FILE_PDF/" + sach_old.FILEPATH));
+
+                    }
+                    string fileExtend = System.IO.Path.GetExtension(filepdf.FileName);
+
+
+                    string targetFolder = Server.MapPath("~/Content/ClientContent/FILE_PDF/");
+                    string targetPath = Path.Combine(targetFolder, sach.MASACH + fileExtend);
+                    filepdf.SaveAs(targetPath);
+                    sach.FILEPATH = sach.MASACH + fileExtend;
 
                 }
 
                 if (hinhanh != null)
                 {
+                    if (System.IO.File.Exists(Server.MapPath("~/Content/ClientContent/images/Books/" + sach_old.HINHANH)))
+                    {
+                        System.IO.File.Delete(Server.MapPath("~/Content/ClientContent/images/Books/" + sach_old.HINHANH));
 
-                    System.IO.File.Delete(Server.MapPath("~/Content/ClientContent/images/Books/" + sach_old.HINHANH));
-                    filepdf.SaveAs(Server.MapPath("~/Content/ClientContent/images/Books/" + sach.TENSACH + "_" + sach.NAMXUATBAN));
-                    sach.HINHANH = sach.TENSACH + "_" + sach.NAMXUATBAN + Path.GetExtension(hinhanh.FileName);
+                    }
+                    string fileExtend = System.IO.Path.GetExtension(hinhanh.FileName);
+
+
+                    string targetFolder = Server.MapPath("~/Content/ClientContent/images/Books/");
+                    string targetPath = Path.Combine(targetFolder, sach.MASACH + fileExtend);
+                    hinhanh.SaveAs(targetPath);
+                    sach.HINHANH = sach.MASACH + fileExtend;
                 }
 
-                sach_old = sach;
+                if (TENTACGIA.ToUpper() != sach_old.TACGIA.TENTACGIA)
+                {
+                    //THÊM MỚI TÁC GIẢ
+                    TACGIA newTACGIA = new TACGIA();
+                    newTACGIA.TENTACGIA = TENTACGIA.ToUpper(); ;
+
+                    string matacgia;
+                    do
+                    {
+                        var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+                        var charsnumber = "1234567890";
+
+                        var stringChars = new char[2];
+                        var numberChars = new char[6];
+                        var random = new Random();
+
+                        for (int i = 0; i < stringChars.Length; i++)
+                        {
+                            stringChars[i] = chars[random.Next(chars.Length)];
+                        }
+
+
+                        for (int i = 0; i < numberChars.Length; i++)
+                        {
+                            numberChars[i] = chars[random.Next(charsnumber.Length)];
+                        }
+
+                        //hai chu dau tien
+                        string str1 =  new String(stringChars);
+                        string str2 = new String(numberChars);
+
+                        matacgia = str1 + str2;
+                        
+
+                    }
+                    while (db.TACGIAs.SingleOrDefault(x => x.MATACGIA == matacgia) != null);
+
+                    newTACGIA.MATACGIA = matacgia;
+
+                    db.TACGIAs.Add(newTACGIA);
+                    sach.MATACGIA = matacgia;
+                }
+
+                sach_old.TENSACH = sach.TENSACH;
+                sach_old.SOTRANG = sach.SOTRANG;
+                sach_old.FILEPATH = sach.FILEPATH;
+                sach_old.HINHANH = sach.HINHANH;
+                sach_old.LUOTXEM = sach.LUOTXEM;
+                sach_old.TRANGTHAI = sach.TRANGTHAI;
+                sach_old.NGONNGU = sach.NGONNGU;
+                sach_old.MALOAISACH = sach.MALOAISACH;
+                sach_old.MALINHVUC = sach.MALINHVUC;
+                sach_old.MATACGIA = sach.MATACGIA;
+                sach_old.MANHAXUATBAN = sach.MANHAXUATBAN;
+                sach_old.NGAYTAILEN = sach.NGAYTAILEN;
+                sach_old.NAMXUATBAN = sach.NAMXUATBAN;
+                sach_old.GHICHU = sach.GHICHU;
+
+
                 db.SaveChanges();
 
-                return View();
+                return Redirect("/Admin/XemchitietSach?MaSach=" + sach_old.MASACH);
+
             }
             catch (Exception)
             {
 
             }
+            return Redirect("/Admin/XemchitietSach?MaSach=" + sach_old.MASACH);
 
-            return View();
+        }
+
+        public ActionResult Timkiemsach(string noidungnhap = "", string linhvuc = "", string loaisach = "", string tacgia="")
+        {
+
+            string noidung = noidungnhap.ToUpper();
+            QLTHUVIEN db = new QLTHUVIEN();
+            List<SACH> SearchSach = new List<SACH>();
+
+            //tim kiem gần đúng trên tên sách
+            List<SACH> SearchSachName = db.SACHes.Where(x => x.TENSACH.Contains(noidung) == true).ToList();
+            SearchSach.AddRange(SearchSachName);
+
+            //tim kiem gần đúng mã sách
+            List<SACH> SearchSachMa = db.SACHes.Where(x => x.MASACH.Contains(noidung) == true).ToList();
+            AddSach(SearchSach, SearchSachMa);
+
+            //tìm kiếm vào tên tác giả
+            SqlParameter noidungparam = new SqlParameter("@noidung", noidung);
+            noidungparam.SqlDbType = SqlDbType.NVarChar;
+            List<SACH> SearchSachTacgia = db.Database.SqlQuery<SACH>("exec dbo.SearchSachTacgia '" + noidung + "'").ToList();
+            AddSach(SearchSach, SearchSachTacgia);
+
+            //tim kiếm theo lĩnh vực
+            List<LINHVUC> Linhvulienquan = db.LINHVUCs.Where(x => x.TENLINHVUC.Contains(noidung) == true).ToList();
+
+            foreach (var item in Linhvulienquan)
+            {
+                List<SACH> sach = db.SACHes.Where(x => x.MALINHVUC == item.MALINHVUC).ToList();//tìm kiếm sách có lĩnh vực
+                AddSach(SearchSach, sach);//thêm vào sách search
+            }
+
+            //lọc theo thể loại và lĩnh vực
+            List<SACH> LIST = new List<SACH>();
+            if (linhvuc != "Tất cả" || loaisach != "Tất cả" || tacgia != "Tất cả")
+            {
+                foreach (var item in SearchSach)
+                {
+                    if (item.LINHVUC.TENLINHVUC.Contains(linhvuc.ToUpper()) || item.LOAISACH.TENTHELOAI.Contains(loaisach.ToUpper()) || item.TACGIA.TENTACGIA.Contains(tacgia.ToUpper()))
+                    {
+                        LIST.Add(item);
+                    }
+                }
+                SearchSach = LIST;
+
+            }
+
+            ViewBag.SearchSach = SearchSach;
+            
+            ViewBag.noidungnhap = noidungnhap;
+            ViewBag.linhvuc = linhvuc;
+            ViewBag.loaisach = loaisach;
+            ViewBag.tacgia = tacgia;
+            return Redirect("/Admin/Sach");
+        }
+
+        private void AddSach(List<SACH> list1, List<SACH> list2)
+        {
+
+            foreach (var item2 in list2)
+            {
+                bool exist = false;
+                foreach (var item1 in list1)
+                {
+                    if (item2.MASACH == item1.MASACH)
+                    {
+                        exist = true;
+                        break;
+                    }
+                }
+                if (!exist)
+                {
+                    list1.Add(item2);
+                }
+            }
         }
 
         //hàm xóa cuốn sách ra khỏi thư viện
-        [HttpPost]
         public ActionResult Xoasach(string MaSach)
         {
             try
@@ -265,12 +456,13 @@ namespace WebThuvien.Controllers
                 SACH sach = db.SACHes.Single(x => x.MASACH == MaSach);
                 db.SACHes.Remove(sach);
                 db.SaveChanges();
+                TempData["Error"] = "0";
             }
             catch (Exception)
             {
-                ViewBag.Error = "Không xóa được cuốn sách này";
+                TempData["Error"] = "1";
             }
-            return View();
+            return Redirect("/Admin/Sach");
         }
 
         #region Xử lí mượn trả sách
