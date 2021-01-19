@@ -42,7 +42,17 @@ namespace WebThuvien.Controllers
             ViewBag.currentPage = pageNumber;
             return View();
         }
+        //tải sách
+        public ActionResult TaiSach(string MaSach)
+        {
+            string filename = MaSach+".pdf";
+            string filepath = AppDomain.CurrentDomain.BaseDirectory + "Content/ClientContent/FILE_PDF/" + filename;
+            byte[] filedata = System.IO.File.ReadAllBytes(filepath);
 
+
+
+            return File(filepath, "text/plain", filename);
+        }
 
         public ActionResult Chitietsach(string MaSach)
         {
