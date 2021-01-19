@@ -19,6 +19,15 @@ namespace WebThuvien.Controllers
         public ActionResult Index()
         {
             //kiểm tra sự tồn tại session
+            QLTHUVIEN db = new QLTHUVIEN();
+            List<SACH> lstSach = db.Database.SqlQuery<SACH>("exec dbo.TOPPOPULARBOOK ").ToList();
+            List<SACH> lst = new List<SACH>();
+            foreach (var item in lstSach)
+            {
+                SACH sach = db.SACHes.SingleOrDefault(x => x.ID == item.ID);
+                lst.Add(sach);
+            }
+            ViewBag.Sach = lst;
 
             return View();
         }
@@ -278,9 +287,9 @@ namespace WebThuvien.Controllers
 
 
                     string targetFolder = Server.MapPath("~/Content/ClientContent/FILE_PDF/");
-                    string targetPath = Path.Combine(targetFolder, sach.MASACH + fileExtend);
+                    string targetPath = Path.Combine(targetFolder, sach_old.MASACH + fileExtend);
                     filepdf.SaveAs(targetPath);
-                    sach.FILEPATH = sach.MASACH + fileExtend;
+                    sach.FILEPATH = sach_old.MASACH + fileExtend;
 
                 }
 
@@ -295,9 +304,9 @@ namespace WebThuvien.Controllers
 
 
                     string targetFolder = Server.MapPath("~/Content/ClientContent/images/Books/");
-                    string targetPath = Path.Combine(targetFolder, sach.MASACH + fileExtend);
+                    string targetPath = Path.Combine(targetFolder, sach_old.MASACH + fileExtend);
                     hinhanh.SaveAs(targetPath);
-                    sach.HINHANH = sach.MASACH + fileExtend;
+                    sach.HINHANH = sach_old.MASACH + fileExtend;
                 }
 
                 if (TENTACGIA.ToUpper() != sach_old.TACGIA.TENTACGIA)
