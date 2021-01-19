@@ -1,11 +1,11 @@
 var options = {
 	series: [
 	{
-		name: "Patients",
+		name: "Mượn",
 		data: [10, 15, 12, 20, 18, 26, 24, 25, 20, 25, 22, 30]
 	},
 	{
-		name: "Consultations",
+		name: "Trả",
 		data: [15, 10, 17, 15, 23, 21, 30, 20, 26, 20, 28, 25]
 	}
 	],
@@ -48,7 +48,7 @@ var options = {
 		}
 	},
 	xaxis: {
-		categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+		categories: ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6', 'Tháng 7', 'Tháng 8', 'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'],
 		labels:{
 			style:{
 				colors: '#8c9094'
