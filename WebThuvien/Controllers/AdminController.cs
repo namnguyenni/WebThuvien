@@ -479,6 +479,7 @@ namespace WebThuvien.Controllers
         }
 
         //cho mượn sách
+        [HttpPost]
         public ActionResult MuonSach(string mathe,string[] lstmasach,int[] lstthoigianmuon)
         {
             //thêm dữ liệu vào bảng muontra và bảng chi tiết mượn trả
