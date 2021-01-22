@@ -9,6 +9,7 @@ using System.IO;
 using WebThuvien.Models.Function;
 using System.Data.SqlClient;
 using System.Data;
+using WebThuvien.Models.CustomClass;
 
 namespace WebThuvien.Controllers
 {
@@ -480,6 +481,12 @@ namespace WebThuvien.Controllers
         //hàm xóa cuốn sách ra khỏi thư viện
         public ActionResult Xoasach(string MaSach)
         {
+            //kiểm tra sự tồn tại session
+            if (Session["Taikhoan"] == null)
+            {
+                return Redirect("/Home/Login");
+            }
+
             try
             {
                 QLTHUVIEN db = new QLTHUVIEN();
@@ -505,12 +512,19 @@ namespace WebThuvien.Controllers
         //giao diện cho mượn sách
         public ActionResult MuonSach()
         {
+            //kiểm tra sự tồn tại session
+            if (Session["Taikhoan"] == null)
+            {
+                return Redirect("/Home/Login");
+            }
+
             return View();
         }
 
+
         //cho mượn sách
         [HttpPost]
-        public ActionResult MuonSach(string mathe,string[] lstmasach,int[] lstthoigianmuon)
+        public int MuonSach(string mathe,string[] lstmasach,int[] lstthoigianmuon)
         {
             //thêm dữ liệu vào bảng muontra và bảng chi tiết mượn trả
             QLTHUVIEN db = new QLTHUVIEN();
@@ -518,9 +532,11 @@ namespace WebThuvien.Controllers
             {
                 THETHUVIEN the = db.THETHUVIENs.SingleOrDefault(x => x.MATHE == mathe);
                 if (the != null)
+                {
                     for (int i = 0; i < lstmasach.Length; i++)
                     {
-                        SACH sach = db.SACHes.SingleOrDefault(x => x.MASACH == lstmasach[i]);
+                        string masach = lstmasach[i];
+                        SACH sach = db.SACHes.SingleOrDefault(x => x.MASACH == masach);
                         if (sach != null)
                         {
                             MUONTRASACH muontra = new MUONTRASACH();
@@ -541,19 +557,59 @@ namespace WebThuvien.Controllers
 
                         }
                     }
-                ViewBag.Success = "Lưu hoàn tất !!!";
+                    ViewBag.Success = "Lưu hoàn tất !!!";
+                    return 1;
+                }
+                else
+                {
+                    ViewBag.Error = "Thẻ không tồn tại??";
+                    return 0;
+                }
             }
             catch (Exception)
             {
                 ViewBag.Error = "Lỗi dữ liệu";
-                return View();
+                return 0;
             }
-
-
-
-
-            return View();
+            return 1;
         }
+
+
+        [HttpPost]
+        public JsonResult GetTheFrMathe(string mathe)
+        {
+            QLTHUVIEN db = new QLTHUVIEN();
+            THETHUVIEN thethuvien = db.THETHUVIENs.SingleOrDefault(x => x.MATHE == mathe);
+            if (thethuvien != null)
+            {
+                return Json(new { mathe = thethuvien.MATHE, hoten = thethuvien.TENCHUTHE });
+
+            }
+            else return Json(new {loi = "1" });
+        }
+
+        [HttpPost]
+        public JsonResult GetSachFrMasach(string masach)
+        {
+            QLTHUVIEN db = new QLTHUVIEN();
+            SACH sach = db.SACHes.SingleOrDefault(x => x.MASACH == masach);
+            if (sach != null)
+            {
+                return Json(new { masach = sach.MASACH, tensach = sach.TENSACH, hinhanh = sach.HINHANH });
+
+            }
+            else return Json(new { loi = "1" });
+        }
+
+        [HttpPost]
+        public List<ChitietSachmuon> GetSachMuonFromMaThe(string mathe)
+        {
+            QLTHUVIEN db = new QLTHUVIEN();
+            List<ChitietSachmuon>  lstSachMuon = db.Database.SqlQuery<ChitietSachmuon>("exec dbo.GetSachMuonFromMaThe '"+mathe+"'").ToList();
+            return lstSachMuon;
+        }
+
+
 
         public ActionResult TraSach(string[] masach)
         {

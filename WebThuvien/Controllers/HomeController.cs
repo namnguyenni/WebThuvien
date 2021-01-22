@@ -49,6 +49,8 @@ namespace WebThuvien.Controllers
             if (Session["Taikhoan"] != null)
             {
                 Session.Remove("Taikhoan");
+                Session.Remove("TaikhoanBanDoc");
+
             }
             return View("Login");
         }

@@ -150,6 +150,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\CustomClass\BoLoc.cs" />
+    <Compile Include="Models\CustomClass\ChitietSachmuon.cs" />
     <Compile Include="Models\Entity\BAIDANGTHONGTIN.cs" />
     <Compile Include="Models\Entity\BINHLUAN.cs" />
     <Compile Include="Models\Entity\CHITIETMUONTRASACH.cs" />
@@ -433,6 +434,8 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\onscan.js" />
+    <Content Include="Scripts\onscan.min.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

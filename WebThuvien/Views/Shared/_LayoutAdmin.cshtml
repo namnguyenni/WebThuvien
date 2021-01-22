@@ -84,7 +84,9 @@
         </div>
         <div class="header-right">
             @{ 
-                var session = Session["Taikhoan"] as WebThuvien.Models.Entity.TAIKHOAN;
+               
+                var session =  Session["Taikhoan"] as WebThuvien.Models.Entity.TAIKHOAN;
+
             }
             <div class="user-info-dropdown">
                 <div class="dropdown">
@@ -92,8 +94,11 @@
                         <span class="user-icon">
                             <img src="~/Content/AdminContent/vendors/images/photo1.jpg" alt="">
                         </span>
+                        @if (session.TENTAIKHOAN != null)
+                        {
+                            <span class="user-name">@session.TENTAIKHOAN</span>
 
-                        <span class="user-name">@session.TENTAIKHOAN</span>
+                        }
                     </a>
                     <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
                         <a class="dropdown-item" href="#"><i class="dw dw-user1"></i>Thông tin</a>
@@ -130,10 +135,8 @@
                         <ul class="submenu">
                             <li><a href="/Admin/Sach">Danh mục sách</a></li>
                             <li><a href="/Admin/UploadSach">Thêm mới sách</a></li>
-                            <li><a href="/Admin/UploadSach">Mượn sách</a></li>
-                            <li><a href="/Admin/UploadSach">Trả sách</a></li>
-
-
+                            <li><a href="/Admin/MuonSach">Mượn sách</a></li>
+                            <li><a href="/Admin/TraSach">Trả sách</a></li>
                         </ul>
                     </li>
                     <li class="dropdown">
@@ -145,6 +148,39 @@
                             <li><a href="#">Thêm mới người dùng</a></li>
                             <li><a href="#">Tạo và xuất mẫu thẻ</a></li>
 
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="javascript:;" class="dropdown-toggle">
+                            <span class="micon dw dw-fast-forward-1"></span><span class="mtext">Tác giả</span>
+                        </a>
+                        <ul class="submenu">
+                            <li><a href="/Admin/Sach">Danh mục sách</a></li>
+                            <li><a href="/Admin/UploadSach">Thêm mới sách</a></li>
+                            <li><a href="/Admin/MuonSach">Mượn sách</a></li>
+                            <li><a href="/Admin/TraSach">Trả sách</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="javascript:;" class="dropdown-toggle">
+                            <span class="micon dw dw-fast-forward-1"></span><span class="mtext">Lĩnh vực</span>
+                        </a>
+                        <ul class="submenu">
+                            <li><a href="/Admin/Sach">Danh mục sách</a></li>
+                            <li><a href="/Admin/UploadSach">Thêm mới sách</a></li>
+                            <li><a href="/Admin/MuonSach">Mượn sách</a></li>
+                            <li><a href="/Admin/TraSach">Trả sách</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="javascript:;" class="dropdown-toggle">
+                            <span class="micon dw dw-fast-forward-1"></span><span class="mtext">Loại sách</span>
+                        </a>
+                        <ul class="submenu">
+                            <li><a href="/Admin/Sach">Danh mục sách</a></li>
+                            <li><a href="/Admin/UploadSach">Thêm mới sách</a></li>
+                            <li><a href="/Admin/MuonSach">Mượn sách</a></li>
+                            <li><a href="/Admin/TraSach">Trả sách</a></li>
                         </ul>
                     </li>
                     <li class="dropdown">
