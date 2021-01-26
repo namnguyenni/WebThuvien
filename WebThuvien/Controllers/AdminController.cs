@@ -168,29 +168,7 @@ namespace WebThuvien.Controllers
                     string masach = "";
                     do
                     {
-                        var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-                        var charsnumber = "1234567890";
-
-                        var stringChars = new char[2];
-                        var numberChars = new char[6];
-                        var random = new Random();
-
-                        for (int i = 0; i < stringChars.Length; i++)
-                        {
-                            stringChars[i] = chars[random.Next(chars.Length)];
-                        }
-
-
-                        for (int i = 0; i < numberChars.Length; i++)
-                        {
-                            numberChars[i] = numberChars[random.Next(charsnumber.Length)];
-                        }
-
-                        //hai chu dau tien
-                        string str1 = new String(stringChars);
-                        string str2 = new String(numberChars);
-
-                        masach = str1 + str2;
+                        masach = Tusinhma(2, 4);
                         sach.MASACH = masach;
 
                     }
@@ -222,7 +200,7 @@ namespace WebThuvien.Controllers
                     sach.HINHANH = sach.MASACH + fileExtend;
                 }
 
-                if (db.TACGIAs.SingleOrDefault(x=>x.TENTACGIA == TENTACGIA.ToUpper()) == null)
+                if (db.TACGIAs.SingleOrDefault(x=>x.TENTACGIA.ToUpper() == TENTACGIA.ToUpper()) == null)
                 {
                     //THÊM MỚI TÁC GIẢ
                     TACGIA newTACGIA = new TACGIA();
@@ -231,45 +209,16 @@ namespace WebThuvien.Controllers
                     string matacgia;
                     do
                     {
-                        var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-                        var charsnumber = "1234567890";
-
-                        var stringChars = new char[2];
-                        var numberChars = new char[6];
-                        var random = new Random();
-
-                        for (int i = 0; i < stringChars.Length; i++)
-                        {
-                            stringChars[i] = chars[random.Next(chars.Length)];
-                        }
-
-
-                        for (int i = 0; i < numberChars.Length; i++)
-                        {
-                            numberChars[i] = charsnumber[random.Next(charsnumber.Length)];
-                        }
-
-                        //hai chu dau tien
-                        string str1 = new String(stringChars);
-                        string str2 = new String(numberChars);
-
-                        matacgia = str1 + str2;
-
-
+                        matacgia = Tusinhma(2, 4);
                     }
-
-
                     while (db.TACGIAs.SingleOrDefault(x => x.MATACGIA == matacgia) != null);
-
-
                     newTACGIA.MATACGIA = matacgia;
-
                     db.TACGIAs.Add(newTACGIA);
                     sach.MATACGIA = matacgia;
                 }
                 else
                 {
-                    sach.MATACGIA = db.TACGIAs.SingleOrDefault(x => x.TENTACGIA == TENTACGIA.ToUpper()).MATACGIA;
+                    sach.MATACGIA = db.TACGIAs.FirstOrDefault(x => x.TENTACGIA.ToUpper() == TENTACGIA.ToUpper()).MATACGIA;
                 }
 
 
@@ -434,22 +383,75 @@ namespace WebThuvien.Controllers
             }
 
             //lọc theo thể loại và lĩnh vực
-            List<SACH> LIST = new List<SACH>();
-            if (linhvuc != "" || loaisach != "" || tacgia != "")
+            List<ChitietSachmuon> LIST = new List<ChitietSachmuon>();
+            if (linhvuc != "")
             {
                 foreach (var item in SearchSach)
                 {
-                    if (item.LINHVUC.TENLINHVUC.Contains(linhvuc.ToUpper()) || item.LOAISACH.TENTHELOAI.Contains(loaisach.ToUpper()) || item.TACGIA.TENTACGIA.Contains(tacgia.ToUpper()))
+                    if (item.LINHVUC.TENLINHVUC.Contains(linhvuc.ToUpper()))
                     {
-                        LIST.Add(item);
+                        ChitietSachmuon chitiet = new ChitietSachmuon();
+                        chitiet.MASACH = item.MASACH;
+                        chitiet.TENSACH = item.TENSACH;
+                        chitiet.TENTACGIA = db.TACGIAs.SingleOrDefault(x => x.MATACGIA == item.MATACGIA).TENTACGIA;
+                        chitiet.HINHANH = item.HINHANH;
+                        LIST.Add(chitiet);
                     }
                 }
-                SearchSach = LIST;
+
+            }
+            if (loaisach != "")
+            {
+                foreach (var item in SearchSach)
+                {
+                    if (item.LOAISACH.TENTHELOAI.Contains(loaisach.ToUpper()))
+                    {
+                        ChitietSachmuon chitiet = new ChitietSachmuon();
+                        chitiet.MASACH = item.MASACH;
+                        chitiet.TENSACH = item.TENSACH;
+                        chitiet.TENTACGIA = db.TACGIAs.SingleOrDefault(x => x.MATACGIA == item.MATACGIA).TENTACGIA;
+                        chitiet.HINHANH = item.HINHANH;
+                        LIST.Add(chitiet);
+                    }
+                }
+
+            }
+            if (tacgia != "")
+            {
+                foreach (var item in SearchSach)
+                {
+                    if (item.TACGIA.TENTACGIA.Contains(tacgia.ToUpper()))
+                    {
+                        ChitietSachmuon chitiet = new ChitietSachmuon();
+                        chitiet.MASACH = item.MASACH;
+                        chitiet.TENSACH = item.TENSACH;
+                        chitiet.TENTACGIA = db.TACGIAs.SingleOrDefault(x => x.MATACGIA == item.MATACGIA).TENTACGIA;
+                        chitiet.HINHANH = item.HINHANH;
+                        LIST.Add(chitiet);
+                    }
+                }
+
+            }
+            if (LIST.Count >0)
+            {
+                ViewBag.SearchSach = LIST;
+            }
+            else
+            {
+                foreach (var item in SearchSach)
+                {
+                    ChitietSachmuon chitiet = new ChitietSachmuon();
+                    chitiet.MASACH = item.MASACH;
+                    chitiet.TENSACH = item.TENSACH;
+                    chitiet.TENTACGIA = db.TACGIAs.SingleOrDefault(x => x.MATACGIA == item.MATACGIA).TENTACGIA;
+                    chitiet.HINHANH = item.HINHANH;
+                    LIST.Add(chitiet);
+                }
+                ViewBag.SearchSach = LIST;
+
 
             }
 
-            ViewBag.SearchSach = SearchSach;
-            
             ViewBag.noidungnhap = noidungnhap;
             ViewBag.linhvuc = linhvuc;
             ViewBag.loaisach = loaisach;
@@ -535,20 +537,37 @@ namespace WebThuvien.Controllers
                 {
                     for (int i = 0; i < lstmasach.Length; i++)
                     {
+                        
+
+
                         string masach = lstmasach[i];
                         SACH sach = db.SACHes.SingleOrDefault(x => x.MASACH == masach);
+
                         if (sach != null)
                         {
+                            //kiểm tra sácH đó  mượn hay chưa
+                            CHITIETMUONTRASACH sachmuon = db.CHITIETMUONTRASACHes.SingleOrDefault(x => x.MUONTRASACH.MASACH == masach && x.NGAYTRA == null);
+                            if (sachmuon != null)
+                            {
+                                continue;
+                            }
+
                             MUONTRASACH muontra = new MUONTRASACH();
                             muontra.MASACH = lstmasach[i];
                             muontra.MATHE = mathe;
+                            string mamuontra;
+                            do {
+                                mamuontra = Tusinhma(2, 4);
+                            }
+                            while (db.MUONTRASACHes.SingleOrDefault(x=>x.MAMUONTRASACH == mamuontra) !=null);
+                            muontra.MAMUONTRASACH = mamuontra;
+
                             db.MUONTRASACHes.Add(muontra);
                             db.SaveChanges();
-                            //lay lại id muontrasach
-                            int id = db.MUONTRASACHes.SingleOrDefault(x => x.MASACH == muontra.MASACH && x.MATHE == muontra.MATHE).ID;
+
                             //dùng id này để thêm vào bảng chi tiết
                             CHITIETMUONTRASACH chitiet = new CHITIETMUONTRASACH();
-                            chitiet.MAMUONTRASACH = id;
+                            chitiet.MAMUONTRASACH = mamuontra;
                             chitiet.NGAYMUON = DateTime.UtcNow;
                             chitiet.THOIGIANMUON = lstthoigianmuon[i];
                             db.CHITIETMUONTRASACHes.Add(chitiet);
@@ -568,10 +587,9 @@ namespace WebThuvien.Controllers
             }
             catch (Exception)
             {
-                ViewBag.Error = "Lỗi dữ liệu";
+               ViewBag.Error = "Lỗi dữ liệu";
                 return 0;
             }
-            return 1;
         }
 
 
@@ -588,18 +606,7 @@ namespace WebThuvien.Controllers
             else return Json(new {loi = "1" });
         }
 
-        [HttpPost]
-        public JsonResult GetSachFrMasach(string masach)
-        {
-            QLTHUVIEN db = new QLTHUVIEN();
-            SACH sach = db.SACHes.SingleOrDefault(x => x.MASACH == masach);
-            if (sach != null)
-            {
-                return Json(new { masach = sach.MASACH, tensach = sach.TENSACH, hinhanh = sach.HINHANH });
 
-            }
-            else return Json(new { loi = "1" });
-        }
 
         [HttpPost]
         public List<ChitietSachmuon> GetSachMuonFromMaThe(string mathe)
@@ -610,51 +617,481 @@ namespace WebThuvien.Controllers
         }
 
 
-
-        public ActionResult TraSach(string[] masach)
+        [HttpPost]
+        public JsonResult GetSachFrMasach(string masach)
         {
-            //xóa  dữ liệu vào bảng muontra và bảng chi tiết mượn trả
             QLTHUVIEN db = new QLTHUVIEN();
-            for (int i = 0; i < masach.Length; i++)
+            SACH sach = db.SACHes.SingleOrDefault(x => x.MASACH == masach);
+            if (sach != null)
             {
-                CHITIETMUONTRASACH chitiet = db.CHITIETMUONTRASACHes.SingleOrDefault(x => x.MUONTRASACH.MASACH == masach[i]);
-                if (chitiet!=null)
+
+                //kiểm tra sác đó  mượn hay chưa
+                CHITIETMUONTRASACH sachmuon = db.CHITIETMUONTRASACHes.SingleOrDefault(x => x.MUONTRASACH.MASACH == masach && x.NGAYTRA == null);
+                if (sachmuon != null)
                 {
-                    //xóa chitiet
-                    int? idmuontra = chitiet.MAMUONTRASACH;
-                    db.CHITIETMUONTRASACHes.Remove(chitiet);
-                    //xoa muon tra
-                    
-                    MUONTRASACH muontra = db.MUONTRASACHes.SingleOrDefault(x => x.ID == idmuontra);
-                    if (muontra!=null)
+                    return Json(new { loi = "2" });//lỗi loại 1
+                }
+                
+                    return Json(new{
+                    masach = sach.MASACH,
+                    tensach = sach.TENSACH,
+                    hinhanh = sach.HINHANH});
+            }
+            else return Json(new { loi = "1" });//lỗi loại 1
+        }
+
+
+        [HttpPost]
+        public JsonResult GetSachTraFrMasach(string masach)
+        {
+            QLTHUVIEN db = new QLTHUVIEN();
+            SACH sach = db.SACHes.SingleOrDefault(x => x.MASACH == masach);
+            //kiểm tra sách này có tồn tại trong csdl hay không
+            if (sach != null)
+            {
+                try
+                {
+                    //nếu tồn tại kiểm tra sách này đang mượn hay không
+                    CHITIETMUONTRASACH sachmuon = db.CHITIETMUONTRASACHes.SingleOrDefault(x => x.MUONTRASACH.MASACH == masach && x.NGAYTRA == null);
+                    if (sachmuon != null)
                     {
-                        db.MUONTRASACHes.Remove(muontra);
+                        //nếu sách này đang mượn thì trả về thông tin sách đang mượn này
+                        string mathe = db.MUONTRASACHes.SingleOrDefault(x=>x.MAMUONTRASACH == sachmuon.MAMUONTRASACH).MATHE;
+                        string tenchuthe = db.THETHUVIENs.SingleOrDefault(x => x.MATHE == mathe).TENCHUTHE;
+                        DateTime ngaymuondate = Convert.ToDateTime(sachmuon.NGAYMUON);
+                        string ngaymuon = ngaymuondate.Day + "/" + ngaymuondate.Month + "/" + ngaymuondate.Year;
+                        return Json(new { masach = sach.MASACH, tensach = sach.TENSACH, hinhanh = sach.HINHANH,nguoimuon = tenchuthe,ngaymuon = ngaymuon });
+                    }
+                    else
+                    {
+                        return Json(new { loi = "2" });//sách này hiện không mượn
                     }
                 }
+                catch (Exception)
+                {
 
+                    return Json(new { loi = "1" });//lỗi loại 1
+                }
+
+
+
+            }
+            else return Json(new { loi = "1" });//lỗi loại 1
+        }
+
+        [HttpGet]
+        public ActionResult TraSach()
+        {
+            //kiểm tra sự tồn tại session
+            if (Session["Taikhoan"] == null)
+            {
+                return Redirect("/Home/Login");
             }
             return View();
         }
 
-        //lấy thông tin bạn đọc mượn sách của thư viện dựa vào mã thẻ bạn đọc
+        [HttpPost]
+        public string TraSach(List<string> masach)
+        {
+            QLTHUVIEN db = new QLTHUVIEN();
+            for (int i = 0; i < masach.Count; i++)
+            {
+                string masach1 = masach[i];
+                try
+                {
+                    CHITIETMUONTRASACH chitiet = db.CHITIETMUONTRASACHes.SingleOrDefault(x => x.MUONTRASACH.MASACH == masach1 && x.NGAYTRA==null);
+                    if (chitiet != null)
+                    {
+                        //LẤY NGÀY TRẢ
+                        DateTime date = DateTime.Now;
+                        chitiet.NGAYTRA = date;
+                        db.SaveChanges();
+                    }
+                }
+                catch (Exception)
+                {
 
+                    return "0";
+                }
 
-        //kiểm tra sách quá hạn
-
-
-        //In thông tin khách quá hạn
-
-
-
+            }
+            return "1";
+        }
 
         #endregion
 
         #region danh sách partial
 
-        public ActionResult Thongketongquan()
+        public ActionResult DSTacgia()
         {
+            //kiểm tra sự tồn tại session
+            if (Session["Taikhoan"] == null)
+            {
+                return Redirect("/Home/Login");
+            }
+
+            QLTHUVIEN db = new QLTHUVIEN();
+            List<TACGIA> tacgias = db.TACGIAs.ToList();
+            ViewBag.tacgias = tacgias;
+
+
             return View();
         }
+
+
+
+
+        public ActionResult DSLinhvuc()
+        {
+            //kiểm tra sự tồn tại session
+            if (Session["Taikhoan"] == null)
+            {
+                return Redirect("/Home/Login");
+            }
+            QLTHUVIEN db = new QLTHUVIEN();
+            List<LINHVUC> linhvucs = db.LINHVUCs.ToList();
+            ViewBag.linhvucs = linhvucs;
+            return View();
+        }
+
+        public ActionResult DSLoaisach()
+        {
+            //kiểm tra sự tồn tại session
+            if (Session["Taikhoan"] == null)
+            {
+                return Redirect("/Home/Login");
+            }
+            QLTHUVIEN db = new QLTHUVIEN();
+            List<LOAISACH> loaisachs = db.LOAISACHes.ToList();
+            ViewBag.loaisachs = loaisachs;
+            return View();
+        }
+
+        public ActionResult DSNXB()
+        {
+            //kiểm tra sự tồn tại session
+            if (Session["Taikhoan"] == null)
+            {
+                return Redirect("/Home/Login");
+            }
+
+            QLTHUVIEN db = new QLTHUVIEN();
+            List<NHAXUATBAN> NXB = db.NHAXUATBANs.ToList();
+            ViewBag.NXB = NXB;
+
+
+            return View();
+        }
+
+
+
+        public string Chinhsualinhvuc(string malinhvuc, string tenlinhvuc,string ghichu)
+        {
+            QLTHUVIEN db = new QLTHUVIEN();
+            LINHVUC linhvuc = db.LINHVUCs.SingleOrDefault(x=>x.MALINHVUC==malinhvuc);
+
+            string ma = malinhvuc;
+            if (linhvuc != null)
+            {
+                linhvuc.TENLINHVUC = tenlinhvuc;
+                linhvuc.GHICHU = ghichu;
+            }
+            else
+            {
+                LINHVUC linhvuc1 = new LINHVUC();
+                //tu sinh ma
+                do
+                {
+                    ma = Tusinhma(2, 4);
+                } while (db.LINHVUCs.SingleOrDefault(x => x.MALINHVUC == ma) != null);
+
+                linhvuc1.MALINHVUC = ma;
+                linhvuc1.TENLINHVUC = tenlinhvuc;
+                linhvuc1.GHICHU = ghichu;
+                try
+                {
+                    db.LINHVUCs.Add(linhvuc1);
+                }
+                catch (Exception)
+                {
+                    return "0";
+                }
+            }
+            db.SaveChanges();
+            return ma;
+        }
+
+        public int Xoalinhvuc(string malinhvuc)
+        {
+            QLTHUVIEN db = new QLTHUVIEN();
+            try
+            {
+                LINHVUC linhvuc = db.LINHVUCs.SingleOrDefault(x => x.MALINHVUC == malinhvuc);
+                if (linhvuc == null)
+                {
+                    return 0;
+                }
+                else
+                {
+                    db.LINHVUCs.Remove(linhvuc);
+                    db.SaveChanges();
+                }
+            }
+            catch (Exception)
+            {
+
+                return 0;
+            }
+
+
+            return 1;
+        }
+
+        public string Chinhsuatacgia(string matacgia, string tentacgia,string website,string ghichu)
+        {
+            QLTHUVIEN db = new QLTHUVIEN();
+            TACGIA tacgia = db.TACGIAs.SingleOrDefault(x => x.MATACGIA == matacgia);
+            string ma = matacgia;
+            if (tacgia != null)
+            {
+                tacgia.TENTACGIA = tentacgia;
+                tacgia.LINKWEBSITE = website;
+                tacgia.GHICHU = ghichu;
+                
+
+            }
+            else
+            {
+                TACGIA tacgia1 = new TACGIA();
+                //tu sinh ma
+                do
+                {
+                    ma = Tusinhma(2, 4);
+                } while (db.TACGIAs.SingleOrDefault(x=>x.MATACGIA == ma)!=null);
+
+
+                tacgia1.MATACGIA = ma;
+                tacgia1.TENTACGIA = tentacgia;
+                tacgia1.LINKWEBSITE = website;
+                tacgia1.GHICHU = ghichu;
+                try
+                {
+                    db.TACGIAs.Add(tacgia1);
+                }
+                catch (Exception)
+                {
+
+                    return "0";
+                }
+
+
+
+            }
+            db.SaveChanges();
+            return ma;
+        }
+
+        public int Xoatacgia(string matacgia)
+        {
+            QLTHUVIEN db = new QLTHUVIEN();
+            try
+            {
+                TACGIA tacgia = db.TACGIAs.SingleOrDefault(x => x.MATACGIA == matacgia);
+                if (tacgia==null)
+                {
+                    return 0;
+                }
+                else
+                {
+                    db.TACGIAs.Remove(tacgia);
+                    db.SaveChanges();
+                }
+            }
+            catch (Exception)
+            {
+
+                return 0;
+            }
+
+
+            return 1;
+        }
+
+
+        public string Chinhsualoaisach(string tentheloai,string maloaisach,string ghichu)
+        {
+            QLTHUVIEN db = new QLTHUVIEN();
+            LOAISACH loaisach = db.LOAISACHes.SingleOrDefault(x => x.MATHELOAI == maloaisach);
+            string ma = maloaisach;
+            if (loaisach != null)
+            {
+                loaisach.TENTHELOAI = tentheloai;
+                loaisach.GHICHU = ghichu;
+                
+            }
+            else
+            {
+                LOAISACH loaisach1 = new LOAISACH();
+                //tu sinh ma
+                do
+                {
+                    ma = Tusinhma(2, 4);
+                } while (db.LOAISACHes.SingleOrDefault(x => x.MATHELOAI == ma) != null);
+
+                loaisach1.MATHELOAI = ma;
+                loaisach1.TENTHELOAI = tentheloai;
+                loaisach1.GHICHU = ghichu;
+                try
+                {
+                    db.LOAISACHes.Add(loaisach1);
+                }
+                catch (Exception)
+                {
+                    return "0";
+                }
+            }
+            db.SaveChanges();
+            return ma;
+        }
+
+        public int Xoaloaisach(string maloaisach)
+        {
+            QLTHUVIEN db = new QLTHUVIEN();
+            try
+            {
+                LOAISACH loaisach = db.LOAISACHes.SingleOrDefault(x => x.MATHELOAI == maloaisach);
+                if (loaisach == null)
+                {
+                    return 0;
+                }
+                else
+                {
+                    db.LOAISACHes.Remove(loaisach);
+                    db.SaveChanges();
+                }
+            }
+            catch (Exception)
+            {
+
+                return 0;
+            }
+
+
+            return 1;
+        }
+
+        //chỉnh sửa nxb
+        public string ChinhsuaNXB(string tennxb, string manxb, string diachi,string email)
+        {
+            QLTHUVIEN db = new QLTHUVIEN();
+            NHAXUATBAN nxb = db.NHAXUATBANs.SingleOrDefault(x => x.MANXB == manxb);
+            string ma = manxb;
+            if (nxb != null)
+            {
+                nxb.TENNXB = tennxb;
+                nxb.DIACHI = diachi;
+                nxb.EMAIL = email;
+            }
+            else
+            {
+                NHAXUATBAN nxb1 = new NHAXUATBAN();
+                //tu sinh ma
+                do
+                {
+                    ma = Tusinhma(2, 4);
+                } while (db.NHAXUATBANs.SingleOrDefault(x => x.MANXB == ma) != null);
+
+                nxb1.MANXB = ma;
+                nxb1.TENNXB = tennxb;
+                nxb1.DIACHI = diachi;
+                nxb1.EMAIL = email;
+                try
+                {
+                    db.NHAXUATBANs.Add(nxb1);
+                }
+                catch (Exception)
+                {
+                    return "0";
+                }
+            }
+            db.SaveChanges();
+            return ma;
+        }
+
+        //xóa nhà xuât bản
+        public int XoaNXB(string manxb)
+        {
+            QLTHUVIEN db = new QLTHUVIEN();
+            try
+            {
+                NHAXUATBAN nxb = db.NHAXUATBANs.SingleOrDefault(x => x.MANXB == manxb);
+                if (nxb == null)
+                {
+                    return 0;
+                }
+                else
+                {
+                    db.NHAXUATBANs.Remove(nxb);
+                    db.SaveChanges();
+                }
+            }
+            catch (Exception)
+            {
+
+                return 0;
+            }
+
+
+            return 1;
+        }
+
+        //tu sinh mã
+        public string Tusinhma(int str,int number)
+        {
+            var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            var charsnumber = "1234567890";
+
+            var stringChars = new char[str];
+            var numberChars = new char[number];
+            var random = new Random();
+
+            for (int i = 0; i < stringChars.Length; i++)
+            {
+                stringChars[i] = chars[random.Next(chars.Length)];
+            }
+
+
+            for (int i = 0; i < numberChars.Length; i++)
+            {
+                numberChars[i] = chars[random.Next(charsnumber.Length)];
+            }
+
+            //hai chu dau tien
+            string str1 = new String(stringChars);
+            string str2 = new String(numberChars);
+
+            string ma = str1 + str2;
+
+            return ma;
+        }
+
+        //người dùng và thẻ
+        //danh sách người dùng(tài khoản)
+
+
+
+        //chinh sửa người dùng
+
+
+
+        //thêm mới người dùng
+
+
+        //danh sách thẻ
+
+
+        //thêm mới thẻ
+
 
         #endregion
 

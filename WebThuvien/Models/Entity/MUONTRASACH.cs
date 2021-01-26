@@ -15,6 +15,7 @@ namespace WebThuvien.Models.Entity
             CHITIETMUONTRASACHes = new HashSet<CHITIETMUONTRASACH>();
         }
 
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ID { get; set; }
 
         [StringLength(20)]
@@ -22,6 +23,10 @@ namespace WebThuvien.Models.Entity
 
         [StringLength(20)]
         public string MASACH { get; set; }
+
+        [Key]
+        [StringLength(20)]
+        public string MAMUONTRASACH { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CHITIETMUONTRASACH> CHITIETMUONTRASACHes { get; set; }

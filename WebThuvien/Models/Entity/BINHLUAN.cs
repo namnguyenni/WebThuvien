@@ -21,10 +21,10 @@ namespace WebThuvien.Models.Entity
         [StringLength(1000)]
         public string NOIDUNG { get; set; }
 
-        public int MAREPBINHLUAN { get; set; }
-
         [Column(TypeName = "date")]
         public DateTime? THOIGIAN { get; set; }
+
+        public int? MAREPBINHLUAN { get; set; }
 
         public virtual TAIKHOAN TAIKHOAN { get; set; }
 

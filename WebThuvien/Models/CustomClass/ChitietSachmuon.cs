@@ -26,12 +26,17 @@ namespace WebThuvien.Models.CustomClass
         public string NGONNGU { get; set; }
 
         public string MALOAISACH { get; set; }
+        public string TENLOAISACH { get; set; }
 
         public string MALINHVUC { get; set; }
+        public string TENLINHVUC { get; set; }
 
         public string MATACGIA { get; set; }
+        public string TENTACGIA { get; set; }
 
         public string MANHAXUATBAN { get; set; }
+        public string TENNHAXUATBAN { get; set; }
+
 
         public DateTime? NGAYTAILEN { get; set; }
 

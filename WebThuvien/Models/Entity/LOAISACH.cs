@@ -24,11 +24,13 @@ namespace WebThuvien.Models.Entity
 
         [StringLength(100)]
         public string TENTHELOAI { get; set; }
+
         [StringLength(300)]
         public string GHICHU { get; set; }
 
         [StringLength(30)]
         public string KIHIEU { get; set; }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SACH> SACHes { get; set; }
     }

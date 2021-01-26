@@ -11,7 +11,8 @@ namespace WebThuvien.Models.Entity
     {
         public int ID { get; set; }
 
-        public int? MAMUONTRASACH { get; set; }
+        [StringLength(20)]
+        public string MAMUONTRASACH { get; set; }
 
         public int? THOIGIANMUON { get; set; }
 

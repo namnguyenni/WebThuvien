@@ -1,0 +1,339 @@
+﻿
+@{
+    ViewBag.Title = "MuonSach";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script src="~/Scripts/onscan.min.js"></script>
+
+
+<div class="main-container">
+    <div class="pd-ltr-20 xs-pd-20-10">
+        <div class="min-height-200px">
+            <div class="page-header">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12">
+                        <div class="title">
+                            <h4>Trả sách</h4>
+                        </div>
+                        <nav aria-label="breadcrumb" role="navigation">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item">
+                                    <a href="#">Trang chủ</a>
+                                </li>
+                                <li class="breadcrumb-item">
+                                    <a href="#">Trả sách</a>
+                                </li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-30">
+                    <div class="card-box height-100-p overflow-hidden">
+                        <input onclick="ThemHangMoi('','','','','')" style="right:15px;left:auto;position:initial;" class="btn btn-primary " type="button" value="Thêm sách trả" />
+
+                        <div class="profile-tab height-100-p">
+
+                            <div class="tab height-100-p">
+
+                                @* Bảng sách cho trả offline *@
+                                <form action="/Admin/TraSach" enctype="multipart/form-data" method="post">
+                                    <table class="table table-bordered" border="0" cellspacing="0" cellpadding="0" style="font-size:10px;">
+                                        <thead>
+                                            <tr>
+                                                <th>STT</th>
+                                                <th>Mã sách</th>
+                                                <th>Tên sách</th>
+                                                <th>Hình ảnh</th>
+                                                <th>Ngày mượn</th>
+                                                <th>Người mượn</th>
+                                                <th>Xóa</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            
+                                        </tbody>
+                                    </table>
+                                    <input onclick="GuiTTTraSach()" class="form-control btn btn-success " type="button" value="Xác nhận trả" />
+
+                                </form>
+
+                            </div>
+                            @* Bảng sách cho mượn offline *@
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer-wrap pd-20 mb-20 card-box">
+        Thư viện số hóa -  <a href="/" target="_blank">Ban cơ yếu chính phủ</a>
+    </div>
+</div>
+
+<style>
+    table input[type=text], table textarea, table input[type=number] {
+        border: none;
+        text-align: center;
+        max-width: 120px;
+        min-width: 70px;
+    }
+    td,th{
+        text-align:center;
+    }
+    table input[type=number] {
+        border: none;
+        text-align: center;
+        max-width: 100px;
+        min-width: 30px;
+    }
+    .center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 80%;
+}
+</style>
+
+<script>
+
+
+    $(document).ready(function () {
+
+        var actions = $("table td:last-child").html();
+        // Append table with add row form on add new button click
+
+        // Delete row on delete button click
+        $(document).on("click", ".delete", function () {
+            $(this).parents("tr").remove();
+            index--;
+
+        });
+        //MaSach
+        $(document).on("change", ".MaSach", function () {
+            var formData = new FormData();
+            var SachCode = $(this).val();
+
+            var that = this;
+            var parent = $(this).parents("tr");//thanhf phan cha
+
+            formData.append('masach', SachCode)
+            $.ajax({
+                url: 'GetSachTraFrMasach',
+                type: 'POST',
+                data: formData,
+                processData: false,  // tell jQuery not to process the data
+                contentType: false,  // tell jQuery not to set contentType
+                success: function (data) {
+                    if (data.loi == "1") {
+                        alert("Sách khong ton tai!!!");
+                        $(that).val("");
+                        return;
+                    }
+                    else if (data.loi == "2") {
+                        alert("Sách không trong trạng thái mượn!!")
+                        $(that).val("");
+                        return;
+                    }
+                    //SET GIA TRỊ các thẻ cùng hàng
+                    $(parent).find('.Hinhanh').attr('src', '/Content/CLientContent/images/Books/' + data.hinhanh);
+                    $(parent).find('.Tensach').text(data.tensach);
+                    $(parent).find('.Ngaymuon').text(data.ngaymuon);
+                    $(parent).find('.Nguoimuon').text(data.tenchuthe);
+
+                },
+                error: function (data) {
+                    alert("Lối hoặc sách không ton tai!!!")
+                }
+            });
+
+
+        });
+
+        $(document).on("blur", ".date-picker", function () {
+            //kiểm tra xem định dạng date chưa
+            var dateVal = $(this).val();
+            if (testDate(dateVal)) {
+
+                return;
+            }
+            else {
+                $(this).val(getMonthDays(dateVal));
+                return;
+            }
+        });
+
+
+
+        onScan.attachTo(document, {
+            suffixKeyCodes: [13], // enter-key expected at the end of a scan
+            reactToPaste: true, // Compatibility to built-in scanners in paste-mode (as opposed to keyboard-mode)
+            onScan: function (sCode, iQty) { // Alternative to document.addEventListener('scan')
+
+                    console.log(sCode)
+                    GetSachTraFrMasach(sCode);
+
+            },
+            onKeyDetect: function (iKeyCode) { // output all potentially relevant key events - great for debugging!
+                console.log('Nhấn: ' + iKeyCode);
+            }
+        });
+    });
+
+    //gưi thông tin mượn sách lên server
+    function GuiTTTraSach() {
+        
+        var masach = [];
+        var i = 0;
+        var formData = new FormData();
+        
+        $('.MaSach').each(function (index) {
+            if ($(this).val() !='') {
+                masach[i] = $(this).val();
+                
+                i++;
+            }
+        })
+        formData.append('masach[]',JSON.stringify( masach));
+        //GOI AJAX
+        
+
+
+        $.ajax({
+            url: 'TraSach',
+            type: 'POST',
+            data: formData,
+            dataType: 'json',
+            processData: false,  // tell jQuery not to process the data
+            contentType: false,  // tell jQuery not to set contentType
+            success: function (data) {
+                if (data == "1") {
+                    var success = '<div id="alertSuccess" class="alert alert-success alert-dismissible fade show" role="alert">' +
+                    '<strong id="alertTxt">Thành công</strong>' +
+                                   '<button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
+                                        '<span aria-hidden="true">×</span>' +
+                                        '</button>' +
+
+                                '</div>'
+
+                    $('.tab').append(success);
+                    return;
+                }
+                else if(data=="0") {
+                    var alertt = '<div id="alert" class="alert alert-success alert-dismissible fade show" role="alert">' +
+                          '<strong id="alertTxt">Thất bại</strong>' +
+                          '<button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
+                                '<span aria-hidden="true">×</span>' +
+                                '</button>' +
+                        '</div>' +
+
+                $('div.tab').append(alertt);
+                    $('#alertTxt').text("Xác nhận mượn sách không thành công");
+                }
+            },
+            error: function (data) {
+                alert("Server không phục vụ bây giờ.Kiểm tra kết nối đường truyền!!!")
+            }
+        });
+
+    }
+
+    var index = $("table tbody tr:last-child").index() + 1;
+    //them hàng mới
+    function ThemHangMoi(masach, tensach, hinhanh,ngaymuon,nguoimuon) {
+        index++;
+        var row = '<tr>' +
+                '<td>' +
+                `${index}` +
+                '<td><textarea name="Masach" class="MaSach" >'+masach+'</textarea></td>' +
+                '<td><text class="Tensach">'+tensach+'</text></td>' +
+                '<td><img style="max-height:100px;max-width:100px;" src="/Content/CLientContent/images/Books/'+hinhanh+'" class="Hinhanh"/></td>' +
+                '<td><text class="Ngaymuon">'+ngaymuon+'</text></td>' +
+                '<td><text class="Nguoimuon">'+nguoimuon+'</text></td>' +
+                '<td><a class="delete" title="Xóa"><i class="fa fa-remove" style="color:#22a1be;font-size:20px;text-align:center"></i></a></td>' +
+                '</tr>';
+        $("table").append(row);
+    }
+
+
+
+    //hàm quẹt thẻ lấy thông tin sách
+        function GetSachTraFrMasach(SachCode) {
+            var formData = new FormData();
+            var that = this;
+            var parent = $(this).parents("tr");//thanhf phan cha
+
+            formData.append('masach', SachCode)
+            $.ajax({
+                url: 'GetSachTraFrMasach',
+                type: 'POST',
+                data: formData,
+                processData: false,  // tell jQuery not to process the data
+                contentType: false,  // tell jQuery not to set contentType
+                success: function (data) {
+                    if (data.loi == "1") {
+                        alert("Sách khong ton tai!!!");
+                        $(that).val("");
+                        return;
+                    }
+                    else if (data.loi == "2") {
+                        alert("Sách không trong trạng thái mượn!!")
+                        return;
+                    }
+                    //SET GIA TRỊ các thẻ cùng hàng
+                    ThemHangMoi(data.masach, data.tensach, data.hinhanh, data.ngaymuon, data.nguoimuon)
+
+                },
+                error: function (data) {
+                    alert("Lối hoặc sách không ton tai!!!")
+                }
+            });
+        }
+
+    //test date
+    function testDate(str) {
+        var t = str.match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
+        if (t === null) return false;
+        var d = parseInt(t[1]), m = parseInt(t[2], 10), y = parseInt(t[3], 10);
+        //below should be more acurate algorithm
+        if (m >= 1 && m <= 12 && d >= 1 && d <= 31) {
+            return true;
+        }
+        return false;
+    }
+
+    //chuyển tháng name thành number
+
+    function getMonthDays(MonthYear) {
+        var months = [
+          'January',
+          'February',
+          'March',
+          'April',
+          'May',
+          'June',
+          'July',
+          'August',
+          'September',
+          'October',
+          'November',
+          'December'
+        ];
+
+        var Value = MonthYear.split(" ");
+        var month = (months.indexOf(Value[1]) + 1);
+        if (month < 10) {
+            month = '0' + month;
+        }
+
+        var date = Value[0];
+
+        return date + '/' + month + '/' + Value[2];
+    }
+
+
+    var quetthe = false;
+</script>

@@ -5,7 +5,7 @@ namespace WebThuvien.Models.Entity
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
-     
+
     [Table("SACH")]
     public partial class SACH
     {
@@ -54,11 +54,11 @@ namespace WebThuvien.Models.Entity
         [Column(TypeName = "date")]
         public DateTime? NGAYTAILEN { get; set; }
 
-        [Column(TypeName = "date")]
-        public DateTime? NAMXUATBAN { get; set; }
-
         [StringLength(1000)]
         public string GHICHU { get; set; }
+
+        [Column(TypeName = "date")]
+        public DateTime? NAMXUATBAN { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BINHLUAN> BINHLUANs { get; set; }

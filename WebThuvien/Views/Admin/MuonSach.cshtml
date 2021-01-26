@@ -71,7 +71,6 @@
                                         <input onclick="GuiTTMuonSach()" class="form-control btn btn-success " type="button" value="Xác nhận" />
                                         
                                     </form>
-
                                 </div>
                                 @* Bảng sách cho mượn offline *@
                             
@@ -124,7 +123,7 @@
             var formData = new FormData();
             var SachCode = $(this).val();
             var that = this;
-            var parent = $(this).parent().parent().get( 0 );
+            var parent = $(this).parents("tr");//thanhf phan cha
             formData.append('masach', SachCode)
             $.ajax({
                 url: 'GetSachFrMasach',
@@ -138,12 +137,17 @@
                         $(that).val("");
                         return;
                     }
+                    if (data.loi == "2") {
+                        alert("Sách đã mượn!!!");
+                        $(that).val("");
+                        return;
+                    }
                     //SET GIA TRỊ các thẻ cùng hàng
-                    $(parent).children().children('img').attr('src', '/Content/CLientContent/images/Books/' + data.hinhanh);
-                    $(parent).children().children('text').text(data.tensach);
+                    $(parent).find('img').attr('src', '/Content/CLientContent/images/Books/' + data.hinhanh);
+                    $(parent).find('text').text(data.tensach);
                 },
                 error: function (data) {
-                    alert("Lối hoặc sách không ton tai!!!")
+                    alert("Lỗi hoặc sách không ton tai!!!")
                 }
             });
         });
@@ -187,9 +191,25 @@
 
     //gưi thông tin mượn sách lên server
     function GuiTTMuonSach() {
-        var lstmasach = $('.lstmasach').val();
-        var lstthoigianmuon = $('.lstthoigianmuon').val();
+        var lstmasach = [];
+
+        var lstthoigianmuon = [];
+
+        $('.lstmasach').each(function (index) {
+            lstmasach[index] = $(this).val();
+        });
+
+        $('.lstthoigianmuon').each(function (index) {
+            lstthoigianmuon[index] = $(this).val();
+        });
+
+        
+        
         var mathe = $('#Mathe').val();
+        if (mathe == undefined || mathe == null|| mathe==''||lstmasach.length<1) {
+            alert("Chưa nhập thông tin");
+            return;
+        }
         //GOI AJAX
         var formData = new FormData();
         formData.append('lstmasach', lstmasach);
@@ -205,28 +225,29 @@
             contentType: false,  // tell jQuery not to set contentType
             success: function (data) {
                 if (data == "1") {
-                    var alertt = '<div id="alert" class="alert alert-success alert-dismissible fade show" role="alert">'+
-                                  '<strong id="alertTxt"></strong>' +
-                                  '<button type="button" class="close" data-dismiss="alert" aria-label="Close">'+
+                    var success = '<div id="alertSuccess" class="alert alert-success alert-dismissible fade show" role="alert">'+
+                    '<strong id="alertTxt">Thành công</strong>'+
+                                   '<button type="button" class="close" data-dismiss="alert" aria-label="Close">'+
                                         '<span aria-hidden="true">×</span>'+
-                                        '</button>'+
-                                '</div>'+
+                                        '</button>' +
+                                    
+                                '</div>'
 
-                    $('div.tab').append(alertt);
+                    
+                    $('.tab').append(success);
 
-                    $('#alertTxt').text("Xác nhận mượn sách thành công");
                     return;
                 }
                 else {
-                    var alertt = '<div id="alert" class="alert alert-success alert-dismissible fade show" role="alert">' +
-              '<strong id="alertTxt"></strong>' +
-              '<button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
-                    '<span aria-hidden="true">×</span>' +
-                    '</button>' +
-            '</div>' +
+                    var success = '<div id="alertError" class="alert alert-error alert-dismissible fade show" role="alert">' +
+                    '<strong id="alertTxt">Thành công</strong>' +
+                                   '<button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
+                                        '<span aria-hidden="true">×</span>' +
+                                        '</button>' +
+                                '</div>'
 
-$('div.tab').append(alertt);
-                    $('#alertTxt').text("Xác nhận mượn sách không thành công");
+
+                    $('.tab').append(success);
                 }
             },
             error: function (data) {
@@ -239,6 +260,8 @@ $('div.tab').append(alertt);
     //lấy thông tin thẻ nhập bằng tay
     function GetTheFrMathe(mathe1) {
         $('#mathe').val(mathe1);
+        $('#Mathe').val(mathe1);
+
         //GOI AJAX
         var formData = new FormData();
         formData.append('mathe', mathe1)
@@ -311,12 +334,16 @@ $('div.tab').append(alertt);
                     alert("Sách khong ton tai!!!");
                     return;
                 }
+                else if (data.loi == "2") {
+                    alert("Sách đã mượn!!!");
+                    return;
+                }
                 //thêm hàng mới vào bảng
                 ThemHangMoi(data.masach, data.tensach, data.hinhanh);
 
             },
             error: function (data) {
-                alert("Lối hoặc sách không ton tai!!!")
+                alert("Lỗi hoặc sách không ton tai!!!")
             }
         });
 

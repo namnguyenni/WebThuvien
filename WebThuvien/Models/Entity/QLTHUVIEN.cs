@@ -50,6 +50,10 @@ namespace WebThuvien.Models.Entity
                 .Property(e => e.MANGUOIBINHLUAN)
                 .IsUnicode(false);
 
+            modelBuilder.Entity<CHITIETMUONTRASACH>()
+                .Property(e => e.MAMUONTRASACH)
+                .IsUnicode(false);
+
             modelBuilder.Entity<DOCGIA>()
                 .Property(e => e.MADOCGIA)
                 .IsUnicode(false);
@@ -89,9 +93,8 @@ namespace WebThuvien.Models.Entity
                 .IsUnicode(false);
 
             modelBuilder.Entity<MUONTRASACH>()
-                .HasMany(e => e.CHITIETMUONTRASACHes)
-                .WithOptional(e => e.MUONTRASACH)
-                .HasForeignKey(e => e.MAMUONTRASACH);
+                .Property(e => e.MAMUONTRASACH)
+                .IsUnicode(false);
 
             modelBuilder.Entity<NHANVIEN>()
                 .Property(e => e.MANHANVIEN)

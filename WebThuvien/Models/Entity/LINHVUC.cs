@@ -25,6 +25,9 @@ namespace WebThuvien.Models.Entity
         [StringLength(100)]
         public string TENLINHVUC { get; set; }
 
+        [StringLength(300)]
+        public string GHICHU { get; set; }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SACH> SACHes { get; set; }
     }

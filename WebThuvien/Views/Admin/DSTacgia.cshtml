@@ -1,0 +1,239 @@
+﻿
+@{
+    ViewBag.Title = "MuonSach";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<div class="main-container">
+    <div class="pd-ltr-20 xs-pd-20-10">
+        <div class="min-height-200px">
+            <div class="page-header">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12">
+                        <div class="title">
+                            <h4>Mượn sách</h4>
+                        </div>
+                        <nav aria-label="breadcrumb" role="navigation">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item">
+                                    <a href="#">Trang chủ</a>
+                                </li>
+                                <li class="breadcrumb-item">
+                                    <a href="#">Mượn sách</a>
+                                </li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-30">
+                    <div class="card-box height-100-p overflow-hidden">
+                        <input onclick="ThemHangMoi()" style="right:15px;left:auto;position:initial;" class="btn btn-primary " type="button" value="Thêm tác giả" />
+
+                        <div class="profile-tab height-100-p">
+
+                            <div class="tab height-100-p">
+
+                                @* Bảng sách cho mượn offline *@
+                                    <table class="table table-bordered" border="0" cellspacing="0" cellpadding="0" style="font-size:10px;">
+                                        <thead>
+                                            <tr style="text-align:center;">
+                                                <th>STT</th>
+                                                <th style="display:none;">Mã tác giả</th>
+                                                <th>Tên tác giả</th>
+                                                <th>Website</th>
+                                                <th>Ghi chú</th>
+                                                <th>Xóa</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody style="text-align:center">
+                                            @{ int i = 1;}
+                                            @foreach (var item in ViewBag.tacgias as List<WebThuvien.Models.Entity.TACGIA>)
+                                            {
+                                                <tr>
+                                                    <td>@i</td>
+                                                    <td style="display:none;"><textarea style="max-width:50px;" type="text" class="Ma" placeholder="Mã tac gia">@item.MATACGIA</textarea></td>
+                                                    <td style="max-width:150px"><textarea style="max-width:100px;" type="text" class="Ten" placeholder="Tên tác giả">@item.TENTACGIA</textarea></td>
+                                                    <td style="max-width:250px"><textarea style="max-width:200px;" type="text" class="Website" placeholder="Website">@item.LINKWEBSITE</textarea></td>
+                                                    <td style="max-width:400px"><textarea style="max-width:300px;" type="text" class="Ghichu" placeholder="Ghi chú">@item.GHICHU</textarea></td>
+                                                    <td>
+                                                        <a class="delete" title="Xóa"><i class="fa fa-remove" style="color:#22a1be;font-size:20px;text-align:center"></i></a>
+                                                        <a target="_blank" title="Xem các tác phẩm" href="/Admin/Timkiemsach?noidungnhap=&linhvuc=&loaisach=&tacgia=@item.TENTACGIA"><i class="fa fa-eye" style="color:#042297;font-size:20px;text-align:center"></i></a>
+                                                    
+                                                    </td>
+                                                </tr>
+                                                i = i + 1;
+                                            }
+                                            
+                                        </tbody>
+                                    </table>
+
+
+                            </div>
+                            @* Bảng sách cho mượn offline *@
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer-wrap pd-20 mb-20 card-box">
+        Thư viện số hóa -  <a href="/" target="_blank">Ban cơ yếu chính phủ</a>
+    </div>
+</div>
+
+
+
+<style>
+    table input[type=text], table textarea, table input[type=number] {
+        border: none;
+        text-align: center;
+        max-width: 120px;
+        min-width: 70px;
+    }
+
+    table input[type=number] {
+        border: none;
+        text-align: center;
+        max-width: 100px;
+        min-width: 30px;
+    }
+    td{
+        text-align:center;
+        align-content:center;
+    }
+</style>
+
+<script>
+
+
+    $(document).ready(function () {
+        $('table').DataTable({
+            "language": {
+                "sProcessing": "Đang xử lý...",
+                "sLengthMenu": "Xem _MENU_ mục",
+                "sZeroRecords": "Không tìm thấy dòng nào phù hợp",
+                "sInfo": "Đang xem _START_ đến _END_ trong tổng số _TOTAL_ mục",
+                "sInfoEmpty": "Đang xem 0 đến 0 trong tổng số 0 mục",
+                "sInfoFiltered": "(được lọc từ _MAX_ mục)",
+                "sInfoPostFix": "",
+                "sSearch": "Tìm kiếm:",
+                "sUrl": "",
+                "oPaginate": {
+                    "sFirst": "Đầu",
+                    "sPrevious": "Trước",
+                    "sNext": "Tiếp",
+                    "sLast": "Cuối"
+                }
+            }
+        });
+
+
+        var actions = $("table td:last-child").html();
+
+        // Delete row on delete button click
+        $(document).on("click", ".delete", function () {
+
+
+            var formData = new FormData();
+            var parent = $(this).parents("tr");//thanhf phan cha
+
+            var matacgia = $(parent).find('.Ma').val();
+            formData.append('matacgia', matacgia);
+            $.ajax({
+                url: 'Xoatacgia',
+                type: 'POST',
+                data: formData,
+                processData: false,  // tell jQuery not to process the data
+                contentType: false,  // tell jQuery not to set contentType
+                success: function (data) {
+                    if (data == 1) {
+                        console.log("thay đổi thành công")
+                        $(parent).remove();
+                        index--;
+                        return;
+                    }
+                    else {
+                        console.log("thay đổi không thành công 1")
+                        alert("Không thể xóa!!Trong thư viên có sách thuộc tác giả này");
+
+                    }
+                    //SET GIA TRỊ các thẻ cùng hàng
+                },
+                error: function (data) {
+                    console.log("thay đổi không thành công")
+                }
+            });
+        });
+
+        //MaSach
+        $(document).on("change", ".Ma", function () { Chinhsuatacgia(this); });
+        $(document).on("change", ".Ten", function () { Chinhsuatacgia(this); });
+        $(document).on("change", ".Website", function () { Chinhsuatacgia(this); });
+        $(document).on("change", ".Ghichu", function () { Chinhsuatacgia(this); });
+
+
+
+
+    });
+
+    function Chinhsuatacgia (e) {
+        var formData = new FormData();
+        var parent = $(e).parents("tr");//thanhf phan cha
+
+        var matacgia = $(parent).find('.Ma').val();
+        var tentacgia = $(parent).find('.Ten').val();
+        var website = $(parent).find('.Website').val();
+        var ghichu = $(parent).find('.Ghichu').val();
+
+        formData.append('matacgia', matacgia);
+        formData.append('tentacgia', tentacgia);
+        formData.append('website', website);
+        formData.append('ghichu', ghichu);
+        $.ajax({
+            url: 'Chinhsuatacgia',
+            type: 'POST',
+            data: formData,
+            processData: false,  // tell jQuery not to process the data
+            contentType: false,  // tell jQuery not to set contentType
+            success: function (data) {
+                if (data != "0") {
+                    console.log("thay đổi thành công")
+                    $(parent).find('.Ma').val(data)
+
+                    return;
+                }
+                else {
+                    console.log("thay đổi không thành công")
+
+                }
+                //SET GIA TRỊ các thẻ cùng hàng
+            },
+            error: function (data) {
+                console.log("thay đổi không thành công")
+            }
+        });
+    }
+
+
+    var index = $("table tbody tr:last-child").index() + 1;
+    //them hàng mới
+    function ThemHangMoi() {
+        index++;
+        var row = '<tr>'+
+        '<td>' + `${index}` + '</td>' +
+        '<td style="display:none;"><textarea style="max-width:50px;" type="text" class="Ma" placeholder="Mã tac gia"></textarea></td>' +
+        '<td style="max-width:150px"><textarea style="max-width:100px;" type="text" class="Ten" placeholder="Tên tác giả"></textarea></td>' +
+        '<td style="max-width:150px"><textarea style="max-width:100px;" type="text" class="Website" placeholder="Website"></textarea></td>' +
+        '<td style="max-width:400px"><textarea style="max-width:300px;" type="text" class="Ghichu" placeholder="Ghi chú"></textarea></td>' +
+        '<td>' +
+        '<a class="delete" title="Xóa"><i class="fa fa-remove" style="color:#22a1be;font-size:20px;text-align:center"></i></a>' +
+        '<a target="_blank" title="Xem các tác phẩm" href="#"><i class="fa fa-eye" style="color:#042297;font-size:20px;text-align:center"></i></a>' +
+        '</td>' +
+        '</tr>';
+        $("table").append(row);
+    }
+
+</script>

@@ -74,7 +74,7 @@
                                     </div>
                                 </div>
                                 <div class="text-right">
-                                    <button class="btn btn-primary">Tìm</button>
+                                    <input class="btn btn-primary" value="Tìm" type="submit">
                                 </div>
                             </div>
                         </div>
@@ -103,7 +103,7 @@
                     <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
                         <a class="dropdown-item" href="#"><i class="dw dw-user1"></i>Thông tin</a>
                         <a class="dropdown-item" href="#"><i class="dw dw-help"></i> Thay đổi mật khẩu</a>
-                        <a class="dropdown-item" href="#"><i class="dw dw-logout"></i> Đăng xuất</a>
+                        <a class="dropdown-item" href="/home/logout"><i class="dw dw-logout"></i> Đăng xuất</a>
                     </div>
                 </div>
             </div>
@@ -137,6 +137,10 @@
                             <li><a href="/Admin/UploadSach">Thêm mới sách</a></li>
                             <li><a href="/Admin/MuonSach">Mượn sách</a></li>
                             <li><a href="/Admin/TraSach">Trả sách</a></li>
+                            <li><a href="/Admin/DSTacgia">Danh sách tác giả</a></li>
+                            <li><a href="/Admin/DSLinhvuc">Danh sách lĩnh vực</a></li>
+                            <li><a href="/Admin/DSLoaisach">Danh sách loại sách</a></li>
+                            <li><a href="/Admin/DSNXB">Danh sách nhà xuất bản</a></li>
                         </ul>
                     </li>
                     <li class="dropdown">
@@ -150,42 +154,10 @@
 
                         </ul>
                     </li>
+                    
                     <li class="dropdown">
                         <a href="javascript:;" class="dropdown-toggle">
-                            <span class="micon dw dw-fast-forward-1"></span><span class="mtext">Tác giả</span>
-                        </a>
-                        <ul class="submenu">
-                            <li><a href="/Admin/Sach">Danh mục sách</a></li>
-                            <li><a href="/Admin/UploadSach">Thêm mới sách</a></li>
-                            <li><a href="/Admin/MuonSach">Mượn sách</a></li>
-                            <li><a href="/Admin/TraSach">Trả sách</a></li>
-                        </ul>
-                    </li>
-                    <li class="dropdown">
-                        <a href="javascript:;" class="dropdown-toggle">
-                            <span class="micon dw dw-fast-forward-1"></span><span class="mtext">Lĩnh vực</span>
-                        </a>
-                        <ul class="submenu">
-                            <li><a href="/Admin/Sach">Danh mục sách</a></li>
-                            <li><a href="/Admin/UploadSach">Thêm mới sách</a></li>
-                            <li><a href="/Admin/MuonSach">Mượn sách</a></li>
-                            <li><a href="/Admin/TraSach">Trả sách</a></li>
-                        </ul>
-                    </li>
-                    <li class="dropdown">
-                        <a href="javascript:;" class="dropdown-toggle">
-                            <span class="micon dw dw-fast-forward-1"></span><span class="mtext">Loại sách</span>
-                        </a>
-                        <ul class="submenu">
-                            <li><a href="/Admin/Sach">Danh mục sách</a></li>
-                            <li><a href="/Admin/UploadSach">Thêm mới sách</a></li>
-                            <li><a href="/Admin/MuonSach">Mượn sách</a></li>
-                            <li><a href="/Admin/TraSach">Trả sách</a></li>
-                        </ul>
-                    </li>
-                    <li class="dropdown">
-                        <a href="javascript:;" class="dropdown-toggle">
-                            <span class="micon dw dw-analytics-21"></span><span class="mtext">Thống kê</span>
+                            <span class="micon dw dw-analytics-21"></span><span class="mtext">Thống kê và báo cáo</span>
                         </a>
                         <ul class="submenu">
                             <li><a href="#">Sách xem nhiều</a></li>
@@ -195,7 +167,7 @@
                     </li>
                     
                     <li>
-                        <a href="/" target="_blank" class="dropdown-toggle no-arrow">
+                        <a href="/home/Logout" target="_blank" class="dropdown-toggle no-arrow">
                             <span class="micon dw dw-paper-plane1"></span>
                             <span class="mtext"> Đăng xuất <img src="~/Content/AdminContent/vendors/images/coming-soon.png" alt="" width="25"></span>
                         </a>
