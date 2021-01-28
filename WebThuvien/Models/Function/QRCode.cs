@@ -26,11 +26,24 @@ namespace WebThuvien.Models.Function
             return barcodeText;
         }
 
-
-        public string GenerateQRCode(string qrcodeText)
+        /// <summary>
+        /// Type = 1 là sach,Type=2 là thẻ
+        /// </summary>
+        /// <param name="qrcodeText"></param>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        public string GenerateQRCode(string qrcodeText,int type)
         {
             string folderPath = "~/Content/Images/";
-            string imagePath = "~/Content/Images/"+ qrcodeText + ".png";
+            string imagePath = "~/Content/Images/Sach/" + qrcodeText + ".png";
+            if (type==1)//sách
+            {
+                imagePath = "~/Content/Images/Sach/" + qrcodeText + ".png";
+            }
+            else if (type==2)//thẻ
+            {
+                imagePath = "~/Content/Images/The/" + qrcodeText + ".png";
+            }
             // If the directory doesn't exist then create it.
             if (!Directory.Exists(HttpContext.Current.Server.MapPath(folderPath)))
             {
@@ -39,7 +52,7 @@ namespace WebThuvien.Models.Function
 
             var barcodeWriter = new BarcodeWriter();
             barcodeWriter.Format = BarcodeFormat.CODE_128;
-            barcodeWriter.Options = new ZXing.Common.EncodingOptions() { Width = 250, Height = 60 };
+            barcodeWriter.Options = new ZXing.Common.EncodingOptions() { Width = 400, Height = 50 };
             var result = barcodeWriter.Write(qrcodeText);
 
             string barcodePath = HttpContext.Current.Server.MapPath(imagePath);

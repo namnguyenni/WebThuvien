@@ -485,6 +485,7 @@
     <Content Include="Views\Admin\TraSach.cshtml" />
     <Content Include="Views\Admin\Taikhoan.cshtml" />
     <Content Include="Views\Admin\ThemThe.cshtml" />
+    <Content Include="Views\Admin\The.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

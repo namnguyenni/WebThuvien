@@ -1,0 +1,57 @@
+﻿
+@{
+    ViewBag.Title = "Tài liệu thư viện";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="main-container">
+    <div class="xs-pd-20-10 pd-ltr-20">
+        <div class="card-box pb-10">
+            <div class="h5 pd-20 mb-0">Danh sách các cuốn sách trong thư viện</div>
+            <table class="data-table table nowrap">
+                <thead>
+                    <tr>
+                        <th class="table-plus">STT</th>
+                        <th>Mã thẻ</th>
+                        <th>Tên chủ thẻ</th>
+                        <th>Số sách đang mượn</th>
+                        <th class="datatable-nosort sorting_disabled" rowspan="1" colspan="1" aria-label="Action">Action</th>
+                        <th class="datatable-nosort sorting_disabled" rowspan="1" colspan="1" aria-label="Action">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{ int STT = 0;}
+                    @foreach (var item in @ViewBag.thethuviens as List<WebThuvien.Models.Entity.THETHUVIEN>)
+                    {
+                        STT = STT + 1;
+                        <tr>
+                            <td class="table-plus">
+                                @STT
+                            </td>
+                            <td>@item.MATHE</td>
+                            <td>@item.TENCHUTHE</td>
+                            <td>0</td>
+
+                            <td>
+                                <a href="/Admin/XemMauThe?mathe=@item.MATHE"><i title="Xem ảnh thẻ" class="icon-copy fa fa-cloud-download" style="font-size:20px" aria-hidden="true"></i></a>
+                            </td>
+                            <td>
+                                <div class="table-actions">
+                                    <i class="icon-copy fa fa-lock" style="font-size:20px" aria-hidden="true"></i>
+                                    <i class="icon-copy fa fa-unlock" aria-hidden="true"></i>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+
+
+                </tbody>
+            </table>
+        </div>
+
+
+        <div class="footer-wrap pd-20 mb-20 card-box">
+            Thư viện số hóa -  <a href="/" target="_blank">Ban cơ yếu chính phủ</a>
+        </div>
+    </div>
+</div>

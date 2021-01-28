@@ -178,7 +178,7 @@ namespace WebThuvien.Controllers
                     }
                     while (db.SACHes.SingleOrDefault(x => x.MASACH == masach) != null);
                 }
-                new QRCode().GenerateQRCode(sach.MASACH);
+                new QRCode().GenerateQRCode(sach.MASACH,1);
 
 
                 if (filepdf != null)
@@ -1165,6 +1165,12 @@ namespace WebThuvien.Controllers
         //danh sách thẻ bạn đọc
         public ActionResult The()
         {
+            //kiểm tra sự tồn tại session
+            if (Session["Taikhoan"] == null)
+            {
+                return Redirect("/Home/Login");
+            }
+
             QLTHUVIEN db = new QLTHUVIEN();
             ViewBag.thethuviens = db.THETHUVIENs.OrderBy(x => x.NGAYCAP).ToList();
 
@@ -1175,15 +1181,92 @@ namespace WebThuvien.Controllers
         [HttpGet]
         public ActionResult ThemThe()
         {
+            //kiểm tra sự tồn tại session
+            if (Session["Taikhoan"] == null)
+            {
+                return Redirect("/Home/Login");
+            }
             return View();
         }
 
+        public ActionResult XemMauThe(string mathe)
+        {
+            //kiểm tra có thẻ này không
+            QLTHUVIEN db = new QLTHUVIEN();
+            THETHUVIEN thethuvien = db.THETHUVIENs.SingleOrDefault(x => x.MATHE == mathe);
+            if (thethuvien == null)
+            {
+                return Redirect("/Admin/The");
+
+            }
+            else
+            {
+            //kiểm tra exist của ảnh mẫu thẻ
+                bool check = System.IO.File.Exists(Server.MapPath("~/Content/ClientContent/Thethuvien/" + mathe + ".jpg"));
+                if (!check)
+                {
+                    //tạo mẫu thẻ mới
+                    if (!System.IO.File.Exists(Server.MapPath("/Images/The/" + mathe + ".png")))
+                    {
+                        //tạo mẫu barcode thẻ mới
+                        new QRCode().GenerateQRCode(mathe, 2);
+                    }
+
+                    string file = Server.MapPath("~/Content/AdminContent/Mauthe/Thethuvien.jpg");
+                    string img = Server.MapPath("~/Content/Images/The/" + mathe + ".png");
+
+                    Bitmap bitMapImage = new System.Drawing.Bitmap(file);
+                    Graphics graphicImage = Graphics.FromImage(bitMapImage);
+                    graphicImage.SmoothingMode = SmoothingMode.AntiAlias;
+                    //viết chữ
+                    string gt, ns, nc, nhh;
+
+                    if (thethuvien.GIOITINH == 1)
+                    {
+                        gt = "Nam";
+                    }
+                    else
+                    {
+                        gt = "Nữ";
+                    }
+                    ns = ConvertDate(Convert.ToDateTime(thethuvien.NGAYSINH));
+                    nc = ConvertDate(Convert.ToDateTime(thethuvien.NGAYCAP));
+                    nhh = ConvertDate(Convert.ToDateTime(thethuvien.NGAYHETHAN));
+                    Font font = new Font("Arial", 12, FontStyle.Bold);
+                    graphicImage.DrawString(thethuvien.TENCHUTHE.ToUpper(), font, SystemBrushes.WindowText, new Point(300, 158));
+                    graphicImage.DrawString(gt, font, SystemBrushes.WindowText, new Point(300, 199));
+                    graphicImage.DrawString(ns, font, SystemBrushes.WindowText, new Point(300, 243));
+
+                    graphicImage.DrawString(thethuvien.DIACHI.ToUpper(), font, SystemBrushes.WindowText, new Point(300, 286));
+                    graphicImage.DrawString(nc, font, SystemBrushes.WindowText, new Point(300, 328));
+                    graphicImage.DrawString(nhh, font, SystemBrushes.WindowText, new Point(300, 371));
+
+
+                    //thêm ảnh
+                    Image barcode = Image.FromFile(img);
+                    graphicImage.DrawImage(barcode, new Point(265, 428));
+
+                    //lưu
+                    Response.ContentType = "image/jpg";
+                    //Save the new image to the response output stream.
+                    bitMapImage.Save(Server.MapPath("~/Content/ClientContent/Thethuvien/" + mathe + ".jpg"), ImageFormat.Jpeg);
+
+                    //Clean house.
+                    graphicImage.Dispose();
+                    bitMapImage.Dispose();
+
+                }
+
+            }
+            return Redirect("/Content/ClientContent/Thethuvien/" + mathe + ".jpg");
+        }
+
         [HttpPost]
-        public int ThemThe(THETHUVIEN thethuvien)
+        public ActionResult ThemThe(THETHUVIEN thethuvien)
         {
             //tự sinh mã thẻ
             string year = DateTime.Now.Year.ToString();
-            string number = Tusinhma(3, 0);
+            string number = Tusinhma(0, 3);
             string mathe = "TV" + year +""+ number;
             //lưu thông tin thẻ vào cơ sở dữ liệu
             thethuvien.MATHE = mathe;
@@ -1191,59 +1274,60 @@ namespace WebThuvien.Controllers
             try
             {
                 db.THETHUVIENs.Add(thethuvien);
-                new QRCode().GenerateQRCode(mathe);
+                new QRCode().GenerateQRCode(mathe,2);
                 db.SaveChanges();
             }
             catch (Exception)
             {
                 TempData["Loi"] = "Lỗi !Không thể thêm thẻ thư viện";
-                return 0;
+                return Redirect("/Admin/Themthe");
             }
-            string file = Server.MapPath("~/Content/AdminContent/Mauthe/Thethuvien.png");
-            string img = Server.MapPath("~/Content/Images/"+mathe+".png");
+            
 
-            Bitmap bitMapImage = new
-            System.Drawing.Bitmap(file);
-            Graphics graphicImage = Graphics.FromImage(bitMapImage);
-            graphicImage.SmoothingMode = SmoothingMode.AntiAlias;
-            //viết chữ
-            string gt, ns, nc, nhh;
-
-            if (thethuvien.GIOITINH == 1)
-            {
-                gt = "Nam";
-            }
-            else
-            {
-                gt = "Nữ";
-            }
-            ns = ConvertDate(Convert.ToDateTime(thethuvien.NGAYSINH));
-            nc = ConvertDate(Convert.ToDateTime(thethuvien.NGAYCAP));
-            nhh = ConvertDate(Convert.ToDateTime(thethuvien.NGAYHETHAN));
-            Font font = new Font("Arial", 12, FontStyle.Bold);
-            graphicImage.DrawString(thethuvien.TENCHUTHE.ToUpper(),font,SystemBrushes.WindowText, new Point(100, 250));
-            graphicImage.DrawString(ns, font, SystemBrushes.WindowText, new Point(100, 250));
-            graphicImage.DrawString(gt, font, SystemBrushes.WindowText, new Point(100, 250));
-            graphicImage.DrawString(thethuvien.DIACHI.ToUpper(), font, SystemBrushes.WindowText, new Point(100, 250));
-            graphicImage.DrawString(nc, font, SystemBrushes.WindowText, new Point(100, 250));
-            graphicImage.DrawString(nhh, font, SystemBrushes.WindowText, new Point(100, 250));
-
-
-            //thêm ảnh
-            Image barcode = Image.FromFile(img);
-            graphicImage.DrawImage(barcode, new Point(100, 100));
-
-            //lưu
-            Response.ContentType = "image/jpg";
-            //Save the new image to the response output stream.
-            bitMapImage.Save(Server.MapPath("~/Content/ClientContent/Thethuvien/" + mathe + ".jpg"), ImageFormat.Jpeg);
-
-            //Clean house.
-            graphicImage.Dispose();
-            bitMapImage.Dispose();
-
-            return 1;
+            return XemMauThe(mathe);
         }
+
+#region Section Hoạt động
+        //Danh sách hoạt động
+        public ActionResult DSHoatdong()
+        {
+            return View();
+        }
+
+        //Chi tiết hoạt động
+        public ActionResult Chitiethoatdong(string id)
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Chinhsuahoatdong(BAIDANGTHONGTIN baidang)
+        {
+            return View();
+        }
+
+        //xóa hoạt động
+        public string Xoahoatdong()
+        {
+            return "0";
+        }
+
+        //Thêm hoạt động
+        [HttpGet]
+        public ActionResult Themhoatdong()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Themhoatdong(BAIDANGTHONGTIN baidang)
+        {
+            return View();
+        }
+
+
+
+        #endregion
 
         public string ConvertDate(DateTime date)
         {

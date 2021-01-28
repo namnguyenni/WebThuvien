@@ -1,25 +1,80 @@
 ﻿
 @{
-    Layout = null;
+    ViewBag.Title = "Thêm mới sách";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<!DOCTYPE html>
+<div class="main-container">
+    <div class="xs-pd-20-10 pd-ltr-20">
+        <div class="title pb-10">
+            <h2 class="h3 mb-0">Thêm thẻ thư viện  </h2>
+            <div class="card card-box">
+            </div>
+        </div>
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>ThemThe</title>
-</head>
-<body>
-    <form action="/Admin/ThemThe" method="post" enctype="multipart/form-data">
-        <input placeholder="TENCHUTHE" name="TENCHUTHE" type="text"/>
-        <input name="NGAYSINH" type="date" />
-        <input name="DIACHI" type="text" />
-        <input name="NGAYCAP" type="date" />
-        <input name="NGAYHETHAN" type="date" />
-        <input name="GIOITINH" type="number" />
-        <input type="submit" value="Submit" />
+        <div class="xs-pd-20-10 pd-ltr-20">
+            <form method="post" enctype="multipart/form-data" action="/Admin/ThemThe">
+                <div class="row">
+                    <div class="col-md-6 col-sm-12">
+                        <div class="form-group">
+                            <label>Họ tên chủ thẻ</label>
+                            <input name="TENCHUTHE" type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-sm-12">
+                        <div class="form-group">
+                            <label>Ngày sinh</label>
+                            <input name="NGAYSINH" type="date" class="form-control">
+                        </div>
+                    </div>
+                    
+                </div>
+                <div class="row">
+                    <div class="col-md-6 col-sm-12">
+                        <div class="form-group">
+                            <label>Giới tính</label>
+                            <select name="GIOITINH" type="text" class="form-control custom-select">
+                                <option value="1">Nam</option>
+                                <option value="2">Nữ</option>
 
-    </form>
-</body>
-</html>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-sm-12">
+                        <div class="form-group">
+                            <label>Địa chỉ</label>
+                            <input name="DIACHI" type="text" class="form-control">
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-md-6 col-sm-12">
+                        <div class="form-group">
+                            <label>Ngày cấp</label>
+                            <input name="NGAYCAP" type="date" class="form-control" >
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-sm-12">
+                        <div class="form-group">
+                            <label>Ngày hết hạn</label>
+                            <input name="NGAYHETHAN" class="form-control" type="date">
+                        </div>
+                    </div>
+
+                </div>
+
+                <input type="submit" value="Lưu" class="form-control" />
+            </form>
+        </div>
+
+
+        <div style="height:40px"></div>
+
+
+
+        <div class="footer-wrap pd-20 mb-20 card-box">
+            Thư viện số hóa - <a href="/" target="_blank">Ban cơ yếu chính phủ</a>
+        </div>
+    </div>
+</div>
