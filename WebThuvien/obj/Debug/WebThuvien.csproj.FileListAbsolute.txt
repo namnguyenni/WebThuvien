@@ -61,3 +61,5 @@ E:\Github Clone\WebThuvien\WebThuvien\obj\Debug\WebThuvien.csprojResolveAssembly
 E:\Github Clone\WebThuvien\WebThuvien\obj\Debug\WebThuvien.dll
 E:\Github Clone\WebThuvien\WebThuvien\obj\Debug\WebThuvien.pdb
 E:\Github Clone\WebThuvien\WebThuvien\bin\Zen.Barcode.Core.dll
+E:\Github Clone\WebThuvien\WebThuvien\bin\Xceed.Document.NET.dll
+E:\Github Clone\WebThuvien\WebThuvien\bin\Xceed.Words.NET.dll

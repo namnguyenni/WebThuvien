@@ -1,0 +1,263 @@
+﻿
+@{
+    ViewBag.Title = "MuonSach";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<div class="main-container">
+    <div class="pd-ltr-20 xs-pd-20-10">
+        <div class="min-height-200px">
+            <div class="page-header">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12">
+                        <div class="title">
+                            <h4>Lĩnh vực</h4>
+                        </div>
+                        <nav aria-label="breadcrumb" role="navigation">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item">
+                                    <a href="#">Trang chủ</a>
+                                </li>
+                                <li class="breadcrumb-item">
+                                    <a href="#">Danh sách lĩnh vực</a>
+                                </li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-30">
+                    <div class="card-box height-100-p overflow-hidden">
+                        <input onclick="ThemHangMoi()" style="right:15px;left:auto;position:initial;" class="btn btn-primary " type="button" value="Thêm tài khoản" />
+
+                        <div class="profile-tab height-100-p">
+
+                            <div class="tab height-100-p">
+
+                                @* Bảng sách cho mượn offline *@
+                                <table class="table table-bordered" border="0" cellspacing="0" cellpadding="0" style="font-size:10px;">
+                                    <thead>
+                                        <tr style="text-align:center;">
+                                            <th>STT</th>
+                                            <th>Tên đăng nhập</th>
+                                            <th>Mật khẩu</th>
+                                            <th>Loại tài khoản</th>
+                                            <th>Xóa</th>
+                                        </tr>
+                                    </thead> 
+                                    <tbody style="text-align:center">
+                                        @{ int i = 1;}
+                                        @foreach (var item in ViewBag.taikhoans as List<WebThuvien.Models.Entity.TAIKHOAN>)
+                                        {
+                                            <tr>
+                                                <td>@i</td>
+                                                <td><text style="max-width:250px;" class="Tendangnhap col-12">@item.TENTAIKHOAN</text></td>
+                                                <td style="max-width:250px"><input maxlength="20" style="max-width:200px;" type="text" class="col-12 Matkhau" value="@item.MATKHAU" placeholder="Matkhau"></td>
+                                                <td style="max-width:300px">
+                                                <select style="max-width:250px;" type="text" class="Loaitaikhoan custom-select col-12">
+                                                    @foreach (var item1 in ViewBag.loaitaikhoans as List<WebThuvien.Models.Entity.LOAITAIKHOAN>)
+                                                    {
+                                                        if (item.LOAITAIKHOAN == item1.MALOAI)
+                                                        {
+                                                            <option value="@item1.MALOAI" label="@item1.TENLOAITAIKHOAN" selected></option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option value="@item1.MALOAI" label="@item1.TENLOAITAIKHOAN"></option>
+                                                        }
+                                                    }
+                                                </select></td>
+                                                <td>
+                                                    <a class="delete" title="Xóa"><i class="fa fa-remove" style="color:#22a1be;font-size:20px;text-align:center"></i></a>
+                                                </td>
+                                            </tr>
+                                            i = i + 1;
+                                        }
+
+                                    </tbody>
+                                </table>
+
+
+                            </div>
+                            @* Bảng sách cho mượn offline *@
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer-wrap pd-20 mb-20 card-box">
+        Thư viện số hóa -  <a href="/" target="_blank">Ban cơ yếu chính phủ</a>
+    </div>
+</div>
+
+
+
+<style>
+    table input[type=text], table textarea, table input[type=number] {
+        border: none;
+        text-align: center;
+        max-width: 120px;
+        min-width: 70px;
+    }
+
+    table input[type=number] {
+        border: none;
+        text-align: center;
+        max-width: 100px;
+        min-width: 30px;
+    }
+
+    td {
+        text-align: center;
+        align-content: center;
+    }
+</style>
+
+<script>
+
+
+    $(document).ready(function () {
+        $('table').DataTable({
+            "language": {
+                "sProcessing": "Đang xử lý...",
+                "sLengthMenu": "Xem _MENU_ mục",
+                "sZeroRecords": "Không tìm thấy dòng nào phù hợp",
+                "sInfo": "Đang xem _START_ đến _END_ trong tổng số _TOTAL_ mục",
+                "sInfoEmpty": "Đang xem 0 đến 0 trong tổng số 0 mục",
+                "sInfoFiltered": "(được lọc từ _MAX_ mục)",
+                "sInfoPostFix": "",
+                "sSearch": "Tìm kiếm:",
+                "sUrl": "",
+                "oPaginate": {
+                    "sFirst": "Đầu",
+                    "sPrevious": "Trước",
+                    "sNext": "Tiếp",
+                    "sLast": "Cuối"
+                }
+            }
+        });
+
+
+        var actions = $("table td:last-child").html();
+
+        // Delete row on delete button click
+        $(document).on("click", ".delete", function () {
+
+
+            var formData = new FormData();
+            var parent = $(this).parents("tr");//thanhf phan cha
+
+            var Tendangnhap = $(parent).find('.Tendangnhap').val();
+            if (Tendangnhap=="") {
+                Tendangnhap = $(parent).find('.Tendangnhap').text();
+            }
+            formData.append('Tendangnhap', Tendangnhap);
+            $.ajax({
+                url: 'Xoataikhoan',
+                type: 'POST',
+                data: formData,
+                processData: false,  // tell jQuery not to process the data
+                contentType: false,  // tell jQuery not to set contentType
+                success: function (data) {
+                    if (data == 1) {
+                        console.log("Xóa thành công")
+                        $(parent).remove();
+                        index--;
+                        return;
+                    }
+                    else {
+                        console.log("không thành công");
+                        alert("Không thể xóa!!");
+
+                    }
+                },
+                error: function (data) {
+                    console.log("thay đổi không thành công")
+                }
+            });
+        });
+
+        //MaSach
+        $(document).on("change", ".Matkhau", function () { Chinhsuataikhoan(this); });
+        $(document).on("change", ".Loaitaikhoan", function () { Chinhsuataikhoan(this); });
+        $(document).on("change", ".Tendangnhap", function () {
+
+            var data = Chinhsuataikhoan(this);
+            if (data == "0") {
+                alert("Tài khoản và mật khẩu phải trên 6 kí tự.");
+            }
+        });
+
+
+    });
+
+    function Chinhsuataikhoan(e) {
+        var formData = new FormData();
+        var parent = $(e).parents("tr");//thanhf phan cha
+
+        var matkhau = $(parent).find('.Matkhau').val();
+        var tendangnhap = $(parent).find('.Tendangnhap').text();
+        if (tendangnhap=="") {
+            tendangnhap = $(parent).find('.Tendangnhap').val();
+        }
+        if (tendangnhap.length<6) {
+            alert("Tên đăng nhập phải lơn hơn 6 kí tự");
+            return;
+        }
+        if (matkhau.length < 6) {
+            alert("Mật khẩu phải lơn hơn 6 kí tự")
+            return;
+        }
+
+        var loaitaikhoan = $(parent).find('.Loaitaikhoan').val();
+        formData.append('Matkhau', matkhau);
+        formData.append('Tendangnhap', tendangnhap);
+        formData.append('Loaitaikhoan', loaitaikhoan);
+        $.ajax({
+            url: 'Chinhsuataikhoan',
+            type: 'POST',
+            data: formData,
+            processData: false,  // tell jQuery not to process the data
+            contentType: false,  // tell jQuery not to set contentType
+            success: function (data) {
+                if (data != "0") {
+                    console.log("Thành công")
+                    return data;
+                }
+                else {
+                    console.log("Không thành công")
+                    return data;
+                }
+                //SET GIA TRỊ các thẻ cùng hàng
+            },
+            error: function (data) {
+                console.log("Lỗi server!")
+            }
+        });
+    }
+
+
+    var index = $("table tbody tr:last-child").index() + 1;
+    //them hàng mới
+    function ThemHangMoi() {
+        index++;
+        var row = '<tr>'+
+        '<td>' + `${index}` + '</td>' +
+        '<td><input style="max-width:250px;" class="Tendangnhap col-12" placeholder="Tên đăng nhập" /></td>' +
+        '<td style="max-width:250px"><input maxlength="20" style="max-width:200px;" type="text" class="col-12 Matkhau" value="" placeholder="Matkhau"></td>' +
+        '<td style="max-width:300px">' +
+        '<select style="max-width:250px;" type="text" class="Loaitaikhoan custom-select col-12">' +
+        '<option value="1" label="Bạn đọc"></option>' +
+        '<option value="2" label="Nhân viên"></option>' +
+        '</select></td>' +
+        '<td>' +
+        '<a class="delete" title="Xóa"><i class="fa fa-remove" style="color:#22a1be;font-size:20px;text-align:center"></i></a>' +
+        '</td>' +
+        '</tr>';
+        $("table").append(row);
+    }
+
+</script>

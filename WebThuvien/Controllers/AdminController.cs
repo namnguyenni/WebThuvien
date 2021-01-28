@@ -10,6 +10,10 @@ using WebThuvien.Models.Function;
 using System.Data.SqlClient;
 using System.Data;
 using WebThuvien.Models.CustomClass;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.Drawing.Drawing2D;
+using System.Drawing.Text;
 
 namespace WebThuvien.Controllers
 {
@@ -526,8 +530,11 @@ namespace WebThuvien.Controllers
 
         //cho mượn sách
         [HttpPost]
-        public int MuonSach(string mathe,string[] lstmasach,int[] lstthoigianmuon)
+        public int MuonSach(string mathe,string[] lstmasach,string[] lstthoigianmuon)
         {
+            string[] listmasach = lstmasach[0].Split(',');
+            string[] listthoigian = lstthoigianmuon[0].Split(',');
+
             //thêm dữ liệu vào bảng muontra và bảng chi tiết mượn trả
             QLTHUVIEN db = new QLTHUVIEN();
             try
@@ -535,12 +542,12 @@ namespace WebThuvien.Controllers
                 THETHUVIEN the = db.THETHUVIENs.SingleOrDefault(x => x.MATHE == mathe);
                 if (the != null)
                 {
-                    for (int i = 0; i < lstmasach.Length; i++)
+                    for (int i = 0; i < listmasach.Length; i++)
                     {
                         
 
 
-                        string masach = lstmasach[i];
+                        string masach = listmasach[i];
                         SACH sach = db.SACHes.SingleOrDefault(x => x.MASACH == masach);
 
                         if (sach != null)
@@ -553,7 +560,7 @@ namespace WebThuvien.Controllers
                             }
 
                             MUONTRASACH muontra = new MUONTRASACH();
-                            muontra.MASACH = lstmasach[i];
+                            muontra.MASACH = listmasach[i];
                             muontra.MATHE = mathe;
                             string mamuontra;
                             do {
@@ -569,7 +576,7 @@ namespace WebThuvien.Controllers
                             CHITIETMUONTRASACH chitiet = new CHITIETMUONTRASACH();
                             chitiet.MAMUONTRASACH = mamuontra;
                             chitiet.NGAYMUON = DateTime.UtcNow;
-                            chitiet.THOIGIANMUON = lstthoigianmuon[i];
+                            chitiet.THOIGIANMUON = Convert.ToInt32(listthoigian[i]);
                             db.CHITIETMUONTRASACHes.Add(chitiet);
                             db.SaveChanges();
 
@@ -691,12 +698,13 @@ namespace WebThuvien.Controllers
         }
 
         [HttpPost]
-        public string TraSach(List<string> masach)
+        public string TraSach(string[] masach)
         {
+            string[] listmasach = masach[0].Split(',');
             QLTHUVIEN db = new QLTHUVIEN();
-            for (int i = 0; i < masach.Count; i++)
+            for (int i = 0; i < listmasach.Length; i++)
             {
-                string masach1 = masach[i];
+                string masach1 = listmasach[i];
                 try
                 {
                     CHITIETMUONTRASACH chitiet = db.CHITIETMUONTRASACHes.SingleOrDefault(x => x.MUONTRASACH.MASACH == masach1 && x.NGAYTRA==null);
@@ -1063,7 +1071,7 @@ namespace WebThuvien.Controllers
 
             for (int i = 0; i < numberChars.Length; i++)
             {
-                numberChars[i] = chars[random.Next(charsnumber.Length)];
+                numberChars[i] = charsnumber[random.Next(charsnumber.Length)];
             }
 
             //hai chu dau tien
@@ -1077,21 +1085,170 @@ namespace WebThuvien.Controllers
 
         //người dùng và thẻ
         //danh sách người dùng(tài khoản)
+        public ActionResult Taikhoan()
+        {
+            //kiểm tra sự tồn tại session
+            if (Session["Taikhoan"] == null)
+            {
+                return Redirect("/Home/Login");
+            }
+            QLTHUVIEN db = new QLTHUVIEN();
+            ViewBag.taikhoans = db.TAIKHOANs.OrderBy(x=>x.LOAITAIKHOAN).ToList();
+            ViewBag.loaitaikhoans = db.LOAITAIKHOANs.ToList();
 
+
+            return View();
+        }
 
 
         //chinh sửa người dùng
+        public string Chinhsuataikhoan(string Matkhau, string Tendangnhap, string Loaitaikhoan)
+        {
+            QLTHUVIEN db = new QLTHUVIEN();
+            TAIKHOAN taikhoan = db.TAIKHOANs.SingleOrDefault(x => x.TENTAIKHOAN == Tendangnhap);
+            string tendangnhap = Tendangnhap;
+            if (taikhoan != null)
+            {
+                taikhoan.MATKHAU = Matkhau;
+                taikhoan.LOAITAIKHOAN = Convert.ToInt32(Loaitaikhoan);
+            }
+            else
+            {
+                if (tendangnhap.Length < 6 || Matkhau.Length <6)
+                {
+                    return "0";//tên đăng nhập hoặc mật khẩu không hợp lệ
+                }
+                else//tạo mới
+                {
+                    TAIKHOAN taikhoanmoi = new TAIKHOAN();
+                    taikhoanmoi.TENTAIKHOAN = Tendangnhap;
+                    taikhoanmoi.MATKHAU = Matkhau;
+                    taikhoanmoi.LOAITAIKHOAN = Convert.ToInt32(Loaitaikhoan);
+
+                    db.TAIKHOANs.Add(taikhoanmoi);
+                }
+            }
+            db.SaveChanges();
+            return "1";
+        }
+        //xóa người dùng
+        public int Xoataikhoan(string Tendangnhap)
+        {
+            QLTHUVIEN db = new QLTHUVIEN();
+            TAIKHOAN taikhoan = db.TAIKHOANs.SingleOrDefault(x => x.TENTAIKHOAN == Tendangnhap);
+            if (taikhoan!= null)
+            {
+                try
+                {
+                    TAIKHOAN taikhoancurrent = Session["Taikhoan"] as TAIKHOAN;
+
+                    if (taikhoancurrent.TENTAIKHOAN == Tendangnhap)
+                    {
+                        return 0;
+                    }
+
+                    db.TAIKHOANs.Remove(taikhoan);
+                    db.SaveChanges();
+                }
+                catch (Exception)
+                {
+
+                    return 0;
+                }
+            }
+            return 1;
+        }
+
+        
 
 
+        //danh sách thẻ bạn đọc
+        public ActionResult The()
+        {
+            QLTHUVIEN db = new QLTHUVIEN();
+            ViewBag.thethuviens = db.THETHUVIENs.OrderBy(x => x.NGAYCAP).ToList();
 
-        //thêm mới người dùng
-
-
-        //danh sách thẻ
-
+            return View();
+        }
 
         //thêm mới thẻ
+        [HttpGet]
+        public ActionResult ThemThe()
+        {
+            return View();
+        }
 
+        [HttpPost]
+        public int ThemThe(THETHUVIEN thethuvien)
+        {
+            //tự sinh mã thẻ
+            string year = DateTime.Now.Year.ToString();
+            string number = Tusinhma(3, 0);
+            string mathe = "TV" + year +""+ number;
+            //lưu thông tin thẻ vào cơ sở dữ liệu
+            thethuvien.MATHE = mathe;
+            QLTHUVIEN db = new QLTHUVIEN();
+            try
+            {
+                db.THETHUVIENs.Add(thethuvien);
+                new QRCode().GenerateQRCode(mathe);
+                db.SaveChanges();
+            }
+            catch (Exception)
+            {
+                TempData["Loi"] = "Lỗi !Không thể thêm thẻ thư viện";
+                return 0;
+            }
+            string file = Server.MapPath("~/Content/AdminContent/Mauthe/Thethuvien.png");
+            string img = Server.MapPath("~/Content/Images/"+mathe+".png");
+
+            Bitmap bitMapImage = new
+            System.Drawing.Bitmap(file);
+            Graphics graphicImage = Graphics.FromImage(bitMapImage);
+            graphicImage.SmoothingMode = SmoothingMode.AntiAlias;
+            //viết chữ
+            string gt, ns, nc, nhh;
+
+            if (thethuvien.GIOITINH == 1)
+            {
+                gt = "Nam";
+            }
+            else
+            {
+                gt = "Nữ";
+            }
+            ns = ConvertDate(Convert.ToDateTime(thethuvien.NGAYSINH));
+            nc = ConvertDate(Convert.ToDateTime(thethuvien.NGAYCAP));
+            nhh = ConvertDate(Convert.ToDateTime(thethuvien.NGAYHETHAN));
+            Font font = new Font("Arial", 12, FontStyle.Bold);
+            graphicImage.DrawString(thethuvien.TENCHUTHE.ToUpper(),font,SystemBrushes.WindowText, new Point(100, 250));
+            graphicImage.DrawString(ns, font, SystemBrushes.WindowText, new Point(100, 250));
+            graphicImage.DrawString(gt, font, SystemBrushes.WindowText, new Point(100, 250));
+            graphicImage.DrawString(thethuvien.DIACHI.ToUpper(), font, SystemBrushes.WindowText, new Point(100, 250));
+            graphicImage.DrawString(nc, font, SystemBrushes.WindowText, new Point(100, 250));
+            graphicImage.DrawString(nhh, font, SystemBrushes.WindowText, new Point(100, 250));
+
+
+            //thêm ảnh
+            Image barcode = Image.FromFile(img);
+            graphicImage.DrawImage(barcode, new Point(100, 100));
+
+            //lưu
+            Response.ContentType = "image/jpg";
+            //Save the new image to the response output stream.
+            bitMapImage.Save(Server.MapPath("~/Content/ClientContent/Thethuvien/" + mathe + ".jpg"), ImageFormat.Jpeg);
+
+            //Clean house.
+            graphicImage.Dispose();
+            bitMapImage.Dispose();
+
+            return 1;
+        }
+
+        public string ConvertDate(DateTime date)
+        {
+            return date.Day + "/" + date.Month + "/" + date.Year;
+        }
 
         #endregion
 

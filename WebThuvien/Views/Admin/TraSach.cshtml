@@ -193,11 +193,10 @@
         $('.MaSach').each(function (index) {
             if ($(this).val() !='') {
                 masach[i] = $(this).val();
-                
                 i++;
             }
         })
-        formData.append('masach[]',JSON.stringify( masach));
+        formData.append('masach', masach);
         //GOI AJAX
         
 

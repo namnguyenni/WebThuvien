@@ -30,7 +30,7 @@ namespace WebThuvien.Models.Function
         public string GenerateQRCode(string qrcodeText)
         {
             string folderPath = "~/Content/Images/";
-            string imagePath = "~/Content/Images/"+ qrcodeText + ".jpg";
+            string imagePath = "~/Content/Images/"+ qrcodeText + ".png";
             // If the directory doesn't exist then create it.
             if (!Directory.Exists(HttpContext.Current.Server.MapPath(folderPath)))
             {
