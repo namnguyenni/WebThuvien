@@ -40,7 +40,6 @@ namespace WebThuvien.Models.Entity
 
         public int? GIOITINH { get; set; }
 
-
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DOCGIA> DOCGIAs { get; set; }
 

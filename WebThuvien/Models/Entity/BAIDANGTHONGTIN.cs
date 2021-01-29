@@ -18,11 +18,18 @@ namespace WebThuvien.Models.Entity
         [Column(TypeName = "date")]
         public DateTime? NGAYDANG { get; set; }
 
+        [StringLength(100)]
+        public string DIADIEM { get; set; }
+
         [StringLength(20)]
         public string TACGIA { get; set; }
 
         [StringLength(3000)]
         public string NOIDUNG { get; set; }
+
+        public DateTime? THOIGIANBATDAU { get; set; }
+
+        public DateTime? THOIGIANKETTHUC { get; set; }
 
         [StringLength(50)]
         public string HINHANH1 { get; set; }

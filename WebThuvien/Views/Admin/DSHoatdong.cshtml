@@ -1,0 +1,78 @@
+﻿
+@{
+    ViewBag.Title = "Hoạt động thư viện";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="main-container">
+    <div class="xs-pd-20-10 pd-ltr-20">
+        <div class="card-box pb-10">
+            <div class="h5 pd-20 mb-0">Danh sách các cuốn sách trong thư viện</div>
+            <table class="data-table table nowrap">
+                <thead>
+                    <tr>
+                        <th class="table-plus">STT</th>
+                        <th>Tên hoạt động</th>
+                        <th>Thời gian diễn ra</th>
+                        <th>Địa điểm</th>
+                        <th>Hình ảnh</th>
+                        <th class="datatable-nosort">Công cụ</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{ int STT = 0;
+                        
+                    }
+                    @foreach (var item in @ViewBag.hoatdongs as List<WebThuvien.Models.Entity.BAIDANGTHONGTIN>)
+                    {
+
+                        STT = STT + 1;
+                        var thoigianbatdau = Convert.ToDateTime(item.THOIGIANBATDAU).Hour + ":" + Convert.ToDateTime(item.THOIGIANBATDAU).Minute + " "+ Convert.ToDateTime(item.THOIGIANBATDAU).Day+"/"+ Convert.ToDateTime(item.THOIGIANBATDAU).Month +"/"+ Convert.ToDateTime(item.THOIGIANBATDAU).Year;
+                        var thoigianketthuc = Convert.ToDateTime(item.THOIGIANKETTHUC).Hour + ":" + Convert.ToDateTime(item.THOIGIANKETTHUC).Minute + " " + Convert.ToDateTime(item.THOIGIANKETTHUC).Day + "/" + Convert.ToDateTime(item.THOIGIANKETTHUC).Month + "/" + Convert.ToDateTime(item.THOIGIANKETTHUC).Year;
+
+                        <tr>
+                            <td class="table-plus">
+                                @STT
+                            </td>
+                            <td>@item.TIEUDE</td>
+                            <td>@thoigianbatdau - @thoigianketthuc
+                            </td>
+                            <td>@item.DIADIEM</td>
+                            <td>
+                                <div class="name-avatar d-flex align-items-center">
+                                    <div class="avatar mr-2 flex-shrink-0">
+                                        <img src="~/Content/ClientContent/Hoatdong/@item.HINHANH1" width="60" height="60" alt="hình ảnh">
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="table-actions">
+                                    <a href="/Admin/Chitiethoatdong?mahoatdong=@item.MABAIDANG" data-color="#265ed7"><i class="icon-copy dw dw-edit2"></i></a>
+                                    <a data-hd="@item.MABAIDANG" data-color="#e95959"><i class="icon-copy dw dw-delete-3"></i></a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+
+
+                </tbody>
+            </table>
+        </div>
+
+
+
+
+
+
+        <div class="footer-wrap pd-20 mb-20 card-box">
+            Thư viện số hóa -  <a href="/" target="_blank">Ban cơ yếu chính phủ</a>
+        </div>
+    </div>
+</div>
+@{ ViewBag.Error = TempData["Error"] as string; }
+<script>
+    var error = '@ViewBag.Error';
+
+
+</script>
+

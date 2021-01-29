@@ -1,0 +1,92 @@
+﻿@{
+    ViewBag.Title = "Hoạt động :"+ ViewBag.baidang.TIEUDE;
+    Layout = "~/Views/Shared/_LayoutHomeClient.cshtml";
+}
+        <!-- Start: Products Section -->
+<div id="content" class="site-content">
+    <div id="primary" class="content-area">
+        <main id="main" class="site-main">
+            <div class="main-news-list">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-9 col-md-push-3">
+                            <div class="news-list-detail">
+                                <div class="news-list-box">
+                                    <div class="single-news-list">
+                                        
+                                        <figure>
+                                            <img src="~/Content/ClientContent/Hoatdong/@ViewBag.baidang.HINHANH1" alt="@ViewBag.baidang.TIEUDE">
+                                        </figure>
+                                        <div class="content-block">
+                                            <div class="member-info">
+                                                <div class="content_meta_category">
+                                                    <span class="arrow-right"></span>
+                                                    <a href="#." rel="category tag">Hoạt động</a>
+                                                </div>
+                                                <ul class="news-event-info">
+                                                    <li>
+                                                        <a href="#" target="_blank">
+                                                            <i class="fa fa-calendar"></i>
+                                                            @ViewBag.baidang.THOIGIANBATDAU
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#" target="_blank">
+                                                            <i class="fa fa-clock-o"></i>
+                                                            @ViewBag.baidang.THOIGIANKETTHUC
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#" target="_blank">
+                                                            <i class="fa fa-map-marker"></i>
+                                                            @ViewBag.baidang.DIADIEM
+                                                        </a>
+                                                    </li>
+                                                </ul>
+
+                                                <h2>@ViewBag.baidang.TIEUDE</h2>
+                                                <p>@ViewBag.baidang.NOIDUNG</p>
+
+                                                <figure>
+                                                    <img src="~/Content/ClientContent/Hoatdong/@ViewBag.baidang.HINHANH2" alt="@ViewBag.baidang.TIEUDE">
+                                                </figure>
+                                                <p>@ViewBag.baidang.NOIDUNG</p>
+                                            </div>
+                                        </div>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-md-pull-9">
+                            <aside id="secondary" class="sidebar widget-area">
+                                <div class="widget widget_recent_entries">
+                                    <h4 class="widget-title" data-control>Bài đăng mới</h4>
+                                    <ul>
+                                        @foreach (var item in ViewBag.newbaidang as List<WebThuvien.Models.Entity.BAIDANGTHONGTIN>)
+                                        {
+                                            <li>
+                                                <figure>
+                                                    <img class="col-md-12" style="max-height:250px" src="~/Content/ClientContent/Hoatdong/@item.HINHANH1" alt="bài đăng thông tin" />
+                                                </figure>
+                                                <a href="/Hoatdong/chitiet?mabaidang=@item.MABAIDANG">@item.TIEUDE</a>
+                                                <span><i class="fa fa-calendar"></i> &nbsp; @item.THOIGIANBATDAU</span>
+                                                <span><i class="fa fa-clock-o"></i> &nbsp; @item.THOIGIANKETTHUC</span>
+                                                <span><i class="fa fa-map-marker"></i> &nbsp; @item.DIADIEM</span>
+                                                <div class="clearfix"></div>
+                                            </li>
+                                        }
+
+                                    </ul>
+                                </div>
+
+                            </aside>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+<!-- End: Products Section -->

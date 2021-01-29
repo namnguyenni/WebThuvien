@@ -1,0 +1,112 @@
+﻿@{
+    ViewBag.Title = "Hoạt động";
+    Layout = "~/Views/Shared/_LayoutHomeClient.cshtml";
+}
+
+<div id="content" class="site-content">
+    <div id="primary" class="content-area">
+        <main id="main" class="site-main">
+            <div class="main-news-list">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-9 col-md-push-3 news-events-list-view">
+                            @foreach (var item in ViewBag.baidangs as List<WebThuvien.Models.Entity.BAIDANGTHONGTIN>)
+                            {
+                                <div class="news-list-box">
+                                    <div class="single-news-list">
+                                        <figure>
+                                            <a href="~/Hoatdong/Chitiet?mabaidang=@item.MABAIDANG" ><img style="width:500px;height:500px;" src="~/Content/ClientContent/Hoatdong/@item.HINHANH1" alt="@item.TIEUDE"></a>
+                                        </figure>
+                                        <div class="content-block" style="max-width:500px;max-height:500px;" >
+                                            <div class="member-info">
+                                                <div class="content_meta_category">
+                                                    <span class="arrow-right"></span>
+                                                    <a href="#." rel="category tag">Hoạt động</a>
+                                                </div>
+                                                <ul class="news-event-info">
+                                                    <li>
+                                                        <a href="#" target="_blank">
+                                                            <i class="fa fa-calendar"></i>
+                                                            @item.THOIGIANBATDAU
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#" target="_blank">
+                                                            <i class="fa fa-clock-o"></i>
+                                                            @item.THOIGIANKETTHUC
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#" target="_blank">
+                                                            <i class="fa fa-map-marker"></i>
+                                                            @item.DIADIEM
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                                <h3><a href="~/Hoatdong/Chitiet?mabaidang=@item.MABAIDANG">@item.TIEUDE</a></h3>
+                                                <p class="content-p">@item.NOIDUNG</p>
+                                                <a class="btn btn-primary" href="~/Hoatdong/Chitiet?mabaidang=@item.MABAIDANG">Đọc tiếp</a>
+                                            </div>
+                                        </div>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                </div>
+                            }
+                            
+
+                            <nav class="navigation pagination text-center">
+                                <h2 class="screen-reader-text">Posts navigation</h2>
+                                <div class="nav-links">
+                                    <a class="prev page-numbers" href="#."><i class="fa fa-long-arrow-left"></i> Previous</a>
+                                    <a class="page-numbers" href="#.">1</a>
+                                    <span class="page-numbers current">2</span>
+                                    <a class="page-numbers" href="#.">3</a>
+                                    <a class="page-numbers" href="#.">4</a>
+                                    <a class="next page-numbers" href="#.">Next <i class="fa fa-long-arrow-right"></i></a>
+                                </div>
+                            </nav>
+                        </div>
+                        <div class="col-md-3 col-md-pull-9">
+                            <aside id="secondary" class="sidebar widget-area">
+                                <div class="widget widget_recent_entries">
+                                    <h4 class="widget-title" data-control>Bài đăng mới</h4>
+                                    <ul>
+                                        @foreach (var item in ViewBag.newbaidang as List<WebThuvien.Models.Entity.BAIDANGTHONGTIN>)
+                                        {
+                                            <li>
+                                                <figure>
+                                                    <img class="col-md-12" style="max-height:250px" src="~/Content/ClientContent/Hoatdong/@item.HINHANH1" alt="bài đăng thông tin" />
+                                                </figure>
+                                                <a href="#">@item.TIEUDE</a>
+                                                <span><i class="fa fa-calendar"></i> &nbsp; @item.THOIGIANBATDAU</span>
+                                                <span><i class="fa fa-clock-o"></i> &nbsp; @item.THOIGIANKETTHUC</span>
+                                                <span><i class="fa fa-map-marker"></i> &nbsp; @item.DIADIEM</span>
+                                                <div class="clearfix"></div>
+                                            </li>
+                                        }
+                                        
+                                    </ul>
+                                </div>
+
+                            </aside>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+<script>
+    function truncateText(selector, maxLength) {
+        var element = document.querySelector(selector),
+            truncated = element.innerText;
+
+        if (truncated.length > maxLength) {
+            truncated = truncated.substr(0, maxLength) + '...';
+        }
+        return truncated;
+    }
+
+    document.querySelector('.content-p').innerText = truncateText('.content-p', 300);
+</script>

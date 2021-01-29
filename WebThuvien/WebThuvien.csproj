@@ -152,6 +152,8 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
+    <Compile Include="Controllers\HoatdongController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\SachController.cs" />
     <Compile Include="Global.asax.cs">
@@ -486,6 +488,13 @@
     <Content Include="Views\Admin\Taikhoan.cshtml" />
     <Content Include="Views\Admin\ThemThe.cshtml" />
     <Content Include="Views\Admin\The.cshtml" />
+    <Content Include="Views\Admin\DSHoatdong.cshtml" />
+    <Content Include="Views\Admin\Chitiethoatdong.cshtml" />
+    <Content Include="Views\Admin\Themhoatdong.cshtml" />
+    <Content Include="Views\Error\Index.cshtml" />
+    <Content Include="Views\Admin\Danhmucsachmuon.cshtml" />
+    <Content Include="Views\Hoatdong\Index.cshtml" />
+    <Content Include="Views\Hoatdong\Chitiet.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -494,10 +503,12 @@
     <Folder Include="Content\AdminContent\vendors\" />
     <Folder Include="Content\ClientContent\css\" />
     <Folder Include="Content\ClientContent\fonts\" />
+    <Folder Include="Content\ClientContent\Hoatdong\" />
     <Folder Include="Content\ClientContent\images\Books\" />
     <Folder Include="Content\ClientContent\js\" />
     <Folder Include="Content\ClientContent\Thethuvien\" />
     <Folder Include="Views\Account\" />
+    <Folder Include="Views\Loi\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

@@ -1,0 +1,65 @@
+﻿
+@{
+    ViewBag.Title = "Danh mục sách mượn";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="main-container">
+    <div class="xs-pd-20-10 pd-ltr-20">
+        <div class="card-box pb-10">
+            <div class="h5 pd-20 mb-0">Danh sách các cuốn sách trong thư viện</div>
+            <table class="data-table table nowrap">
+                <thead>
+                    <tr>
+                        <th class="table-plus">STT</th>
+                        <th>Mã sách</th>
+                        <th>Tên sách</th>
+                        <th>Hình ảnh</th>
+                        <th>Người mượn</th>
+                        <th>Ngày mượn</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{ int STT = 0;}
+                    @foreach (var item in @ViewBag.listsachmuon as List<WebThuvien.Models.CustomClass.ChitietSachmuon>)
+                    {
+                        STT = STT + 1;
+                        <tr>
+                            <td class="table-plus">
+                                @STT
+                            </td>
+                            <td>@item.MASACH</td>
+                            <td>@item.TENSACH</td>
+                            <td>
+                                <div class="name-avatar d-flex align-items-center">
+                                    <div class="avatar mr-2 flex-shrink-0">
+                                        <img src="~/Content/ClientContent/images/Books/@item.HINHANH" style="width:60px;height:60px" alt="hình ảnh">
+                                    </div>
+                                </div>
+                            </td>
+                            <td><p title="Tên chủ thẻ : @item.NGUOIMUON">@item.MATHENGUOIMUON</p></td>
+                            <td>@item.NGAYMUON</td>
+                        </tr>
+                    }
+
+
+                </tbody>
+            </table>
+        </div>
+
+
+
+
+
+
+        <div class="footer-wrap pd-20 mb-20 card-box">
+            Thư viện số hóa -  <a href="/" target="_blank">Ban cơ yếu chính phủ</a>
+        </div>
+    </div>
+</div>
+@{ ViewBag.Error = TempData["Error"] as string; }
+<script>
+    var error = '@ViewBag.Error';
+
+
+</script>

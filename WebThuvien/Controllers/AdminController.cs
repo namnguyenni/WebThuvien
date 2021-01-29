@@ -510,8 +510,43 @@ namespace WebThuvien.Controllers
 
         #region Xử lí mượn trả sách
         //tìm kiếm tất cả sách đang mượn thư viện
-        public ActionResult TatcaSachDangMuon()
+        public ActionResult Danhmucsachmuon()
         {
+            //kiểm tra sự tồn tại session
+            if (Session["Taikhoan"] == null)
+            {
+                return Redirect("/Home/Login");
+            }
+
+            QLTHUVIEN db = new QLTHUVIEN();
+            List<CHITIETMUONTRASACH> lstmuon = db.CHITIETMUONTRASACHes.Where(x => x.NGAYTRA != null).ToList();
+            List<ChitietSachmuon> listsachmuon = new List<ChitietSachmuon>();
+            if (lstmuon!=null)
+            {
+                foreach (var item in lstmuon)
+                {
+                    ChitietSachmuon sachmuon = new ChitietSachmuon();
+                    string masach = db.MUONTRASACHes.SingleOrDefault(x => x.MAMUONTRASACH == item.MAMUONTRASACH).MASACH;
+                    string mathe = db.MUONTRASACHes.SingleOrDefault(x => x.MAMUONTRASACH == item.MAMUONTRASACH).MATHE;
+
+                    SACH sach = db.SACHes.SingleOrDefault(x => x.MASACH == masach);
+                    THETHUVIEN the = db.THETHUVIENs.SingleOrDefault(x => x.MATHE == mathe);
+
+                    sachmuon.MASACH = sach.MASACH;
+                    sachmuon.TENSACH = sach.TENSACH;
+                    sachmuon.HINHANH = sach.HINHANH;
+                    sachmuon.NGAYMUON = item.NGAYMUON;
+                    sachmuon.THOIGIANMUON = item.THOIGIANMUON;
+                    sachmuon.NGUOIMUON = the.TENCHUTHE;
+
+                    sachmuon.MATHENGUOIMUON = the.MATHE;
+
+                    listsachmuon.Add(sachmuon);
+                }
+            }
+            ViewBag.listsachmuon = listsachmuon;
+
+
             return View();
         }
 
@@ -1291,23 +1326,92 @@ namespace WebThuvien.Controllers
         //Danh sách hoạt động
         public ActionResult DSHoatdong()
         {
+            //kiểm tra sự tồn tại session
+            if (Session["Taikhoan"] == null)
+            {
+                return Redirect("/Home/Login");
+            }
+            QLTHUVIEN db = new QLTHUVIEN();
+            ViewBag.hoatdongs = db.BAIDANGTHONGTINs.ToList();
+
+
             return View();
         }
 
         //Chi tiết hoạt động
-        public ActionResult Chitiethoatdong(string id)
+        public ActionResult Chitiethoatdong(int id)
         {
+            //kiểm tra sự tồn tại session
+            if (Session["Taikhoan"] == null)
+            {
+                return Redirect("/Home/Login");
+            }
+            QLTHUVIEN db = new QLTHUVIEN();
+            if (db.BAIDANGTHONGTINs.SingleOrDefault(x => x.MABAIDANG == id)==null)
+            {
+                return Redirect("/Admin/Themhoatdong");
+            }
+
+            ViewBag.baidangs = db.BAIDANGTHONGTINs.SingleOrDefault(x => x.MABAIDANG == id);
             return View();
         }
 
         [HttpPost]
-        public ActionResult Chinhsuahoatdong(BAIDANGTHONGTIN baidang)
+        public ActionResult Chinhsuahoatdong(BAIDANGTHONGTIN baidang,HttpPostedFile hinhanh1=null,HttpPostedFile hinhanh2=null)
         {
+            QLTHUVIEN db = new QLTHUVIEN();
+
+            BAIDANGTHONGTIN baidangcu = db.BAIDANGTHONGTINs.SingleOrDefault(x => x.MABAIDANG == baidang.MABAIDANG);
+            try
+            {
+                baidangcu.TIEUDE = baidang.TIEUDE;
+                baidangcu.NOIDUNG = baidang.NOIDUNG;
+                baidangcu.THOIGIANBATDAU = baidang.THOIGIANBATDAU;
+                baidangcu.THOIGIANKETTHUC = baidang.THOIGIANKETTHUC;
+                baidangcu.DIADIEM = baidang.DIADIEM;
+
+                if (hinhanh1!=null)
+                    {
+                        if (System.IO.File.Exists(Server.MapPath("~/Content/ClientContent/Hoatdong/" + baidang.MABAIDANG+"_1.jpg")))
+                        {
+                            System.IO.File.Delete(Server.MapPath("~/Content/ClientContent/FILE_PDF/" + baidang.MABAIDANG + "_1.jpg"));
+
+                        }
+                        string fileExtend = ".jpg";
+                        string targetFolder = Server.MapPath("~/Content/ClientContent/Hoatdong/");
+                        string targetPath = Path.Combine(targetFolder, baidang.MABAIDANG + "_1" + fileExtend);
+                        hinhanh1.SaveAs(targetPath);
+                        baidangcu.HINHANH1 = baidang.MABAIDANG + "_1.jpg";
+
+                    }
+                if (hinhanh2 != null)
+                {
+                    if (System.IO.File.Exists(Server.MapPath("~/Content/ClientContent/Hoatdong/" + baidang.MABAIDANG + "_2.jpg")))
+                    {
+                        System.IO.File.Delete(Server.MapPath("~/Content/ClientContent/FILE_PDF/" + baidang.MABAIDANG + "_2.jpg"));
+
+                    }
+                    string fileExtend = ".jpg";
+                    string targetFolder = Server.MapPath("~/Content/ClientContent/Hoatdong/");
+                    string targetPath = Path.Combine(targetFolder, baidang.MABAIDANG + "_2" + fileExtend);
+                    hinhanh2.SaveAs(targetPath);
+                    baidangcu.HINHANH2 = baidang.MABAIDANG + "_2.jpg";
+
+                }
+                db.SaveChanges();
+            }
+            catch (Exception)
+            {
+                return Redirect("/Error");
+            }
+
+
+
             return View();
         }
 
         //xóa hoạt động
-        public string Xoahoatdong()
+        public string Xoahoatdong(string mahoatdong)
         {
             return "0";
         }
@@ -1316,12 +1420,63 @@ namespace WebThuvien.Controllers
         [HttpGet]
         public ActionResult Themhoatdong()
         {
+            //kiểm tra sự tồn tại session
+            if (Session["Taikhoan"] == null)
+            {
+                return Redirect("/Home/Login");
+            }
             return View();
         }
 
         [HttpPost]
-        public ActionResult Themhoatdong(BAIDANGTHONGTIN baidang)
+        public ActionResult Themhoatdong(BAIDANGTHONGTIN baidang,HttpPostedFileBase hinhanh1, HttpPostedFileBase hinhanh2)
         {
+            QLTHUVIEN db = new QLTHUVIEN();
+            //kiểm tra sự tồn tại session
+            if (Session["Taikhoan"] != null)
+            {
+                TAIKHOAN tacgia = Session["Taikhoan"] as TAIKHOAN;
+                baidang.TACGIA = tacgia.TENTAIKHOAN;
+            }
+            try
+            {
+                if (hinhanh1 != null)
+                {
+                    if (System.IO.File.Exists(Server.MapPath("~/Content/ClientContent/Hoatdong/" + baidang.MABAIDANG + "_1.jpg")))
+                    {
+                        System.IO.File.Delete(Server.MapPath("~/Content/ClientContent/FILE_PDF/" + baidang.MABAIDANG + "_1.jpg"));
+
+                    }
+                    string fileExtend = ".jpg";
+                    string targetFolder = Server.MapPath("~/Content/ClientContent/Hoatdong/");
+                    string targetPath = Path.Combine(targetFolder, baidang.MABAIDANG + "_1" + fileExtend);
+                    hinhanh1.SaveAs(targetPath);
+                    baidang.HINHANH1 = baidang.MABAIDANG + "_1.jpg";
+
+                }
+                if (hinhanh2 != null)
+                {
+                    if (System.IO.File.Exists(Server.MapPath("~/Content/ClientContent/Hoatdong/" + baidang.MABAIDANG + "_2.jpg")))
+                    {
+                        System.IO.File.Delete(Server.MapPath("~/Content/ClientContent/FILE_PDF/" + baidang.MABAIDANG + "_2.jpg"));
+
+                    }
+                    string fileExtend = ".jpg";
+                    string targetFolder = Server.MapPath("~/Content/ClientContent/Hoatdong/");
+                    string targetPath = Path.Combine(targetFolder, baidang.MABAIDANG + "_2" + fileExtend);
+                    hinhanh2.SaveAs(targetPath);
+                    baidang.HINHANH2 = baidang.MABAIDANG + "_2.jpg";
+
+                }
+                db.BAIDANGTHONGTINs.Add(baidang);
+                db.SaveChanges();
+            }
+            catch(Exception)
+            {
+
+            }
+
+
             return View();
         }
 
