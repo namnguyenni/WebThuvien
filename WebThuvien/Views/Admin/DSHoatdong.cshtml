@@ -48,7 +48,7 @@
                             <td>
                                 <div class="table-actions">
                                     <a href="/Admin/Chitiethoatdong?ID=@item.MABAIDANG" data-color="#265ed7"><i class="icon-copy dw dw-edit2"></i></a>
-                                    <a data-hd="@item.MABAIDANG" data-color="#e95959"><i class="icon-copy dw dw-delete-3"></i></a>
+                                    <a data-hd="@item.MABAIDANG" class="delete" data-color="#e95959"><i class="icon-copy dw dw-delete-3"></i></a>
                                 </div>
                             </td>
                         </tr>
@@ -69,9 +69,46 @@
         </div>
     </div>
 </div>
-@{ ViewBag.Error = TempData["Error"] as string; }
+
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+
+
 <script>
-    var error = '@ViewBag.Error';
+
+
+            $(document).on("click", ".delete", function () {
+
+
+            var formData = new FormData();
+            var parent = $(this).parents("tr");//thanhf phan cha
+            var mahoatdong = $(this).attr("data-hd");
+            formData.append('mahoatdong', mahoatdong);
+            $.ajax({
+                url: 'Xoahoatdong',
+                type: 'POST',
+                data: formData,
+                processData: false,  // tell jQuery not to process the data
+                contentType: false,  // tell jQuery not to set contentType
+                success: function (data) {
+                    if (data == 1) {
+                        console.log("Xóa thành công");
+                        alert("Xóa thành công");
+                        $(parent).remove();
+                        return;
+                    }
+                    else {
+                        console.log("thay đổi không thành công");
+                        alert("Không thể xóa!!");
+
+
+                    }
+                    //SET GIA TRỊ các thẻ cùng hàng
+                },
+                error: function (data) {
+                    console.log("thay đổi không thành công")
+                }
+            });
+        });
 
 
 </script>

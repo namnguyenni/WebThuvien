@@ -36,16 +36,13 @@
                     <label class="col-sm-12 col-md-2 col-form-label">File PDF</label>
                     <div class="col-sm-12 col-md-10">
                         <input class="form-control" type="file" name="filepdf" accept="application/pdf">
-                        <input class="form-control" type="text" name="FILEPATH" style="display:none;" >
-
                     </div>
                 </div>
                 <div class="form-group row">
                     <label class="col-sm-12 col-md-2 col-form-label">Hình ảnh</label>
                     <div class="col-sm-12 col-md-10">
-                        <input required class="form-control" type="file" name="hinhanh" accept="image/*">
-                        <input class="form-control" type="text" name="HINHANH" style="display:none;" >
-
+                        <input required class="form-control" type="file" name="hinhanh" id="hinhanh" accept="image/*">
+                        <img id="ha" src="" />
                     </div>
                 </div>
                 <div class="form-group row">
@@ -160,3 +157,22 @@
         </div>
     </div>
 </div>
+
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+
+<script>
+    function readURL(input,str) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#'+str).attr('src', e.target.result);
+            }
+            reader.readAsDataURL(input.files[0]); // convert to base64 string
+        }
+    }
+
+    $("#hinhanh").change(function () {
+        readURL(this,'ha');
+    });
+</script>

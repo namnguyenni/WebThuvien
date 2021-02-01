@@ -8,7 +8,7 @@
     <div class="xs-pd-20-10 pd-ltr-20">
         <div class="title pb-10">
             <h2 class="h3 mb-0"> @ViewBag.Sach.TENSACH </h2>
-            <div  style="max-height:250px;max-width:250px;" class="card card-box">
+            <div  style="max-height:350px;max-width:350px;" class="card card-box">
                 <img class="card-img-top" src="~/Content/ClientContent/images/Books/@ViewBag.Sach.HINHANH" alt="Hình ảnh sách">
             </div>
             <div style="height:100px"></div>
@@ -39,6 +39,14 @@
                     <label class="col-sm-12 col-md-2 col-form-label">File PDF</label>
                     <div class="col-sm-12 col-md-10">
                         <input class="form-control" type="file" name="filepdf" accept="application/pdf">
+                        
+                            @if (ViewBag.Sach.FILEPATH !=null)
+                            {
+                                <div class="col-sm-6 col-md-12">
+                                    <a class="btn btn-primary" href="~/Content/ClientContent/FILE_PDF/@ViewBag.Sach.FILEPATH">Nội dung hiện tại</a>
+                                </div>
+                            }
+                                
                         <input class="form-control" type="text" name="FILEPATH" style="display:none;" value="@ViewBag.Sach.FILEPATH">
 
                     </div>
@@ -46,7 +54,9 @@
                 <div class="form-group row">
                     <label class="col-sm-12 col-md-2 col-form-label">Hình ảnh</label>
                     <div class="col-sm-12 col-md-10">
-                        <input class="form-control" value="" type="file" name="hinhanh" accept="image/*">
+                        <input class="form-control" type="file" name="hinhanh" id="hinhanh" accept="image/*">
+                        <p>Hình ảnh cũ : </p>
+                        <img id="ha" src="~/Content/ClientContent/images/Books/@ViewBag.Sach.HINHANH" />
                         <input class="form-control" type="text" name="HINHANH" style="display:none;" value="@ViewBag.Sach.HINHANH">
 
                     </div>
@@ -192,3 +202,22 @@
             </div>
         </div>
 </div>
+
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+
+<script>
+    function readURL(input,str) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#'+str).attr('src', e.target.result);
+            }
+            reader.readAsDataURL(input.files[0]); // convert to base64 string
+        }
+    }
+
+    $("#hinhanh").change(function () {
+        readURL(this,'ha');
+    });
+</script>

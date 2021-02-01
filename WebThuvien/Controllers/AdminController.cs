@@ -420,7 +420,7 @@ namespace WebThuvien.Controllers
             {
                 foreach (var item in SearchSach)
                 {
-                    if (item.LINHVUC.TENLINHVUC.Contains(linhvuc.ToUpper()))
+                    if (item.LINHVUC.TENLINHVUC.ToUpper().Contains(linhvuc.ToUpper()))
                     {
                         ChitietSachmuon chitiet = new ChitietSachmuon();
                         chitiet.MASACH = item.MASACH;
@@ -436,7 +436,7 @@ namespace WebThuvien.Controllers
             {
                 foreach (var item in SearchSach)
                 {
-                    if (item.LOAISACH.TENTHELOAI.Contains(loaisach.ToUpper()))
+                    if (item.LOAISACH.TENTHELOAI.ToUpper().Contains(loaisach.ToUpper()))
                     {
                         ChitietSachmuon chitiet = new ChitietSachmuon();
                         chitiet.MASACH = item.MASACH;
@@ -452,7 +452,7 @@ namespace WebThuvien.Controllers
             {
                 foreach (var item in SearchSach)
                 {
-                    if (item.TACGIA.TENTACGIA.Contains(tacgia.ToUpper()))
+                    if (item.TACGIA.TENTACGIA.ToUpper().Contains(tacgia.ToUpper()))
                     {
                         ChitietSachmuon chitiet = new ChitietSachmuon();
                         chitiet.MASACH = item.MASACH;
@@ -1444,11 +1444,23 @@ namespace WebThuvien.Controllers
         }
 
         //xóa hoạt động
+        [HttpPost]
         public string Xoahoatdong(string mahoatdong)
         {
+            QLTHUVIEN db = new QLTHUVIEN();
+            try
+            {
+                BAIDANGTHONGTIN baidang = db.BAIDANGTHONGTINs.SingleOrDefault(x => x.MABAIDANG == mahoatdong);
+                db.BAIDANGTHONGTINs.Remove(baidang);
+                db.SaveChanges();
+            }
+            catch (Exception)
+            {
 
+                return "0";
+            }
 
-            return "0";
+            return "1";
         }
 
         //Thêm hoạt động
