@@ -10,7 +10,7 @@
                 <div class="col-md-4 col-sm-6">
                     <div class="form-group">
                         <label class="sr-only" for="keywords">Tìm kiếm bằng từ khóa</label>
-                        <input value="" class="form-control" placeholder="Nhập từ khóa tìm kiếm" id="noidungnhap" name="noidungnhap" type="text">
+                        <input value="@TempData["noidungnhap"]" class="form-control" placeholder="Nhập từ khóa tìm kiếm" id="noidungnhap" name="noidungnhap" type="text">
                     </div>
                 </div>
                 <div class="col-md-3 col-sm-6">
@@ -19,7 +19,12 @@
                             <option value="0">Tất cả loại sách</option>
                             @foreach (var item in ViewBag.list_loaisach)
                             {
-                                <option value="@item.ID">@item.TENTHELOAI</option>
+                                if (TempData["loaisach"] == item.MATHELOAI)
+                                {
+                                    <option selected value="@item.MATHELOAI">@item.TENTHELOAI</option>
+
+                                }
+                                <option value="@item.MATHELOAI">@item.TENTHELOAI</option>
 
                             }
                         </select>
@@ -31,7 +36,13 @@
                             <option value="0">Tất cả lĩnh vực</option>
                             @foreach (var item in ViewBag.list_linhvuc)
                             {
-                                <option value="@item.ID" >@item.TENLINHVUC</option>
+                                if (TempData["linhvuc"] == item.MALINHVUC)
+                                {
+                                    <option selected value="@item.MALINHVUC">@item.TENLINHVUC</option>
+
+                                }
+
+                                <option value="@item.MALINHVUC" >@item.TENLINHVUC</option>
 
                             }
                             

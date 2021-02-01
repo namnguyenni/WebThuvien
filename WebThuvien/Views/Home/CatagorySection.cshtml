@@ -21,15 +21,15 @@
                     @foreach (var item in ViewBag.TatcaSach)
                     {
                         <li class="category-item @item.MALINHVUC">
-                            <figure>
-                                <img style="min-height:328px;width:100%; max-height:330px;" src="~/Content/ClientContent/images/Books/@item.HINHANH" alt="New Releaase" />
+                            <figure  style="height:330px;width:280px" >
+                                <img src="~/Content/ClientContent/images/Books/@item.HINHANH" alt="New Releaase" />
                                 <figcaption class="bg-blue">
                                     <div class="diamond">
                                         <i class="book"></i>
                                     </div>
                                     <div class="info-block">
                                         <h4>@item.TENSACH</h4>
-                                        <span class="author"><strong>Tác giả:</strong> @item.TACGIA.TENTACGIA</span>
+                                        <span class="author"><strong>Tác giả:</strong> <p>@item.TACGIA.TENTACGIA</p></span>
                                         <span class="author"><strong>Lĩnh vực:</strong> @item.LINHVUC.TENLINHVUC</span>
                                         <div class="rating">
                                             <span>☆</span>
@@ -60,7 +60,9 @@
                                     </div>
                                 </figcaption>
                             </figure>
+                            <div class="clearfix"></div>
                         </li>
+                        
                     }
                 </ul>
                 <a  class="center-content btn btn-primary" href="/Sach">

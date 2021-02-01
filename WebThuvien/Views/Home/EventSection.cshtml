@@ -8,107 +8,67 @@
             <span class="underline center"></span>
             <p class="lead c-light">Sự kiện lí thú của thư viện diễn ra trong thời gian tới.</p>
         </div>
+
         <div class="news-events-list">
-            <div class="single-news-event">
-                <figure>
-                    <img src="~/Content/ClientContent/images/news-event/news-event-01.jpg" alt="News & Event" />
-                </figure>
-                <div class="content-block">
-                    <div class="member-info">
-                        <div class="content_meta_category">
-                            <span class="arrow-right"></span>
-                            <a href="#." rel="category tag">EVENT</a>
+            @foreach (var item in ViewBag.lstEvent as List<WebThuvien.Models.Entity.BAIDANGTHONGTIN>)
+            {
+                <div class="single-news-event">
+                    <figure>
+                        <img src="~/Content/ClientContent/Hoatdong/@item.HINHANH1" alt="Bài đăng thông tin" />
+                    </figure>
+                    <div class="content-block">
+                        <div class="member-info">
+                            <div class="content_meta_category">
+                                <span class="arrow-right"></span>
+                                <a href="#." rel="category tag">Hoạt động</a>
+                            </div>
+                            <ul class="news-event-info">
+                                <li>
+                                    <a href="#" target="_blank">
+                                        <i class="fa fa-calendar"></i>
+                                        @item.THOIGIANBATDAU
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" target="_blank">
+                                        <i class="fa fa-clock-o"></i>
+                                        @item.THOIGIANKETTHUC
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" target="_blank">
+                                        <i class="fa fa-map-marker"></i>
+                                        @item.DIADIEM
+                                    </a>
+                                </li>
+                            </ul>
+                            <h3><a href=".#">@item.TIEUDE</a></h3>
+                            <p class="p-content">@item.NOIDUNG.</p>
+                            <a class="btn btn-primary" href="/Hoatdong/Chitiet?Mabaidang=@item.MABAIDANG">Xem chi tiết</a>
                         </div>
-                        <ul class="news-event-info">
-                            <li>
-                                <a href="#" target="_blank">
-                                    <i class="fa fa-calendar"></i>
-                                    July 25, 2016
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#" target="_blank">
-                                    <i class="fa fa-clock-o"></i>
-                                    10:15 AM - 10:15 PM
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#" target="_blank">
-                                    <i class="fa fa-map-marker"></i>
-                                    Hà Nội - Việt Nam
-                                </a>
-                            </li>
-                        </ul>
-                        <h3><a href=".html#">Sự kiện thường niên tại thư viện</a></h3>
-                        <p>Sự phát triển thói quen sử dụng thông tin của bạn đọc (BĐ) trong giai đoạn hiện nay. Thay vì sử dụng các hình thức tài liệu truyền thống như những năm trước đây, thì giờ đây BĐ lại chỉ chú trọng đến việc tìm kiếm các nguồn thông tin trên Internet thay vì đến thư viện.</p>
-                        <a class="btn btn-primary" href="#">Xem chi tiết</a>
                     </div>
+                    <div class="clearfix"></div>
                 </div>
-                <div class="clearfix"></div>
-            </div>
-            <div class="single-news-event">
-                <figure>
-                    <img src="~/Content/ClientContent/images/news-event/news-event-02.jpg" alt="News & Event" />
-                </figure>
-                <div class="content-block">
-                    <div class="member-info">
-                        <div class="content_meta_category">
-                            <span class="arrow-right"></span>
-                            <a href="#." rel="category tag">EVENT</a>
-                        </div>
-                        <ul class="news-event-info">
-                            <li>
-                                <a href="#" target="_blank">
-                                    <i class="fa fa-calendar"></i>
-                                    July 25, 2016
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#" target="_blank">
-                                    <i class="fa fa-map-marker"></i>
-                                    Hà Nội
-                                </a>
-                            </li>
-                        </ul>
-                        <h3><a href=".html#">Sự kiện thường niên tại thư viện</a></h3>
-                        <p>Sự phát triển của  quen sử dụng thông tin của bạn đọc (BĐ) trong giai đoạn hiện nay. Thay vì sử dụng các hình thức tài liệu truyền thống như những năm trước đây, thì giờ đây BĐ lại chỉ chú trọng đến việc tìm kiếm các nguồn thông tin trên Internet thay vì đến thư viện, </p>
-                        <a class="btn btn-primary" href="#">Xem chi tiết</a>
-                    </div>
-                </div>
-                <div class="clearfix"></div>
-            </div>
-            <div class="single-news-event">
-                <figure>
-                    <img src="~/Content/ClientContent/images/news-event/news-event-03.jpg" alt="News & Event" />
-                </figure>
-                <div class="content-block">
-                    <div class="member-info">
-                        <div class="content_meta_category">
-                            <span class="arrow-right"></span>
-                            <a href="#." rel="category tag">SỰ KIỆN</a>
-                        </div>
-                        <ul class="news-event-info">
-                            <li>
-                                <a href="#" target="_blank">
-                                    <i class="fa fa-calendar"></i>
-                                    July 25, 2016
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#" target="_blank">
-                                    <i class="fa fa-map-marker"></i>
-                                    Hà Nội
-                                </a>
-                            </li>
-                        </ul>
-                        <h3><a href=".html#">Sự kiện thường niên tại thư viện</a></h3>
-                        <p>Sự phát triển của công nghệ các hình thức tài liệu truyền thống như những năm trước đây, thì giờ đây BĐ lại chỉ chú trọng đến việc tìm kiếm các nguồn thông tin trên Internet thay vì đến thư viện, </p>
-                        <a class="btn btn-primary" href="#">Xem chi tiết</a>
-                    </div>
-                </div>
-            </div>
+            }
+            
+            
+            
             <div class="clearfix"></div>
         </div>
     </div>
 </section>
 <!-- End: News & Event -->
+
+<script>
+    function truncateText(selector, maxLength) {
+        var element = document.querySelector(selector),
+            truncated = element.innerText;
+
+        if (truncated.length > maxLength) {
+            truncated = truncated.substr(0, maxLength) + '...';
+        }
+        return truncated;
+    }
+
+    document.querySelector('.content-p').innerText = truncateText('.content-p', 300);
+</script>

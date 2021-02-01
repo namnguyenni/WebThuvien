@@ -497,8 +497,13 @@ namespace WebThuvien.Controllers
             {
                 QLTHUVIEN db = new QLTHUVIEN();
                 SACH sach = db.SACHes.SingleOrDefault(x => x.MASACH == MaSach);
+                if (System.IO.File.Exists(Server.MapPath("~/Content/ClientContent/images/Books/"+sach.HINHANH)))
+                {
+                    System.IO.File.Delete(Server.MapPath("~/Content/ClientContent/images/Books/" + sach.HINHANH));
+                }
                 db.SACHes.Remove(sach);
                 db.SaveChanges();
+
                 TempData["Error"] = "0";
             }
             catch (Exception)
@@ -1176,7 +1181,6 @@ namespace WebThuvien.Controllers
                 try
                 {
                     TAIKHOAN taikhoancurrent = Session["Taikhoan"] as TAIKHOAN;
-
                     if (taikhoancurrent.TENTAIKHOAN == Tendangnhap)
                     {
                         return 0;
@@ -1413,6 +1417,8 @@ namespace WebThuvien.Controllers
         //xóa hoạt động
         public string Xoahoatdong(string mahoatdong)
         {
+
+
             return "0";
         }
 

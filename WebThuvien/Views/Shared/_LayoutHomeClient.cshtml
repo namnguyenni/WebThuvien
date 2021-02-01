@@ -47,8 +47,7 @@
                             <li><a href="/home">Trang chủ</a></li>
                             <li><a href="/sach">Sách &amp; Đa phương tiện</a></li>
                             <li><a href="/hoatdong">Tin tức &amp; Sự kiện</a></li>
-                            <li><a href="#">Dịch vụ</a></li>
-                            <li><a href="#">Liên hệ</a></li>
+                            <li><a href="/lienhe">Liên hệ</a></li>
                         </ul>
                     </div>
                 </div>
@@ -104,35 +103,12 @@
     <script type="text/javascript" src="~/Content/ClientContent/js/main.js"></script>
 
     <script>
-        var x = '@ViewBag.noidungnhap';
-        var y = '@ViewBag.linhvuc';
-        var z = '@ViewBag.loaisach';
-
-        $(document).ready(function () {
-            $('#noidungnhap').val(x);
-
-            if (y == undefined || y == null || y == '') {
-                y = '0';
-            }
-            $('#loaisach option[value=' + y + ']').attr('selected', 'selected');
-
-
-            if (z == undefined || z == null || z == '') {
-                z = '0';
-            }
-            $('#linhvuc option[value=' + z + ']').attr('selected', 'selected');
-
-        })
-
-    </script>
-    <script>
     function setSelectedPageNav() {
         var pathName = location.pathname.toLowerCase();
         var patt1 = new RegExp("/home");
         var patt2 = new RegExp("/sach");
-        var patt4 = new RegExp("/thongke");
         var patt3 = new RegExp("/hoatdong");
-        var patt5 = new RegExp("/baocao");
+        var patt4 = new RegExp("/lienhe");
         // || pathName == "/"
         if (patt1.exec(pathName) != null) {
             $("#home-nav").css("color", "#84bb45");
@@ -142,6 +118,9 @@
         }
         else if (patt3.exec(pathName) != null) {
             $("#hoatdong").css("color", "#84bb45");
+        }
+        else if (patt4.exec(pathName) != null) {
+            $("#lienhe").css("color", "#84bb45");
         }
 
     }

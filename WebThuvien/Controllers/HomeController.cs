@@ -124,6 +124,9 @@ namespace WebThuvien.Controllers
         }
         public ActionResult EventSection()
         {
+            QLTHUVIEN db = new QLTHUVIEN();
+            ViewBag.lstEvent = db.BAIDANGTHONGTINs.OrderBy(x => x.THOIGIANBATDAU).Take(3).ToList();
+
             return View();
         }
         #endregion

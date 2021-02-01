@@ -10,64 +10,17 @@
             <div class="books-full-width">
                 <div class="container">
                     <!-- Start: Search Section -->
-
+                    
                     <!-- End: Search Section -->
-
-                    <div class="filter-options margin-list">
-                        <div class="row">
-                            <div class="col-md-3 col-sm-3">
-                                <select name="orderby">
-                                    <option selected="selected">Sort by Title</option>
-                                    <option>Sort by popularity</option>
-                                    <option>Sort by rating</option>
-                                    <option>Sort by newness</option>
-                                    <option>Sort by price</option>
-                                </select>
-                            </div>
-                            <div class="col-md-3 col-sm-3">
-                                <select name="orderby">
-                                    <option selected="selected">Sort by Author</option>
-                                    <option>Sort by popularity</option>
-                                    <option>Sort by rating</option>
-                                    <option>Sort by newness</option>
-                                    <option>Sort by price</option>
-                                </select>
-                            </div>
-                            <div class="col-md-2 col-sm-3">
-                                <select name="orderby">
-                                    <option selected="selected">Language</option>
-                                    <option>Sort by popularity</option>
-                                    <option>Sort by rating</option>
-                                    <option>Sort by newness</option>
-                                    <option>Sort by price</option>
-                                </select>
-                            </div>
-                            <div class="col-md-2 col-sm-3">
-                                <select name="orderby">
-                                    <option selected="selected">Publishing Date</option>
-                                    <option>Sort by popularity</option>
-                                    <option>Sort by rating</option>
-                                    <option>Sort by newness</option>
-                                    <option>Sort by price</option>
-                                </select>
-                            </div>
-                            <div class="col-md-2 col-sm-12 pull-right">
-                                <div class="filter-toggle">
-                                    <a href="#" class="active"><i class="glyphicon glyphicon-th-large"></i></a>
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                     <div class="booksmedia-fullwidth">
                         <ul>
                             @foreach (var item in @ViewBag.SearchSach)
                             {
                                 <li>
                                     <div class="book-list-icon light-green-icon"></div>
-                                    <figure>
+                                    <figure style="height:430px;width:350px">
                                         <a href="/Sach/Chitietsach?MaSach=@item.MASACH">
-                                            <img  style="height:435px;width:100%;" src="~/Content/ClientContent/images/Books/@item.HINHANH" alt="Book">
+                                            <img   src="~/Content/ClientContent/images/Books/@item.HINHANH" alt="Book">
                                         </a>
                                         <figcaption>
                                             <header>
@@ -75,7 +28,7 @@
                                                 <p><strong>Tác giả:</strong>@item.TACGIA.TENTACGIA</p>
                                                 <p><strong>Mã sách:</strong>  @item.MASACH</p>
                                             </header>
-                                            <p>@item.GHICHU</p>
+                                            <p class="content-p" style="min-height:70px;">@item.GHICHU</p>
                                             <div class="actions">
                                                 <ul>
                                                     <li>
@@ -163,58 +116,16 @@
     </div>
 </div>
 <!-- End: Products Section -->
-<!-- Start: Social Network -->
-<section class="social-network section-padding">
-    <div class="container">
-        <div class="center-content">
-            <h2 class="section-title">Follow Us</h2>
-            <span class="underline center"></span>
-            <p class="lead">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-        </div>
-        <ul>
-            <li>
-                <a class="facebook" href="#" target="_blank">
-                    <span>
-                        <i class="fa fa-facebook-f"></i>
-                    </span>
-                </a>
-            </li>
-            <li>
-                <a class="twitter" href="#" target="_blank">
-                    <span>
-                        <i class="fa fa-twitter"></i>
-                    </span>
-                </a>
-            </li>
-            <li>
-                <a class="google" href="#" target="_blank">
-                    <span>
-                        <i class="fa fa-google-plus"></i>
-                    </span>
-                </a>
-            </li>
-            <li>
-                <a class="rss" href="#" target="_blank">
-                    <span>
-                        <i class="fa fa-rss"></i>
-                    </span>
-                </a>
-            </li>
-            <li>
-                <a class="linkedin" href="#" target="_blank">
-                    <span>
-                        <i class="fa fa-linkedin"></i>
-                    </span>
-                </a>
-            </li>
-            <li>
-                <a class="youtube" href="#" target="_blank">
-                    <span>
-                        <i class="fa fa-youtube"></i>
-                    </span>
-                </a>
-            </li>
-        </ul>
-    </div>
-</section>
-<!-- End: Social Network -->
+<script>
+    function truncateText(selector, maxLength) {
+        var element = document.querySelector(selector),
+            truncated = element.innerText;
+
+        if (truncated.length > maxLength) {
+            truncated = truncated.substr(0, maxLength) + '...';
+        }
+        return truncated;
+    }
+
+    document.querySelector('.content-p').innerText = truncateText('.content-p', 300);
+</script>

@@ -3,11 +3,10 @@
 <head>
     <!-- Basic Page Info -->
     <meta charset="utf-8">
-    <title>Thư viện số - Admin</title>
+    <title>Thư viện số - @ViewBag.Title</title>
     <!-- Site favicon -->
-    <link rel="apple-touch-icon" sizes="180x180" href="~/Content/AdminContent/vendors/images/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="~/Content/AdminContent/vendors/images/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="~/Content/AdminContent/vendors/images/favicon-16x16.png">
+    <link href="~/Content/ClientContent/images/favicon.ico" rel="icon" type="image/x-icon" />
+
     <!-- Mobile Specific Metas -->
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <!-- Google Font -->
@@ -31,7 +30,7 @@
 <body>
     <div class="pre-loader">
         <div class="pre-loader-box">
-            <div class="loader-logo"><img src="~/Content/AdminContent/vendors/images/deskapp-logo.svg" alt=""></div>
+            <div class="loader-logo"><img src="~/Content/ClientContent/images/logo_thuvienso.png" alt=""></div>
             <div class='loader-progress' id="progress_div">
                 <div class='bar' id='bar1'></div>
             </div>
@@ -113,8 +112,7 @@
     <div class="left-side-bar">
         <div class="brand-logo">
             <a href="/">
-                <img src="~/Content/AdminContent/vendors/images/deskapp-logo.svg" alt="" class="dark-logo">
-                <img src="~/Content/AdminContent/vendors/images/deskapp-logo-white.svg" alt="" class="light-logo">
+                <img src="~/Content/ClientContent/images/logo_thuvienso.png" alt="">
             </a>
             <div class="close-sidebar" data-toggle="left-sidebar-close">
                 <i class="ion-close-round"></i>
@@ -128,9 +126,9 @@
                             <span class="micon dw dw-house-1"></span><span class="mtext">Trang chủ</span>
                         </a>
                     </li>
-                    <li class="dropdown">
+                    <li class="dropdown" >
                         <a href="javascript:;" class="dropdown-toggle">
-                            <span class="micon dw dw-fast-forward-1"></span><span class="mtext">Sách</span>
+                            <span class="micon dw dw-copy"></span><span class="mtext">Sách</span>
                         </a>
                         <ul class="submenu">
                             <li><a href="/Admin/Sach">Danh mục sách</a></li>
@@ -143,7 +141,7 @@
                     </li>
                     <li class="dropdown">
                         <a href="javascript:;" class="dropdown-toggle">
-                            <span class="micon dw dw-user1"></span><span class="mtext">Mượn trả sách</span>
+                            <span class="micon dw dw-list3"></span><span class="mtext">Mượn trả sách</span>
                         </a>
                         <ul class="submenu">
                             <li><a href="/Admin/Danhmucsachmuon">Danh mục sách mượn</a></li>
@@ -164,7 +162,7 @@
                     
                     <li class="dropdown">
                         <a href="javascript:;" class="dropdown-toggle">
-                            <span class="micon dw dw-analytics-21"></span><span class="mtext">Sự kiện</span>
+                            <span class="micon dw dw-apartment"></span><span class="mtext">Sự kiện</span>
                         </a>
                         <ul class="submenu">
                             <li><a href="/Admin/DSHoatdong">Danh sách hoạt động</a></li>
@@ -209,14 +207,21 @@
     <script src="~/Content/AdminContent/src/plugins/datatables/js/responsive.bootstrap4.min.js"></script>
     <script src="~/Content/AdminContent/vendors/scripts/dashboard3.js"></script>
     <script>
-        $(document).ready(function () {
-            if (error == '1') {
-                alert("XÓA SÁCH KHÔNG THÀNH CÔNG");
-            }
-            else if (error == '0') {
-                alert("XÓA SÁCH THÀNH CÔNG");
-            }
+        $(document).ready(function () {          
+            NaviMenu();
+
         })
+
+        function NaviMenu() {
+            var x = location.pathname;
+            var thea = $(document).find('a[href="' + x + '"]')
+            var a = $(thea);
+            
+            a.parents("li.dropdown").addClass("show");
+            a.addClass("active");
+            a.parents("li.dropdown").children(".dropdown-toggle").attr("data-option", "on");
+            a.parents("ul.submenu").css("display", "block");
+        }
     </script>
 </body>
 </html>

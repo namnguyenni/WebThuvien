@@ -12,68 +12,19 @@
         <main id="main" class="site-main">
             <div class="books-full-width">
                 <div class="container">
-                    <!-- Start: Search Section -->
-                    <!-- End: Search Section -->
-                    <!--
-                    <div class="filter-options margin-list">
-                        <div class="row">
-                            <div class="col-md-3 col-sm-3">
-                                <select name="orderby">
-                                    <option selected="selected">Sort by Title</option>
-                                    <option>Sort by popularity</option>
-                                    <option>Sort by rating</option>
-                                    <option>Sort by newness</option>
-                                    <option>Sort by price</option>
-                                </select>
-                            </div>
-                            <div class="col-md-3 col-sm-3">
-                                <select name="orderby">
-                                    <option selected="selected">Sort by Author</option>
-                                    <option>Sort by popularity</option>
-                                    <option>Sort by rating</option>
-                                    <option>Sort by newness</option>
-                                    <option>Sort by price</option>
-                                </select>
-                            </div>
-                            <div class="col-md-2 col-sm-3">
-                                <select name="orderby">
-                                    <option selected="selected">Language</option>
-                                    <option>Sort by popularity</option>
-                                    <option>Sort by rating</option>
-                                    <option>Sort by newness</option>
-                                    <option>Sort by price</option>
-                                </select>
-                            </div>
-                            <div class="col-md-2 col-sm-3">
-                                <select name="orderby">
-                                    <option selected="selected">Publishing Date</option>
-                                    <option>Sort by popularity</option>
-                                    <option>Sort by rating</option>
-                                    <option>Sort by newness</option>
-                                    <option>Sort by price</option>
-                                </select>
-                            </div>
-                            <div class="col-md-2 col-sm-12 pull-right">
-                                <div class="filter-toggle">
-                                    <a href="#" class="active"><i class="glyphicon glyphicon-th-large"></i></a>
 
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    -->
                     <div class="booksmedia-fullwidth">
                         <ul>
                             @foreach (var item in ViewBag.SearchSach as List<WebThuvien.Models.Entity.SACH>)
                             {
                                 <li>
                                     <div class="book-list-icon light-green-icon"></div>
-                                    <figure>
-                                        <a href="/Sach/Chitietsach?MaSach=@item.MASACH"><img  style="height:435px;width:100%;" src="~/Content/ClientContent/images/Books/@item.HINHANH" alt="Book"></a>
+                                    <figure  style="height:430px;width:350px">
+                                        <a href="/Sach/Chitietsach?MaSach=@item.MASACH"><img src="~/Content/ClientContent/images/Books/@item.HINHANH" alt="Book"></a>
                                         <figcaption>
                                             <header>
                                                 <h4><a href="/Sach/Chitietsach?MaSach=@item.MASACH">@item.TENSACH</a></h4>
-                                                <p><strong>Tác giả:</strong>  @item.TACGIA.MATACGIA</p>
+                                                <p><strong>Tác giả:</strong>  @item.TACGIA.TENTACGIA</p>
                                                 <p><strong>Lĩnh vực :</strong>  @item.LINHVUC.TENLINHVUC</p>
                                             </header>
                                             <p>@item.GHICHU</p>
@@ -129,12 +80,12 @@
                             }
                             @for (int i = 1; i <= ViewBag.countPage; i++)
                             {
-                                if (@i == ViewBag.currentPage)
+                                if (i == ViewBag.currentPage)
                                 {
                                     <a href="/Sach/Timkiemsach?noidungnhap=@ViewBag.noidungnhap&loaisach=@ViewBag.loaisach&linhvuc=@ViewBag.linhvuc&pagenumber=@i"><span class="page-numbers current">@i</span></a>
 
                                 }
-                                else
+                                else if(i < ViewBag.currentPage + 3 || i > ViewBag.currentPage - 3)
                                 {
                                     <a href="/Sach/Timkiemsach?noidungnhap=@ViewBag.noidungnhap&loaisach=@ViewBag.loaisach&linhvuc=@ViewBag.linhvuc&pagenumber=@i"><span class="page-numbers">@i</span></a>
                                 }

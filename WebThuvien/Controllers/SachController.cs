@@ -121,7 +121,7 @@ namespace WebThuvien.Controllers
                 return Redirect("/Home/Login");
             }
 
-            string noidung = noidungnhap.ToUpper();
+            string noidung = noidungnhap.Trim().ToUpper();
             QLTHUVIEN db = new QLTHUVIEN();
             List<SACH> SearchSach = new List<SACH>();
 
@@ -134,9 +134,7 @@ namespace WebThuvien.Controllers
             AddSach(SearchSach, SearchSachMa);
 
             //tìm kiếm vào tên tác giả
-            SqlParameter noidungparam = new SqlParameter("@noidung", noidung);
-            noidungparam.SqlDbType = SqlDbType.NVarChar;
-            List<SACH> SearchSachTacgia = db.Database.SqlQuery<SACH>("exec dbo.SearchSachTacgia '"+ noidung+"'").ToList();
+            List<SACH> SearchSachTacgia = db.SACHes.Where(x=>x.TACGIA.TENTACGIA.Contains(noidung)).ToList();
             AddSach(SearchSach, SearchSachTacgia);
 
             //tim kiếm theo lĩnh vực
@@ -161,7 +159,19 @@ namespace WebThuvien.Controllers
                 }
                 SearchSach = LIST;
 
+
             }
+
+            foreach (var item in SearchSach)
+            {
+                TACGIA tacgia = db.TACGIAs.SingleOrDefault(x => x.MATACGIA == item.MATACGIA);
+                LINHVUC linhvuc1 = db.LINHVUCs.SingleOrDefault(x => x.MALINHVUC == item.MALINHVUC);
+
+
+                item.TACGIA = tacgia;
+                item.LINHVUC = linhvuc1;
+            }
+
 
             //phân trang và tính toán
             if (SearchSach.Count<9)
@@ -187,9 +197,10 @@ namespace WebThuvien.Controllers
             
             ViewBag.countPage = countPage;
             ViewBag.currentPage = pageNumber;
-            ViewBag.noidungnhap = noidungnhap;
-            ViewBag.linhvuc = linhvuc;
-            ViewBag.loaisach = loaisach;
+
+            TempData["noidungnhap"] = noidungnhap;
+            TempData["linhvuc"] = linhvuc;
+            TempData["loaisach"] = loaisach;
 
             return View();
         }

@@ -155,6 +155,7 @@
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HoatdongController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LienheController.cs" />
     <Compile Include="Controllers\SachController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -495,6 +496,7 @@
     <Content Include="Views\Admin\Danhmucsachmuon.cshtml" />
     <Content Include="Views\Hoatdong\Index.cshtml" />
     <Content Include="Views\Hoatdong\Chitiet.cshtml" />
+    <Content Include="Views\Lienhe\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
