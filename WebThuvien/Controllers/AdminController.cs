@@ -39,6 +39,34 @@ namespace WebThuvien.Controllers
                 lst.Add(sach);
             }
             ViewBag.Sach = lst;
+            ViewBag.Soluongsach = db.SACHes.Count();
+            ViewBag.Soluongbandoc = db.TAIKHOANs.Count();
+            int Soluongbaidangthang = 0;
+            foreach (var item in db.BAIDANGTHONGTINs)
+            {
+                if (item.NGAYDANG != null)
+                {
+                    DateTime ngaydang = (DateTime)item.NGAYDANG;
+                    if (ngaydang.Month == DateTime.Now.Month)
+                    {
+                        Soluongbaidangthang++;
+                    }
+                }
+                
+
+            }
+            ViewBag.Soluongbaidangthang = Soluongbaidangthang;
+            int Soluongquahan = 0;
+            foreach (var item in db.CHITIETMUONTRASACHes)
+            {
+                if ((DateTime.Now -  item.NGAYMUON.Value).TotalDays > item.THOIGIANMUON && item.NGAYTRA ==  null)
+                {
+                    Soluongquahan++;
+                }
+            }
+
+            ViewBag.Soluongquahan = Soluongquahan;
+
 
             return View();
         }
@@ -1343,7 +1371,7 @@ namespace WebThuvien.Controllers
         }
 
         //Chi tiết hoạt động
-        public ActionResult Chitiethoatdong(int id)
+        public ActionResult Chitiethoatdong(string id)
         {
             //kiểm tra sự tồn tại session
             if (Session["Taikhoan"] == null)
@@ -1357,6 +1385,7 @@ namespace WebThuvien.Controllers
             }
 
             ViewBag.baidangs = db.BAIDANGTHONGTINs.SingleOrDefault(x => x.MABAIDANG == id);
+
             return View();
         }
 
@@ -1444,6 +1473,15 @@ namespace WebThuvien.Controllers
                 TAIKHOAN tacgia = Session["Taikhoan"] as TAIKHOAN;
                 baidang.TACGIA = tacgia.TENTAIKHOAN;
             }
+            //SINH MÃ BÀI ĐĂNG
+            string mabaidang;
+            do
+            {
+                mabaidang = Tusinhma(2, 4);
+            } while (db.BAIDANGTHONGTINs.SingleOrDefault(x=>x.MABAIDANG == mabaidang)!=null);
+
+            baidang.MABAIDANG = mabaidang;
+
             try
             {
                 if (hinhanh1 != null)
@@ -1474,6 +1512,7 @@ namespace WebThuvien.Controllers
                     baidang.HINHANH2 = baidang.MABAIDANG + "_2.jpg";
 
                 }
+                baidang.NGAYDANG = DateTime.Now;
                 db.BAIDANGTHONGTINs.Add(baidang);
                 db.SaveChanges();
             }
@@ -1483,7 +1522,7 @@ namespace WebThuvien.Controllers
             }
 
 
-            return View();
+            return Redirect("/Admin/Chitiethoatdong?id="+baidang.MABAIDANG);
         }
 
 
@@ -1492,7 +1531,19 @@ namespace WebThuvien.Controllers
 
         public string ConvertDate(DateTime date)
         {
-            return date.Day + "/" + date.Month + "/" + date.Year;
+            string day, month;
+            if (date.Day < 10)
+            {
+                day = "0" + date.Day;
+            }
+            else day = date.Day.ToString();
+            if (date.Month < 10)
+            {
+                month = "0" + date.Month;
+            }
+            else month = date.Month.ToString();
+
+            return day + "/" + month + "/" + date.Year;
         }
 
         #endregion

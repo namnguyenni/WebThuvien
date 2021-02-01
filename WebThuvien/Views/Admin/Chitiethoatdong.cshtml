@@ -7,19 +7,19 @@
 <div class="main-container">
     <div class="xs-pd-20-10 pd-ltr-20">
         <div class="title pb-10">
-            <h2 class="h3 mb-0">@ViewBag.hoatdong.TIEUDE</h2>
+            <h2 class="h3 mb-0">@ViewBag.baidangs.TIEUDE</h2>
             <div class="card card-box">
             </div>
         </div>
 
         <div class="xs-pd-20-10 pd-ltr-20">
             <form method="post" enctype="multipart/form-data" action="/Admin/Chinhsuahoatdong">
-                <input name="TACGIA" type="text" value="@ViewBag.hoatdong.TACGIA" style="display:none;"/>
+                <input name="TACGIA" type="text" value="@ViewBag.baidangs.TACGIA" style="display:none;"/>
                 <div class="row">
                     <div class="col-md-12 col-sm-12">
                         <div class="form-group">
                             <label>Tiêu đề</label>
-                            <input name="TIEUDE" type="text" class="form-control">
+                            <input name="TIEUDE" value="@ViewBag.baidangs.TIEUDE" type="text" class="form-control">
                         </div>
                     </div>
                 </div>
@@ -27,7 +27,7 @@
                     <div class="col-md-12 col-sm-12">
                         <div class="form-group">
                             <label>Địa điểm</label>
-                            <input name="DIADIEM" type="text" class="form-control">
+                            <input name="DIADIEM" value="@ViewBag.baidangs.DIADIEM" type="text" class="form-control">
                         </div>
                     </div>
                 </div>
@@ -51,22 +51,25 @@
                         <div class="form-group">
                             <label>Hình ảnh 1</label>
                             <input name="hinhanh1" type="file" class="form-control" accept="image/*">
+                            <img src="~/Content/ClientContent/Hoatdong/@ViewBag.baidangs.HINHANH1" />
+
                         </div>
                     </div>
                     <div class="col-md-6 col-sm-12">
                         <div class="form-group">
                             <label>Hình ảnh 2</label>
                             <input name="hinhanh2" class="form-control" type="file" accept="image/*">
+                            <img src="~/Content/ClientContent/Hoatdong/@ViewBag.baidangs.HINHANH2" />
                         </div>
                     </div>
 
                 </div>
                 <div class="row">
-                    <div class="col-md-6 col-sm-12">
+                    <div class="col-md-12 col-sm-12">
                         <div class="form-group">
                             <div class="html-editor pd-20 card-box mb-30">
                                 <p>Nội dung</p>
-                                <textarea name="NOIDUNG" class="form-control"></textarea>
+                                <textarea name="NOIDUNG" class="form-control">@ViewBag.baidangs.NOIDUNG</textarea>
                             </div>
                         </div>
                     </div>

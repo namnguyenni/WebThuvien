@@ -41,7 +41,7 @@ namespace WebThuvien.Controllers
             return View();
         }
 
-        public ActionResult Chitiet(int mabaidang)
+        public ActionResult Chitiet(string mabaidang)
         {
             if (Session["TaikhoanBanDoc"] == null)
             {

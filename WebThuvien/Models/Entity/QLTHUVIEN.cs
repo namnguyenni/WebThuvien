@@ -31,6 +31,10 @@ namespace WebThuvien.Models.Entity
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<BAIDANGTHONGTIN>()
+                .Property(e => e.MABAIDANG)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<BAIDANGTHONGTIN>()
                 .Property(e => e.TACGIA)
                 .IsUnicode(false);
 
@@ -171,8 +175,9 @@ namespace WebThuvien.Models.Entity
 
             modelBuilder.Entity<TAIKHOAN>()
                 .HasMany(e => e.BAIDANGTHONGTINs)
-                .WithOptional(e => e.TAIKHOAN)
-                .HasForeignKey(e => e.TACGIA);
+                .WithRequired(e => e.TAIKHOAN)
+                .HasForeignKey(e => e.TACGIA)
+                .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<TAIKHOAN>()
                 .HasMany(e => e.BINHLUANs)

@@ -9,28 +9,35 @@ namespace WebThuvien.Models.Entity
     [Table("BAIDANGTHONGTIN")]
     public partial class BAIDANGTHONGTIN
     {
-        [Key]
-        public int MABAIDANG { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int ID { get; set; }
 
+        [Key]
+        [StringLength(20)]
+        public string MABAIDANG { get; set; }
+
+        [Required]
         [StringLength(50)]
         public string TIEUDE { get; set; }
 
         [Column(TypeName = "date")]
-        public DateTime? NGAYDANG { get; set; }
+        public DateTime NGAYDANG { get; set; }
 
         [StringLength(100)]
         public string DIADIEM { get; set; }
 
+        [Required]
         [StringLength(20)]
         public string TACGIA { get; set; }
 
         [StringLength(3000)]
         public string NOIDUNG { get; set; }
 
-        public DateTime? THOIGIANBATDAU { get; set; }
+        public DateTime THOIGIANBATDAU { get; set; }
 
-        public DateTime? THOIGIANKETTHUC { get; set; }
+        public DateTime THOIGIANKETTHUC { get; set; }
 
+        [Required]
         [StringLength(50)]
         public string HINHANH1 { get; set; }
 
