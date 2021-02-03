@@ -72,11 +72,13 @@ namespace WebThuvien.Controllers
             }
 
             QLTHUVIEN db = new QLTHUVIEN();
-
+            
             
                 //lấy cuốn sách
                 SACH sach = db.SACHes.Single(x => x.MASACH == MaSach);
-                ViewBag.sach = sach;
+            //them lượt xem
+            sach.LUOTXEM = sach.LUOTXEM++;
+            ViewBag.sach = sach;
 
                 //lấy loại sách
                 LOAISACH loaisach = db.LOAISACHes.Single(x => x.MATHELOAI == sach.MALOAISACH);

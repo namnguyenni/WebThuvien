@@ -82,9 +82,9 @@
             </div>
         </div>
         <div class="header-right">
-            @{ 
-               
-                var session =  Session["Taikhoan"] as WebThuvien.Models.Entity.TAIKHOAN;
+            @{
+
+                var session = Session["Taikhoan"] as WebThuvien.Models.Entity.TAIKHOAN;
 
             }
             <div class="user-info-dropdown">
@@ -108,7 +108,7 @@
             </div>
         </div>
     </div>
-    
+
     <div class="left-side-bar">
         <div class="brand-logo">
             <a href="/">
@@ -126,7 +126,7 @@
                             <span class="micon dw dw-house-1"></span><span class="mtext">Trang chủ</span>
                         </a>
                     </li>
-                    <li class="dropdown" >
+                    <li class="dropdown">
                         <a href="javascript:;" class="dropdown-toggle">
                             <span class="micon dw dw-copy"></span><span class="mtext">Sách</span>
                         </a>
@@ -159,7 +159,7 @@
                             <li><a href="/Admin/Themthe">Tạo thẻ mới</a></li>
                         </ul>
                     </li>
-                    
+
                     <li class="dropdown">
                         <a href="javascript:;" class="dropdown-toggle">
                             <span class="micon dw dw-apartment"></span><span class="mtext">Sự kiện</span>
@@ -179,7 +179,7 @@
                             <li><a href="#">Thống kê chung</a></li>
                         </ul>
                     </li>
-                    
+
                     <li>
                         <a href="/home/Logout" target="_blank" class="dropdown-toggle no-arrow">
                             <span class="micon dw dw-paper-plane1"></span>
@@ -194,6 +194,10 @@
     @RenderBody()
     <div class="mobile-menu-overlay"></div>
 
+
+    
+
+
     <!-- js -->
     <script src="~/Scripts/jquery-3.4.1.min.js"></script>
     <script src="~/Content/AdminContent/vendors/scripts/core.js"></script>
@@ -207,7 +211,7 @@
     <script src="~/Content/AdminContent/src/plugins/datatables/js/responsive.bootstrap4.min.js"></script>
     <script src="~/Content/AdminContent/vendors/scripts/dashboard3.js"></script>
     <script>
-        $(document).ready(function () {          
+        $(document).ready(function () {
             NaviMenu();
 
         })
@@ -216,7 +220,7 @@
             var x = location.pathname;
             var thea = $(document).find('a[href="' + x + '"]')
             var a = $(thea);
-            
+
             a.parents("li.dropdown").addClass("show");
             a.addClass("active");
             a.parents("li.dropdown").children(".dropdown-toggle").attr("data-option", "on");
@@ -224,4 +228,5 @@
         }
     </script>
 </body>
+
 </html>

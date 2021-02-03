@@ -1,72 +1,307 @@
-﻿
-@{
-    ViewBag.Title = "Danh mục sách mượn";
-    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+﻿@{
+    Layout = null;
 }
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- Basic Page Info -->
+    <meta charset="utf-8">
+    <title>Thư viện số - Danh mục sach mượn</title>
+    <!-- Site favicon -->
+    <link href="~/Content/ClientContent/images/favicon.ico" rel="icon" type="image/x-icon" />
 
-<div class="main-container">
-    <div class="xs-pd-20-10 pd-ltr-20">
-        <div class="card-box pb-10">
-            <div class="h5 pd-20 mb-0">Danh sách các cuốn sách trong thư viện</div>
-            <table class="data-table table nowrap">
-                <thead>
-                    <tr>
-                        <th class="table-plus">STT</th>
-                        <th>Mã sách</th>
-                        <th>Tên sách</th>
-                        <th>Hình ảnh</th>
-                        <th>Người mượn</th>
-                        <th>Ngày mượn</th>
-                        <th>TG mượn</th>
-                        <th>Ngày trả</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @{ int STT = 0;}
-                    @foreach (var item in @ViewBag.listsachmuon as List<WebThuvien.Models.CustomClass.ChitietSachmuon>)
-                    {
-                        string ngaymuon = item.NGAYMUON.Value.Day + "/" + item.NGAYMUON.Value.Month + "/" + item.NGAYMUON.Value.Year;
-                        int thoigianquahan = (int)(DateTime.Now - item.NGAYMUON.Value).TotalDays - 120;
+    <!-- Mobile Specific Metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- CSS -->
+    <link rel="stylesheet" type="text/css" href="~/Content/AdminContent/vendors/styles/core.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/AdminContent/vendors/styles/icon-font.min.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/AdminContent/src/plugins/datatables/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/AdminContent/src/plugins/datatables/css/responsive.bootstrap4.min.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/AdminContent/vendors/styles/style.css">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-119386393-1"></script>
+    <script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
 
-                        STT = STT + 1;
-                        <tr>
-                            <td class="table-plus">
-                                @STT
-                            </td>
-                            <td>@item.MASACH</td>
-                            <td>@item.TENSACH</td>
-                            <td>
-                                <div class="name-avatar d-flex align-items-center">
-                                    <div class="avatar mr-2 flex-shrink-0">
-                                        <img src="~/Content/ClientContent/images/Books/@item.HINHANH" style="width:60px;height:60px" alt="hình ảnh">
-                                    </div>
-                                </div>
-                            </td>
-                            <td><p title="Tên chủ thẻ : @item.NGUOIMUON">@item.MATHENGUOIMUON</p></td>
-                            <td>@ngaymuon</td>
-                            <td>@item.THOIGIANMUON ngày</td>
-
-                        </tr>
-                    }
-
-
-                </tbody>
-            </table>
-        </div>
-
-
-
-
-
-
-        <div class="footer-wrap pd-20 mb-20 card-box">
-            Thư viện số hóa -  <a href="/" target="_blank">Ban cơ yếu chính phủ</a>
+		gtag('config', 'UA-119386393-1');
+    </script>
+</head>
+<body>
+    <div class="pre-loader">
+        <div class="pre-loader-box">
+            <div class="loader-logo"><img src="~/Content/ClientContent/images/logo_thuvienso.png" alt=""></div>
+            <div class='loader-progress' id="progress_div">
+                <div class='bar' id='bar1'></div>
+            </div>
+            <div class='percent' id='percent1'>0%</div>
+            <div class="loading-text">
+                Đang tải...
+            </div>
         </div>
     </div>
-</div>
-@{ ViewBag.Error = TempData["Error"] as string; }
-<script>
-    var error = '@ViewBag.Error';
+    <div class="header">
+        <div class="header-left">
+            <div class="menu-icon dw dw-menu"></div>
+            <div class="search-toggle-icon dw dw-search2" data-toggle="header_search"></div>
+            <div class="header-search">
+                <form action="/Admin/Timkiemsach" method="post" enctype="multipart/form-data">
+                    <div class="form-group mb-0">
+                        <i class="dw dw-search2 search-icon"></i>
+                        <input type="text" class="form-control search-input" placeholder="Nhập thông tin tìm kiếm" name="noidungnhap">
+                        <div class="dropdown show">
+                            <a class="dropdown-toggle no-arrow" role="button" data-toggle="dropdown" aria-expanded="true">
+                                <i class="ion-arrow-down-c"></i>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right show" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 3782px, 0px);" x-placement="bottom-end" x-out-of-boundaries="">
+                                <div class="form-group row">
+                                    <label class="col-sm-12 col-md-2 col-form-label">Loại sách</label>
+                                    <div class="col-sm-12 col-md-10">
+                                        <input class="form-control form-control-sm form-control-line" type="text" name="loaisach">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-12 col-md-2 col-form-label">Lĩnh vực</label>
+                                    <div class="col-sm-12 col-md-10">
+                                        <input class="form-control form-control-sm form-control-line" type="text" name="linhvuc">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-12 col-md-2 col-form-label">Tác giả</label>
+                                    <div class="col-sm-12 col-md-10">
+                                        <input class="form-control form-control-sm form-control-line" type="text" name="tacgia">
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <input class="btn btn-primary" value="Tìm" type="submit">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="header-right">
+            @{
+
+                var session = Session["Taikhoan"] as WebThuvien.Models.Entity.TAIKHOAN;
+
+            }
+            <div class="user-info-dropdown">
+                <div class="dropdown">
+                    <a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown">
+                        <span class="user-icon">
+                            <img src="~/Content/AdminContent/vendors/images/photo1.jpg" alt="">
+                        </span>
+                        @if (session.TENTAIKHOAN != null)
+                        {
+                            <span class="user-name">@session.TENTAIKHOAN</span>
+
+                        }
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
+                        <a class="dropdown-item" href="#"><i class="dw dw-user1"></i>Thông tin</a>
+                        <a class="dropdown-item" href="#"><i class="dw dw-help"></i> Thay đổi mật khẩu</a>
+                        <a class="dropdown-item" href="/home/logout"><i class="dw dw-logout"></i> Đăng xuất</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="left-side-bar">
+        <div class="brand-logo">
+            <a href="/">
+                <img src="~/Content/ClientContent/images/logo_thuvienso.png" alt="">
+            </a>
+            <div class="close-sidebar" data-toggle="left-sidebar-close">
+                <i class="ion-close-round"></i>
+            </div>
+        </div>
+        <div class="menu-block customscroll">
+            <div class="sidebar-menu">
+                <ul id="accordion-menu">
+                    <li>
+                        <a href="/Admin" class="dropdown-toggle no-arrow">
+                            <span class="micon dw dw-house-1"></span><span class="mtext">Trang chủ</span>
+                        </a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="javascript:;" class="dropdown-toggle">
+                            <span class="micon dw dw-copy"></span><span class="mtext">Sách</span>
+                        </a>
+                        <ul class="submenu">
+                            <li><a href="/Admin/Sach">Danh mục sách</a></li>
+                            <li><a href="/Admin/UploadSach">Thêm mới sách</a></li>
+                            <li><a href="/Admin/DSTacgia">Danh sách tác giả</a></li>
+                            <li><a href="/Admin/DSLinhvuc">Danh sách lĩnh vực</a></li>
+                            <li><a href="/Admin/DSLoaisach">Danh sách loại sách</a></li>
+                            <li><a href="/Admin/DSNXB">Danh sách nhà xuất bản</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="javascript:;" class="dropdown-toggle">
+                            <span class="micon dw dw-list3"></span><span class="mtext">Mượn trả sách</span>
+                        </a>
+                        <ul class="submenu">
+                            <li><a href="/Admin/Danhmucsachmuon">Danh mục sách mượn</a></li>
+                            <li><a href="/Admin/MuonSach">Mượn sách</a></li>
+                            <li><a href="/Admin/TraSach">Trả sách</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="javascript:;" class="dropdown-toggle">
+                            <span class="micon dw dw-user1"></span><span class="mtext">Người dùng và thẻ</span>
+                        </a>
+                        <ul class="submenu">
+                            <li><a href="/Admin/Taikhoan">Danh sách tài khoản</a></li>
+                            <li><a href="/Admin/The">Danh sách thẻ thư viện</a></li>
+                            <li><a href="/Admin/Themthe">Tạo thẻ mới</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="dropdown">
+                        <a href="javascript:;" class="dropdown-toggle">
+                            <span class="micon dw dw-apartment"></span><span class="mtext">Sự kiện</span>
+                        </a>
+                        <ul class="submenu">
+                            <li><a href="/Admin/DSHoatdong">Danh sách hoạt động</a></li>
+                            <li><a href="/Admin/Themhoatdong">Thêm hoạt động</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="javascript:;" class="dropdown-toggle">
+                            <span class="micon dw dw-analytics-21"></span><span class="mtext">Thống kê</span>
+                        </a>
+                        <ul class="submenu">
+                            <li><a href="#">Sách xem nhiều</a></li>
+                            <li><a href="#">Người dùng</a></li>
+                            <li><a href="#">Thống kê chung</a></li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a href="/home/Logout" target="_blank" class="dropdown-toggle no-arrow">
+                            <span class="micon dw dw-paper-plane1"></span>
+                            <span class="mtext"> Đăng xuất <img src="~/Content/AdminContent/vendors/images/coming-soon.png" alt="" width="25"></span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
 
 
-</script>
+    <div class="mobile-menu-overlay"></div>
+    <div class="main-container">
+        <div class="pd-ltr-20 xs-pd-20-10">
+            <div class="min-height-200px">
+                
+                <!-- Export Datatable start -->
+                <div class="card-box mb-30">
+                    <div class="pd-20">
+                        <h4 class="text-blue h4">Data Table with Export Buttons</h4>
+                    </div>
+                    <div class="pb-20">
+                        <table class="table hover multiple-select-row data-table-export nowrap">
+                            <thead>
+                                <tr>
+                                    <th class="table-plus">STT</th>
+                                    <th>Mã sách</th>
+                                    <th>Tên sách</th>
+                                    <th>Hình ảnh</th>
+                                    <th>Người mượn</th>
+                                    <th>Ngày mượn</th>
+                                    <th>Trạng thái</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{ int STT = 0;}
+                                @foreach (var item in @ViewBag.listsachmuon as List<WebThuvien.Models.CustomClass.ChitietSachmuon>)
+                                {
+                                    string ngaymuon = item.NGAYMUON.Value.Day + "/" + item.NGAYMUON.Value.Month + "/" + item.NGAYMUON.Value.Year;
+                                    int thoigianquahan = (int)(DateTime.Now - item.NGAYMUON.Value).TotalDays - 120;
+
+                                    STT = STT + 1;
+                                    <tr>
+                                        <td class="table-plus">
+                                            @STT
+                                        </td>
+                                        <td>@item.MASACH</td>
+                                        <td>@item.TENSACH</td>
+                                        <td>
+                                            <div class="name-avatar d-flex align-items-center">
+                                                <div class="avatar mr-2 flex-shrink-0">
+                                                    <img src="~/Content/ClientContent/images/Books/@item.HINHANH" style="width:60px;height:60px" alt="hình ảnh">
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td><p title="Tên chủ thẻ : @item.NGUOIMUON">@item.MATHENGUOIMUON</p></td>
+                                        <td>@ngaymuon</td>
+                                        @if (item.NGAYTRA == null && thoigianquahan < 0)
+                                        {
+                                            <td style="color:#ff7d00">Chưa trả</td>
+                                        }
+                                        else if (item.NGAYTRA == null && thoigianquahan > 0)
+                                        {
+                                            <td style="color:#ff0000">Quá hạn @thoigianquahan ngày</td>
+                                        }
+                                        else
+                                        {
+                                            <td style="color:#00ff21">Đã trả</td>
+                                        }
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <!-- Export Datatable End -->
+            </div>
+            <div class="footer-wrap pd-20 mb-20 card-box">
+                DeskApp - Bootstrap 4 Admin Template By <a href="https://github.com/dropways" target="_blank">Ankit Hingarajiya</a>
+            </div>
+        </div>
+    </div>
+    <!-- js -->
+    <script src="~/Content/AdminContent/vendors/scripts/core.js"></script>
+    <script src="~/Content/AdminContent/vendors/scripts/script.min.js"></script>
+    <script src="~/Content/AdminContent/vendors/scripts/process.js"></script>
+    <script src="~/Content/AdminContent/vendors/scripts/layout-settings.js"></script>
+    <script src="~/Content/AdminContent/src/plugins/datatables/js/jquery.dataTables.min.js"></script>
+    <script src="~/Content/AdminContent/src/plugins/datatables/js/dataTables.bootstrap4.min.js"></script>
+    <script src="~/Content/AdminContent/src/plugins/datatables/js/dataTables.responsive.min.js"></script>
+    <script src="~/Content/AdminContent/src/plugins/datatables/js/responsive.bootstrap4.min.js"></script>
+    <!-- buttons for Export datatable -->
+    <script src="~/Content/AdminContent/src/plugins/datatables/js/dataTables.buttons.min.js"></script>
+    <script src="~/Content/AdminContent/src/plugins/datatables/js/buttons.bootstrap4.min.js"></script>
+    <script src="~/Content/AdminContent/src/plugins/datatables/js/buttons.print.min.js"></script>
+    <script src="~/Content/AdminContent/src/plugins/datatables/js/buttons.html5.min.js"></script>
+    <script src="~/Content/AdminContent/src/plugins/datatables/js/buttons.flash.min.js"></script>
+    <script src="~/Content/AdminContent/src/plugins/datatables/js/pdfmake.min.js"></script>
+    <script src="~/Content/AdminContent/src/plugins/datatables/js/vfs_fonts.js"></script>
+    <!-- Datatable Setting js -->
+    <script src="~/Content/AdminContent/vendors/scripts/datatable-setting.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            NaviMenu();
+
+        })
+
+        function NaviMenu() {
+            var x = location.pathname;
+            var thea = $(document).find('a[href="' + x + '"]')
+            var a = $(thea);
+
+            a.parents("li.dropdown").addClass("show");
+            a.addClass("active");
+            a.parents("li.dropdown").children(".dropdown-toggle").attr("data-option", "on");
+            a.parents("ul.submenu").css("display", "block");
+        }
+    </script>
+</body>
+</html>

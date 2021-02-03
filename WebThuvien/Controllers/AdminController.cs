@@ -253,7 +253,7 @@ namespace WebThuvien.Controllers
                     sach.MATACGIA = db.TACGIAs.FirstOrDefault(x => x.TENTACGIA.ToUpper() == TENTACGIA.ToUpper()).MATACGIA;
                 }
 
-
+                sach.NGAYTAILEN = DateTime.Now;
                 db.SACHes.Add(sach);
                 db.SaveChanges();
             }
@@ -527,13 +527,25 @@ namespace WebThuvien.Controllers
             {
                 QLTHUVIEN db = new QLTHUVIEN();
                 SACH sach = db.SACHes.SingleOrDefault(x => x.MASACH == MaSach);
-                if (System.IO.File.Exists(Server.MapPath("~/Content/ClientContent/images/Books/"+sach.HINHANH)))
+                string hinhanh = sach.HINHANH;
+                //nếu sách đó đã trả thì xóa bản ghi về sách đó
+                //danh sách bản ghi về mượn trả của sách này
+                List<MUONTRASACH> lstmuon = db.MUONTRASACHes.Where(x => x.MASACH == MaSach).ToList();
+                foreach (var item in lstmuon)
+                {
+                    CHITIETMUONTRASACH chitiet = db.CHITIETMUONTRASACHes.SingleOrDefault(x => x.MAMUONTRASACH == item.MAMUONTRASACH);
+                    db.CHITIETMUONTRASACHes.Remove(chitiet);
+                    db.MUONTRASACHes.Remove(item);
+                    db.SaveChanges();
+                }
+
+
+                db.SACHes.Remove(sach);
+                db.SaveChanges();
+                if (System.IO.File.Exists(Server.MapPath("~/Content/ClientContent/images/Books/" + sach.HINHANH)))
                 {
                     System.IO.File.Delete(Server.MapPath("~/Content/ClientContent/images/Books/" + sach.HINHANH));
                 }
-                db.SACHes.Remove(sach);
-                db.SaveChanges();
-
                 TempData["Error"] = "0";
             }
             catch (Exception)
@@ -554,7 +566,7 @@ namespace WebThuvien.Controllers
             }
 
             QLTHUVIEN db = new QLTHUVIEN();
-            List<CHITIETMUONTRASACH> lstmuon = db.CHITIETMUONTRASACHes.Where(x => x.NGAYTRA != null).ToList();
+            List<CHITIETMUONTRASACH> lstmuon = db.CHITIETMUONTRASACHes.ToList();
             List<ChitietSachmuon> listsachmuon = new List<ChitietSachmuon>();
             if (lstmuon!=null)
             {
