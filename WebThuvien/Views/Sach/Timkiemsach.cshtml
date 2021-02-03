@@ -24,10 +24,10 @@
                                         <figcaption>
                                             <header>
                                                 <h4><a href="/Sach/Chitietsach?MaSach=@item.MASACH">@item.TENSACH</a></h4>
-                                                <p><strong>Tác giả:</strong>  @item.TACGIA.TENTACGIA</p>
+                                                <p class="content-p"><strong >Tác giả:</strong>  @item.TACGIA.TENTACGIA</p>
                                                 <p><strong>Lĩnh vực :</strong>  @item.LINHVUC.TENLINHVUC</p>
                                             </header>
-                                            <p>@item.GHICHU</p>
+                                            <p class="content-p">@item.GHICHU</p>
                                             <div class="actions">
                                                 <ul>
                                                     <li>
@@ -113,3 +113,17 @@
 </div>
 <!-- End: Products Section -->
 <!-- Start: Social Network -->
+<!-- End: Products Section -->
+<script>
+    function truncateText(selector, maxLength) {
+        var element = document.querySelector(selector),
+            truncated = element.innerText;
+
+        if (truncated.length > maxLength) {
+            truncated = truncated.substr(0, maxLength) + '...';
+        }
+        return truncated;
+    }
+
+    document.querySelector('.content-p').innerText = truncateText('.content-p', 50);
+</script>

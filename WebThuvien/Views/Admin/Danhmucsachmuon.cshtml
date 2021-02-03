@@ -18,6 +18,7 @@
                         <th>Người mượn</th>
                         <th>Ngày mượn</th>
                         <th>TG mượn</th>
+                        <th>Ngày trả</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -25,6 +26,7 @@
                     @foreach (var item in @ViewBag.listsachmuon as List<WebThuvien.Models.CustomClass.ChitietSachmuon>)
                     {
                         string ngaymuon = item.NGAYMUON.Value.Day + "/" + item.NGAYMUON.Value.Month + "/" + item.NGAYMUON.Value.Year;
+                        int thoigianquahan = (int)(DateTime.Now - item.NGAYMUON.Value).TotalDays - 120;
 
                         STT = STT + 1;
                         <tr>

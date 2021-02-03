@@ -114,7 +114,7 @@ namespace WebThuvien.Controllers
         }
 
 
-        public ActionResult Timkiemsach(string noidungnhap="",string linhvuc="",string loaisach="",int pageNumber=1)
+        public ActionResult Timkiemsach(string noidungnhap="",string linhvuc="0",string loaisach="0",int pageNumber=1)
         {
             if (Session["TaikhoanBanDoc"] == null)
             {
@@ -126,19 +126,19 @@ namespace WebThuvien.Controllers
             List<SACH> SearchSach = new List<SACH>();
 
             //tim kiem gần đúng trên tên sách
-            List<SACH> SearchSachName = db.SACHes.Where(x => x.TENSACH.Contains(noidung) == true).ToList();
+            List<SACH> SearchSachName = db.SACHes.Where(x => x.TENSACH.ToUpper().Contains(noidung) == true).ToList();
             SearchSach.AddRange(SearchSachName);
 
             //tim kiem gần đúng mã sách
-            List<SACH> SearchSachMa = db.SACHes.Where(x => x.MASACH.Contains(noidung) == true).ToList();
+            List<SACH> SearchSachMa = db.SACHes.Where(x => x.MASACH.ToUpper().Contains(noidung) == true).ToList();
             AddSach(SearchSach, SearchSachMa);
 
             //tìm kiếm vào tên tác giả
-            List<SACH> SearchSachTacgia = db.SACHes.Where(x=>x.TACGIA.TENTACGIA.Contains(noidung)).ToList();
+            List<SACH> SearchSachTacgia = db.SACHes.Where(x=>x.TACGIA.TENTACGIA.ToUpper().Contains(noidung)).ToList();
             AddSach(SearchSach, SearchSachTacgia);
 
             //tim kiếm theo lĩnh vực
-            List<LINHVUC> Linhvulienquan = db.LINHVUCs.Where(x => x.TENLINHVUC.Contains(noidung) == true).ToList();
+            List<LINHVUC> Linhvulienquan = db.LINHVUCs.Where(x => x.TENLINHVUC.ToUpper().Contains(noidung) == true).ToList();
 
             foreach (var item in Linhvulienquan)
             {
@@ -146,6 +146,7 @@ namespace WebThuvien.Controllers
                 AddSach(SearchSach, sach);//thêm vào sách search
             }
 
+            //lọc theo thể loại và lĩnh vực
             //lọc theo thể loại và lĩnh vực
             List<SACH> LIST = new List<SACH>();
             if (linhvuc != "0" || loaisach != "0")

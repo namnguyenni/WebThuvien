@@ -406,7 +406,7 @@ namespace WebThuvien.Controllers
             AddSach(SearchSach, SearchSachTacgia);
 
             //tim kiếm theo lĩnh vực
-            List<LINHVUC> Linhvulienquan = db.LINHVUCs.Where(x => x.TENLINHVUC.Contains(noidung) == true).ToList();
+            List<LINHVUC> Linhvulienquan = db.LINHVUCs.Where(x => x.TENLINHVUC.ToUpper().Contains(noidung) == true).ToList();
 
             foreach (var item in Linhvulienquan)
             {
@@ -416,8 +416,10 @@ namespace WebThuvien.Controllers
 
             //lọc theo thể loại và lĩnh vực
             List<ChitietSachmuon> LIST = new List<ChitietSachmuon>();
+            int check = 0;
             if (linhvuc != "")
             {
+                check++;
                 foreach (var item in SearchSach)
                 {
                     if (item.LINHVUC.TENLINHVUC.ToUpper().Contains(linhvuc.ToUpper()))
@@ -430,10 +432,11 @@ namespace WebThuvien.Controllers
                         LIST.Add(chitiet);
                     }
                 }
-
+                ViewBag.SearchSach = LIST;
             }
             if (loaisach != "")
             {
+                check++;
                 foreach (var item in SearchSach)
                 {
                     if (item.LOAISACH.TENTHELOAI.ToUpper().Contains(loaisach.ToUpper()))
@@ -446,10 +449,12 @@ namespace WebThuvien.Controllers
                         LIST.Add(chitiet);
                     }
                 }
+                ViewBag.SearchSach = LIST;
 
             }
             if (tacgia != "")
             {
+                check++;
                 foreach (var item in SearchSach)
                 {
                     if (item.TACGIA.TENTACGIA.ToUpper().Contains(tacgia.ToUpper()))
@@ -462,13 +467,10 @@ namespace WebThuvien.Controllers
                         LIST.Add(chitiet);
                     }
                 }
-
-            }
-            if (LIST.Count >0)
-            {
                 ViewBag.SearchSach = LIST;
             }
-            else
+            
+            if (check==0)
             {
                 foreach (var item in SearchSach)
                 {
@@ -571,7 +573,7 @@ namespace WebThuvien.Controllers
                     sachmuon.NGAYMUON = item.NGAYMUON;
                     sachmuon.THOIGIANMUON = item.THOIGIANMUON;
                     sachmuon.NGUOIMUON = the.TENCHUTHE;
-
+                    sachmuon.NGAYTRA = item.NGAYTRA;
                     sachmuon.MATHENGUOIMUON = the.MATHE;
 
                     listsachmuon.Add(sachmuon);

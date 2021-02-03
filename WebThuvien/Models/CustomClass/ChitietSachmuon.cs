@@ -45,6 +45,8 @@ namespace WebThuvien.Models.CustomClass
         public string GHICHU { get; set; }
         public int? THOIGIANMUON { get; set; }
         public DateTime? NGAYMUON { get; set; }
+        public DateTime? NGAYTRA { get; set; }
+
         public string GHICHUMUONTRA { get; set; }
         public string NGUOIMUON { get; set; }
         public string MATHENGUOIMUON { get; set; }

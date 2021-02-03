@@ -66,5 +66,10 @@
 <script>
     var error = '@ViewBag.Error';
 
+    setTimeout(function () {
+        if (error != '') {
+            alert("Không thể xóa");
+        }
+    }, 2000);
 
 </script>

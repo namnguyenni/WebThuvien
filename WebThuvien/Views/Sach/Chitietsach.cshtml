@@ -142,7 +142,7 @@
             {
                 <li>
                     <div class="book-list-icon blue-icon"></div>
-                    <figure>
+                    <figure style="width:350px;height:400px">
                         <img src="~/Content/ClientContent/images/Books/@item.HINHANH" alt="Book">
                         <figcaption>
                             <header>
@@ -150,7 +150,7 @@
                                 <p><strong>Tác giả:</strong>  @item.TACGIA.TENTACGIA</p>
                                 <p><strong>Mã sách :</strong>  @item.MASACH</p>
                             </header>
-                            <p>@item.GHICHU</p>
+                            <p class="content-p">@item.GHICHU</p>
                             <div class="actions">
                                 <ul>
                                     <li>
@@ -187,4 +187,16 @@
     </div>
 </div>
 
+<script>
+    function truncateText(selector, maxLength) {
+        var element = document.querySelector(selector),
+            truncated = element.innerText;
 
+        if (truncated.length > maxLength) {
+            truncated = truncated.substr(0, maxLength) + '...';
+        }
+        return truncated;
+    }
+
+    document.querySelector('.content-p').innerText = truncateText('.content-p', 100);
+</script>
