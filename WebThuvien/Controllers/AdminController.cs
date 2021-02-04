@@ -193,20 +193,25 @@ namespace WebThuvien.Controllers
             QLTHUVIEN db = new QLTHUVIEN();
             try
             {
-               
-                if (sach.MASACH.Trim() == "")
-                {
-                    //ma sach
-                    string masach = "";
-                    do
+                    if (sach.MASACH == "" || sach.MASACH == null)
                     {
-                        masach = Tusinhma(2, 4);
-                        sach.MASACH = masach;
+                        //ma sach
+                        string masach = "";
+                        do
+                        {
+                            masach = Tusinhma(2, 4);
+                            sach.MASACH = masach;
 
+                        }
+                        while (db.SACHes.SingleOrDefault(x => x.MASACH == masach) != null);
+                        new QRCode().GenerateQRCode(sach.MASACH, 1);
                     }
-                    while (db.SACHes.SingleOrDefault(x => x.MASACH == masach) != null);
-                }
-                new QRCode().GenerateQRCode(sach.MASACH,1);
+                
+                    else
+                    {
+                        new QRCode().GenerateQRCode(sach.MASACH, 1);
+                    }
+                
 
 
                 if (filepdf != null)
@@ -546,6 +551,11 @@ namespace WebThuvien.Controllers
                 {
                     System.IO.File.Delete(Server.MapPath("~/Content/ClientContent/images/Books/" + sach.HINHANH));
                 }
+                if (System.IO.File.Exists(Server.MapPath("~/Content/Images/Sach/" + sach.MASACH + ".png")))
+                {
+                    System.IO.File.Delete(Server.MapPath("~/Content/Images/Sach/" + sach.MASACH + ".png"));
+                }
+
                 TempData["Error"] = "0";
             }
             catch (Exception)
@@ -937,6 +947,7 @@ namespace WebThuvien.Controllers
             return 1;
         }
 
+        [HttpPost]
         public string Chinhsuatacgia(string matacgia, string tentacgia,string website,string ghichu)
         {
             QLTHUVIEN db = new QLTHUVIEN();

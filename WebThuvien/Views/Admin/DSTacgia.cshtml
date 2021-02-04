@@ -19,7 +19,7 @@
                                     <a href="#">Trang chủ</a>
                                 </li>
                                 <li class="breadcrumb-item">
-                                    <a href="#">Mượn sách</a>
+                                    <a href="#">Tác giả</a>
                                 </li>
                             </ol>
                         </nav>
@@ -54,9 +54,9 @@
                                                 <tr>
                                                     <td>@i</td>
                                                     <td style="display:none;"><textarea style="max-width:50px;" type="text" class="Ma" placeholder="Mã tac gia">@item.MATACGIA</textarea></td>
-                                                    <td style="max-width:150px"><textarea style="max-width:100px;" type="text" class="Ten" placeholder="Tên tác giả">@item.TENTACGIA</textarea></td>
-                                                    <td style="max-width:250px"><textarea style="max-width:200px;" type="text" class="Website" placeholder="Website">@item.LINKWEBSITE</textarea></td>
-                                                    <td style="max-width:400px"><textarea style="max-width:300px;" type="text" class="Ghichu" placeholder="Ghi chú">@item.GHICHU</textarea></td>
+                                                    <td><textarea rows="3" style="max-width:450px; max-height:100px" type="text" class="Ten" placeholder="Tên tác giả">@item.TENTACGIA</textarea></td>
+                                                    <td ><textarea style="max-width:250px;" type="text" class="Website" placeholder="Website">@item.LINKWEBSITE</textarea></td>
+                                                    <td><textarea style="max-width:350px;" type="text" class="Ghichu" placeholder="Ghi chú">@item.GHICHU</textarea></td>
                                                     <td>
                                                         <a class="delete" title="Xóa"><i class="fa fa-remove" style="color:#22a1be;font-size:20px;text-align:center"></i></a>
                                                         <a target="_blank" title="Xem các tác phẩm" href="/Admin/Timkiemsach?noidungnhap=&linhvuc=&loaisach=&tacgia=@item.TENTACGIA"><i class="fa fa-eye" style="color:#042297;font-size:20px;text-align:center"></i></a>

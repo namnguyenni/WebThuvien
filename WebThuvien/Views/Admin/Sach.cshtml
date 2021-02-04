@@ -23,6 +23,7 @@
                     @{ int STT = 0;}
                     @foreach (var item in @ViewBag.Sach)
                     {
+                        string path = @item.MASACH + ".png";
                         STT = STT + 1;
                         <tr>
                             <td class="table-plus">
@@ -41,6 +42,7 @@
                             <td>
                                 <div class="table-actions">
                                     <a href="/Admin/XemChiTietSach?MaSach=@item.MASACH" data-color="#265ed7"><i class="icon-copy dw dw-edit2"></i></a>
+                                    <a href="~/Content/Images/Sach/@path" title="Ảnh mã sách" data-color="#265ed7"><i class="fa fa-eye"></i></a>
                                     <a href="/Admin/Xoasach?MaSach=@item.MASACH" data-color="#e95959"><i class="icon-copy dw dw-delete-3"></i></a>
                                 </div>
                             </td>
