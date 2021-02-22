@@ -36,7 +36,7 @@ namespace WebThuvien.Controllers
                 ViewBag.baidangs = baidangs.GetRange((pageNumber - 1) * 5, 5);
             }
 
-            
+            ViewBag.currentPage = pageNumber;
 
             return View();
         }

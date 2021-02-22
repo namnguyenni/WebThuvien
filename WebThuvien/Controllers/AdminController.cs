@@ -1415,7 +1415,7 @@ namespace WebThuvien.Controllers
         }
 
         [HttpPost]
-        public ActionResult Chinhsuahoatdong(BAIDANGTHONGTIN baidang,HttpPostedFile hinhanh1=null,HttpPostedFile hinhanh2=null)
+        public ActionResult Chinhsuahoatdong(BAIDANGTHONGTIN baidang,HttpPostedFileBase hinhanh1=null, HttpPostedFileBase hinhanh2 =null)
         {
             QLTHUVIEN db = new QLTHUVIEN();
 
@@ -1432,12 +1432,11 @@ namespace WebThuvien.Controllers
                     {
                         if (System.IO.File.Exists(Server.MapPath("~/Content/ClientContent/Hoatdong/" + baidang.MABAIDANG+"_1.jpg")))
                         {
-                            System.IO.File.Delete(Server.MapPath("~/Content/ClientContent/FILE_PDF/" + baidang.MABAIDANG + "_1.jpg"));
+                            System.IO.File.Delete(Server.MapPath("~/Content/ClientContent/Hoatdong/" + baidang.MABAIDANG + "_1.jpg"));
 
                         }
-                        string fileExtend = ".jpg";
                         string targetFolder = Server.MapPath("~/Content/ClientContent/Hoatdong/");
-                        string targetPath = Path.Combine(targetFolder, baidang.MABAIDANG + "_1" + fileExtend);
+                        string targetPath = Path.Combine(targetFolder, baidang.MABAIDANG + "_1.jpg" );
                         hinhanh1.SaveAs(targetPath);
                         baidangcu.HINHANH1 = baidang.MABAIDANG + "_1.jpg";
 
@@ -1446,12 +1445,11 @@ namespace WebThuvien.Controllers
                 {
                     if (System.IO.File.Exists(Server.MapPath("~/Content/ClientContent/Hoatdong/" + baidang.MABAIDANG + "_2.jpg")))
                     {
-                        System.IO.File.Delete(Server.MapPath("~/Content/ClientContent/FILE_PDF/" + baidang.MABAIDANG + "_2.jpg"));
+                        System.IO.File.Delete(Server.MapPath("~/Content/ClientContent/Hoatdong/" + baidang.MABAIDANG + "_2.jpg"));
 
                     }
-                    string fileExtend = ".jpg";
                     string targetFolder = Server.MapPath("~/Content/ClientContent/Hoatdong/");
-                    string targetPath = Path.Combine(targetFolder, baidang.MABAIDANG + "_2" + fileExtend);
+                    string targetPath = Path.Combine(targetFolder, baidang.MABAIDANG + "_2.jpg");
                     hinhanh2.SaveAs(targetPath);
                     baidangcu.HINHANH2 = baidang.MABAIDANG + "_2.jpg";
 
@@ -1465,7 +1463,7 @@ namespace WebThuvien.Controllers
 
 
 
-            return View();
+            return Redirect("/Admin/Chitiethoatdong?id="+baidang.MABAIDANG);
         }
 
         //xóa hoạt động

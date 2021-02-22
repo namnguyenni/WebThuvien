@@ -14,7 +14,8 @@
 
         <div class="xs-pd-20-10 pd-ltr-20">
             <form method="post" enctype="multipart/form-data" action="/Admin/Chinhsuahoatdong">
-                <input name="TACGIA" type="text" value="@ViewBag.baidangs.TACGIA" style="display:none;"/>
+                <input name="MABAIDANG" type="text" value="@ViewBag.baidangs.MABAIDANG" style="display:none;" />
+                <input name="TACGIA" type="text" value="@ViewBag.baidangs.TACGIA" style="display:none;" />
                 <div class="row">
                     <div class="col-md-12 col-sm-12">
                         <div class="form-group">
@@ -50,16 +51,16 @@
                     <div class="col-md-6 col-sm-12">
                         <div class="form-group">
                             <label>Hình ảnh 1</label>
-                            <input name="hinhanh1" type="file" class="form-control" accept="image/*">
-                            <img src="~/Content/ClientContent/Hoatdong/@ViewBag.baidangs.HINHANH1" />
+                            <input name="hinhanh1" id="ha_in1" type="file" class="form-control" accept="image/*">
+                            <img id="ha1" src="~/Content/ClientContent/Hoatdong/@ViewBag.baidangs.HINHANH1" />
 
                         </div>
                     </div>
                     <div class="col-md-6 col-sm-12">
                         <div class="form-group">
                             <label>Hình ảnh 2</label>
-                            <input name="hinhanh2" class="form-control" type="file" accept="image/*">
-                            <img src="~/Content/ClientContent/Hoatdong/@ViewBag.baidangs.HINHANH2" />
+                            <input name="hinhanh2" id="ha_in2" class="form-control" type="file" accept="image/*">
+                            <img id="ha2" src="~/Content/ClientContent/Hoatdong/@ViewBag.baidangs.HINHANH2" />
                         </div>
                     </div>
 
@@ -89,3 +90,25 @@
     </div>
 </div>
 
+
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+
+<script>
+    function readURL(input,str) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#'+str).attr('src', e.target.result);
+            }
+            reader.readAsDataURL(input.files[0]); // convert to base64 string
+        }
+    }
+
+    $("#ha_in1").change(function () {
+        readURL(this, 'ha1');
+    });
+    $("#ha_in2").change(function () {
+        readURL(this, 'ha2');
+    });
+</script>
