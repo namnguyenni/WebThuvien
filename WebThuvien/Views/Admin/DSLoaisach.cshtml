@@ -40,8 +40,8 @@
                                     <thead>
                                         <tr style="text-align:center;">
                                             <th>STT</th>
-                                            <th style="display:none;">Mã lĩnh vực</th>
-                                            <th>Tên lĩnh vực</th>
+                                            <th style="display:none;">Mã loại sách  </th>
+                                            <th>Tên loại sách</th>
                                             <th>Ghi chú</th>
                                             <th>Xóa</th>
                                         </tr>
@@ -53,8 +53,8 @@
                                             <tr>
                                                 <td>@i</td>
                                                 <td style="display:none;"><textarea style="max-width:50px;" type="text" class="Ma" placeholder="Mã lĩnh vực">@item.MATHELOAI</textarea></td>
-                                                <td style="max-width:150px"><textarea style="max-width:100px;" type="text" class="Ten" placeholder="Tên lĩnh vực">@item.TENTHELOAI</textarea></td>
-                                                <td style="max-width:400px"><textarea style="max-width:300px;" type="text" class="Ghichu" placeholder="Ghi chú">@item.GHICHU</textarea></td>
+                                                <td style="min-width:150px"><textarea style="min-width:100px;" type="text" class="Ten" placeholder="Tên lĩnh vực">@item.TENTHELOAI</textarea></td>
+                                                <td style="width:500px"><textarea style="min-width:500px;overflow:hidden;" type="text" class="Ghichu" placeholder="Ghi chú">@item.GHICHU</textarea></td>
                                                 <td>
                                                     <a class="delete" title="Xóa"><i class="fa fa-remove" style="color:#22a1be;font-size:20px;text-align:center"></i></a>
                                                     <a target="_blank" title="Xem chi tiết" href="/Admin/Timkiemsach?noidungnhap=&linhvuc=&loaisach=@item.TENTHELOAI&tacgia="><i class="fa fa-eye" style="color:#042297;font-size:20px;text-align:center"></i></a>
