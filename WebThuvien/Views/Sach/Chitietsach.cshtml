@@ -1,6 +1,6 @@
 ﻿@using WebThuvien.Models.Entity;
 @{
-    ViewBag.Title = "Chi tiết sách : "+ ViewBag.sach.TENSACH;
+    ViewBag.Title = "Chi tiết sách : " + ViewBag.sach.TENSACH;
     Layout = "~/Views/Shared/_LayoutHomeClient.cshtml";
 }
 
@@ -31,14 +31,14 @@
                                     <p><strong>Số trang:</strong>@ViewBag.sach.SOTRANG </p>
                                     <p><strong>Lượt xem:</strong> @ViewBag.sach.LUOTXEM</p>
                                     <p><strong>Trạng thái:</strong> 
-                                    @{if (@ViewBag.sach.TRANGTHAI==1)
-	                                {
-		                                <strong>Đã mượn</strong>            
-                                    }
-                                    else
-                                    {
-                                        <strong>Khả dụng</strong>
-                                    }}</p>
+                                    @{if (@ViewBag.sach.TRANGTHAI == 1)
+                                        {
+		                                <strong>Mới</strong>            
+                                        }
+                                        else
+                                        {
+                                        <strong>Hư hỏng</strong>
+                                        }}</p>
                                     <p><strong>Ngôn ngữ:</strong>@ViewBag.sach.NGONNGU</p>
                                     
                                     <p><strong>Ngày tải lên:</strong> @ViewBag.sach.NGAYTAILEN</p>
@@ -82,13 +82,13 @@
                                 <div class="post-right-content">
                                     <h4>
                                         @{if (@ViewBag.sach.FILEPATH == null)
-                                        {
+                                            {
                                             <strong>Không có dữ liệu mềm</strong>
-                                        }
-                                        else
-                                        {
+                                            }
+                                            else
+                                            {
                                             <strong>Khả dụng</strong>
-                                        }
+                                            }
                                         }
                                     </h4>
                                     <p><strong>Tổng số quyển :</strong> 01</p>
@@ -97,7 +97,15 @@
                                     <p><strong>Nhà xuất bản :</strong> <a href="#" style="color:#f62457">@ViewBag.nxb.TENNXB</a></p>
                                     <p><strong>Đặt mượn sách :</strong>  01</p>
                                     <a href="/Sach/TaiSach?MaSach=@ViewBag.sach.MASACH" class="btn btn-dark-gray">Tải xuống</a>
-                                    <a href="~/Content/ClientContent/FILE_PDF/@ViewBag.sach.FILEPATH" class="btn btn-dark-gray">Đọc sách</a>
+                                    @if (@ViewBag.sach.FILEPATH != null)
+                                    {
+                                        <a href="~/Content/ClientContent/FILE_PDF/@ViewBag.sach.FILEPATH" class="btn btn-dark-gray">Đọc sách</a>
+                                    }
+                                    else
+                                    {
+
+                                        <a href="#" class="btn btn-dark-gray">Đọc sách</a>
+                                    }
                                     <a href="#." class="btn btn-dark-gray">Xem thêm sách tương tự</a>
                                 </div>
                             </div>
@@ -105,7 +113,15 @@
                         </div>
                         <div class="clearfix"></div>
                         <div>
-                            <embed src="https://drive.google.com/viewerng/viewer?embedded=true&url=https://localhost:44362/Content/ClientContent/FILE_PDF/SACH1.pdf" width="800" height="500">
+                        @{if (@ViewBag.sach.FILEPATH != null)
+                        {
+                        <embed src="~/Content/ClientContent/FILE_PDF/@ViewBag.sach.FILEPATH" width="1200" height="500" />
+                        }
+                        else
+                        {
+                            <p>Không có dữ liệu mềm</p>
+                        }
+                        }
                         </div>
                         <p><strong>Tóm tắt:</strong> @ViewBag.sach.GHICHU </p>
                         <div class="table-tabs" id="responsiveTabs">
@@ -136,7 +152,7 @@
     <div class="container">
         <h2 class="section-title text-center">Sách liên quan</h2>
         <span class="underline center"></span>
-        <p class="lead text-center">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        <p class="lead text-center">Những cuốn sách có liên quán đến lĩnh vực , loại sách.</p>
         <ul class="popular-items-detail-v2">
             @foreach (var item in ViewBag.Sachlienquan as List<WebThuvien.Models.Entity.SACH>)
             {

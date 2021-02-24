@@ -77,7 +77,8 @@ namespace WebThuvien.Controllers
                 //lấy cuốn sách
                 SACH sach = db.SACHes.Single(x => x.MASACH == MaSach);
             //them lượt xem
-            sach.LUOTXEM = sach.LUOTXEM++;
+            sach.LUOTXEM = sach.LUOTXEM+1;
+            db.SaveChanges();
             ViewBag.sach = sach;
 
                 //lấy loại sách

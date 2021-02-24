@@ -40,7 +40,7 @@ namespace WebThuvien.Controllers
             }
             ViewBag.Sach = lst;
             ViewBag.Soluongsach = db.SACHes.Count();
-            ViewBag.Soluongbandoc = db.TAIKHOANs.Count();
+            ViewBag.Soluongbandoc = db.TAIKHOANs.Where(x=>x.LOAITAIKHOAN == 1).Count();
             int Soluongbaidangthang = 0;
             foreach (var item in db.BAIDANGTHONGTINs)
             {
@@ -539,14 +539,18 @@ namespace WebThuvien.Controllers
                 foreach (var item in lstmuon)
                 {
                     CHITIETMUONTRASACH chitiet = db.CHITIETMUONTRASACHes.SingleOrDefault(x => x.MAMUONTRASACH == item.MAMUONTRASACH);
+                    if (chitiet.NGAYTRA ==null)
+                    {
+                        TempData["Error"] = "1";
+                        return Redirect("/Admin/Sach");
+                    }
                     db.CHITIETMUONTRASACHes.Remove(chitiet);
                     db.MUONTRASACHes.Remove(item);
-                    db.SaveChanges();
+
+                    
                 }
 
 
-                db.SACHes.Remove(sach);
-                db.SaveChanges();
                 if (System.IO.File.Exists(Server.MapPath("~/Content/ClientContent/images/Books/" + sach.HINHANH)))
                 {
                     System.IO.File.Delete(Server.MapPath("~/Content/ClientContent/images/Books/" + sach.HINHANH));
@@ -555,8 +559,10 @@ namespace WebThuvien.Controllers
                 {
                     System.IO.File.Delete(Server.MapPath("~/Content/Images/Sach/" + sach.MASACH + ".png"));
                 }
+                db.SACHes.Remove(sach);
 
-                TempData["Error"] = "0";
+                db.SaveChanges();
+                TempData["Error"] = "";
             }
             catch (Exception)
             {
