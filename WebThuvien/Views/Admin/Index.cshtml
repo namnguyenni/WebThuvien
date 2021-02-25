@@ -72,10 +72,21 @@
                         <div class="h5 mb-md-0">Thống kê mượn trả</div>
                         <div class="form-group mb-md-0">
                             <select class="form-control form-control-sm selectpicker">
-                                <option value="2020">Năm 2020</option>
-                                <option value="2021" selected>Năm 2021</option>
-                                <option value="2022">Năm 2022</option>
-                                <option value="2023">Năm 2023</option>
+                                @for (int i = -2; i < 2; i++)
+                                {
+                                    int year = ViewBag.nowyear + i;
+                                    if (i == 0)
+                                    {
+                                        <option value="@year" selected>Năm @year</option>
+
+                                    }
+                                    else
+                                    {
+                                        <option value="@year">Năm @year</option>
+
+                                    }
+
+                                }
                             </select>
                         </div>
                     </div>
@@ -100,66 +111,23 @@
                     </div>
                     <div class="user-list">
                         <ul>
-                            <li class="d-flex align-items-center justify-content-between">
-                                <div class="name-avatar d-flex align-items-center pr-2">
-                                    <div class="avatar mr-2 flex-shrink-0">
-                                        <img src="~/Content/AdminContent/vendors/images/photo1.jpg" class="border-radius-100 box-shadow" width="50" height="50" alt="">
+                            @foreach (var item in ViewBag.Taikhoangannhat as List<WebThuvien.Models.Entity.TAIKHOAN>)
+                            {
+                                <li class="d-flex align-items-center justify-content-between">
+                                    <div class="name-avatar d-flex align-items-center pr-2">
+                                        <div class="avatar mr-2 flex-shrink-0">
+                                            <img src="~/Content/ClientContent/images/Anonymous.jpg" class="border-radius-100 box-shadow" width="50" height="50" alt="">
+                                        </div>
+                                        <div class="txt">
+
+                                            <div class="font-14 weight-600">@item.TENTAIKHOAN</div>
+                                            <div class="font-12 weight-500" data-color="#b2b1b6">@item.DANGNHAPGANNHAT</div>
+                                        </div>
                                     </div>
-                                    <div class="txt">
-                                        
-                                        <div class="font-14 weight-600">Dr. Neil Wagner</div>
-                                        <div class="font-12 weight-500" data-color="#b2b1b6">Pediatrician</div>
-                                    </div>
-                                </div>
-                                <div class="cta flex-shrink-0">
-                                    <a href="#" class="btn btn-sm btn-outline-primary">Thông tin</a>
-                                </div>
-                            </li>
-                            <li class="d-flex align-items-center justify-content-between">
-                                <div class="name-avatar d-flex align-items-center pr-2">
-                                    <div class="avatar mr-2 flex-shrink-0">
-                                        <img src="~/Content/AdminContent/vendors/images/photo2.jpg" class="border-radius-100 box-shadow" width="50" height="50" alt="">
-                                    </div>
-                                    <div class="txt">
-                                        
-                                        <div class="font-14 weight-600">Dr. Ren Delan</div>
-                                        <div class="font-12 weight-500" data-color="#b2b1b6">Pediatrician</div>
-                                    </div>
-                                </div>
-                                <div class="cta flex-shrink-0">
-                                    <a href="#" class="btn btn-sm btn-outline-primary">Thông tin</a>
-                                </div>
-                            </li>
-                            <li class="d-flex align-items-center justify-content-between">
-                                <div class="name-avatar d-flex align-items-center pr-2">
-                                    <div class="avatar mr-2 flex-shrink-0">
-                                        <img src="~/Content/AdminContent/vendors/images/photo3.jpg" class="border-radius-100 box-shadow" width="50" height="50" alt="">
-                                    </div>
-                                    <div class="txt">
-                                        
-                                        <div class="font-14 weight-600">Dr. Garrett Kincy</div>
-                                        <div class="font-12 weight-500" data-color="#b2b1b6">Pediatrician</div>
-                                    </div>
-                                </div>
-                                <div class="cta flex-shrink-0">
-                                    <a href="#" class="btn btn-sm btn-outline-primary">Thông tin</a>
-                                </div>
-                            </li>
-                            <li class="d-flex align-items-center justify-content-between">
-                                <div class="name-avatar d-flex align-items-center pr-2">
-                                    <div class="avatar mr-2 flex-shrink-0">
-                                        <img src="~/Content/AdminContent/vendors/images/photo4.jpg" class="border-radius-100 box-shadow" width="50" height="50" alt="">
-                                    </div>
-                                    <div class="txt">
-                                        
-                                        <div class="font-14 weight-600">Dr. Callie Reed</div>
-                                        <div class="font-12 weight-500" data-color="#b2b1b6">Pediatrician</div>
-                                    </div>
-                                </div>
-                                <div class="cta flex-shrink-0">
-                                    <a href="#" class="btn btn-sm btn-outline-primary">Thông tin</a>
-                                </div>
-                            </li>
+                                    
+                                </li>
+                            }
+                            
                         </ul>
                     </div>
                 </div>
@@ -278,3 +246,91 @@
         </div>
     </div>
 </div>
+
+<script>
+    var luotmuon = @Html.Raw(Json.Encode(ViewBag.luotmuon));
+    var luottra = @Html.Raw(Json.Encode(ViewBag.luottra));
+
+
+    var options = {
+        series: [
+        {
+            name: "Mượn",
+            data: luotmuon
+        },
+        {
+            name: "Trả",
+            data: luottra
+        }
+        ],
+        chart: {
+            height: 300,
+            type: 'line',
+            zoom: {
+                enabled: false,
+            },
+            dropShadow: {
+                enabled: true,
+                color: '#000',
+                top: 18,
+                left: 7,
+                blur: 16,
+                opacity: 0.2
+            },
+            toolbar: {
+                show: false
+            }
+        },
+        colors: ['#f0746c', '#255cd3'],
+        dataLabels: {
+            enabled: false,
+        },
+        stroke: {
+            width: [3, 3],
+            curve: 'smooth'
+        },
+        grid: {
+            show: false,
+        },
+        markers: {
+            colors: ['#f0746c', '#255cd3'],
+            size: 5,
+            strokeColors: '#ffffff',
+            strokeWidth: 2,
+            hover: {
+                sizeOffset: 2
+            }
+        },
+        xaxis: {
+            categories: ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6', 'Tháng 7', 'Tháng 8', 'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'],
+            labels: {
+                style: {
+                    colors: '#8c9094'
+                }
+            }
+        },
+        yaxis: {
+            min: 0,
+            max: 35,
+            labels: {
+                style: {
+                    colors: '#8c9094'
+                }
+            }
+        },
+        legend: {
+            position: 'top',
+            horizontalAlign: 'right',
+            floating: true,
+            offsetY: 0,
+            labels: {
+                useSeriesColors: true
+            },
+            markers: {
+                width: 10,
+                height: 10,
+            }
+        }
+    };
+
+</script>

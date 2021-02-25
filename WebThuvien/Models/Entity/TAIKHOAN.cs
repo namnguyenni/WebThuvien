@@ -38,6 +38,8 @@ namespace WebThuvien.Models.Entity
 
         [StringLength(50)]
         public string HOTEN { get; set; }
+        [Column(TypeName = "datetime")]
+        public DateTime? DANGNHAPGANNHAT { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BAIDANGTHONGTIN> BAIDANGTHONGTINs { get; set; }

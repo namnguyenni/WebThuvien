@@ -67,9 +67,29 @@ namespace WebThuvien.Controllers
 
             ViewBag.Soluongquahan = Soluongquahan;
 
+            //Thống kê mượn trả sách trong năm nay
+            int nowyear = DateTime.Now.Year;
+            ViewBag.nowyear = nowyear;
+            List<int> luotmuon = new List<int>();
+            List<int> luottra = new List<int>();
+            for (int i = 1; i < 13; i++)
+            {
+                int muon = 0, tra = 0;
+                muon = db.CHITIETMUONTRASACHes.Where(x => x.NGAYMUON.Value.Year == nowyear && x.NGAYMUON.Value.Month == i).Count();
+                tra = db.CHITIETMUONTRASACHes.Where(x =>x.NGAYTRA!=null && x.NGAYTRA.Value.Year == nowyear && x.NGAYTRA.Value.Month == i).Count();
+                luotmuon.Add(muon);
+                luottra.Add(tra);
+
+            }
+            ViewBag.luotmuon = luotmuon;
+            ViewBag.luottra = luottra;
+            //đăng nhập gần nhất
+            var Taikhoangannhat = db.TAIKHOANs.Where(x=>x.DANGNHAPGANNHAT!=null).OrderBy(x=>x.DANGNHAPGANNHAT).Take(5).ToList();
+            ViewBag.Taikhoangannhat = Taikhoangannhat;
 
             return View();
         }
+
 
         //TẢI TÀI LIỆU ĐÃ SCAN LÊN CHO VÀO TRONG THƯ MỤC Ở SERVER
         public ActionResult Scan()
@@ -137,6 +157,8 @@ namespace WebThuvien.Controllers
             TAIKHOAN taikhoan = db.TAIKHOANs.SingleOrDefault(x => x.TENTAIKHOAN == tentaikhoan);
             if (taikhoan != null && taikhoan.MATKHAU == matkhau)
             {
+                taikhoan.DANGNHAPGANNHAT = DateTime.Now;
+                db.SaveChanges();
                 //tạo session
                 if (taikhoan.LOAITAIKHOAN == 1)
                 {
@@ -149,6 +171,7 @@ namespace WebThuvien.Controllers
                     Session["TaikhoanBanDoc"] = taikhoan;
                     return Redirect("/Admin");
                 }
+
                 //if (luumk)
                 //{
                 //    HttpCookie taikhoan_ck = new HttpCookie("tentaikhoan", tentaikhoan);

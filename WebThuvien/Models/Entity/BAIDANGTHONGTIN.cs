@@ -30,7 +30,7 @@ namespace WebThuvien.Models.Entity
         [StringLength(20)]
         public string TACGIA { get; set; }
 
-        [StringLength(3000)]
+        [Column(TypeName = "text")]
         public string NOIDUNG { get; set; }
 
         public DateTime THOIGIANBATDAU { get; set; }
