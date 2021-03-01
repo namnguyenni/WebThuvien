@@ -3,67 +3,125 @@
     ViewBag.Title = "Tài liệu thư viện";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
-
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
 <div class="main-container">
-    <div class="xs-pd-20-10 pd-ltr-20">
-        <div class="card-box pb-10">
-            <div class="h5 pd-20 mb-0">Danh sách các cuốn sách trong thư viện</div>
-            <table class="data-table table nowrap">
-                <thead>
-                    <tr>
-                        <th class="table-plus">STT</th>
-                        <th>Mã sách</th>
-                        <th>Tên sách</th>
-                        <th>Tác giả</th>
-                        <th>Hình ảnh sách</th>
-                        <th class="datatable-nosort">Công cụ</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @{ int STT = 0;}
-                    @foreach (var item in @ViewBag.Sach)
-                    {
-                        string path = @item.MASACH + ".png";
-                        STT = STT + 1;
-                        <tr>
-                            <td class="table-plus">
-                                @STT
-                            </td>
-                            <td>@item.MASACH</td>
-                            <td>@item.TENSACH</td>
-                            <td><textarea readonly style="border:none">@item.TACGIA.TENTACGIA</textarea></td>
-                            <td>
-                                <div class="name-avatar d-flex align-items-center">
-                                    <div class="avatar mr-2 flex-shrink-0">
-                                        <img src="~/Content/ClientContent/images/Books/@item.HINHANH" width="60" height="60" alt="hình ảnh">
-                                    </div>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="table-actions">
-                                    <a href="/Admin/XemChiTietSach?MaSach=@item.MASACH" data-color="#265ed7"><i class="icon-copy dw dw-edit2"></i></a>
-                                    <a href="~/Content/Images/Sach/@path" title="Ảnh mã sách" data-color="#265ed7"><i class="fa fa-eye"></i></a>
-                                    <a href="/Admin/Xoasach?MaSach=@item.MASACH" data-color="#e95959"><i class="icon-copy dw dw-delete-3"></i></a>
-                                </div>
-                            </td>
-                        </tr>
-                    }
-                    
+    <div class="pd-ltr-20 xs-pd-20-10">
+        <div class="min-height-200px">
+            <div class="page-header">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12">
+                        <div class="title">
+                            <h4>Quản lí sách thư viện</h4>
+                        </div>
+                        <nav aria-label="breadcrumb" role="navigation">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item">
+                                    <a href="/Admin">Trang chủ</a>
+                                </li>
+                                <li class="breadcrumb-item">
+                                    <a href="/Admin/Sach">Sách</a>
+                                </li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-30">
+                    <div class="card-box height-100-p overflow-hidden">
+                        <div class="profile-tab height-100-p">
 
-                </tbody>
-            </table>
-        </div>
-        
-        
-        
+                            <div class="tab height-100-p">
 
-        
+                                @* Bảng sách cho mượn offline *@
+                                <table class="table table-bordered" border="0" cellspacing="0" cellpadding="0" style="font-size:10px;">
+                                    <thead>
+                                        <tr>
+                                            <th class="table-plus">STT</th>
+                                            <th>Mã sách</th>
+                                            <th>Tên sách</th>
+                                            <th>Tác giả</th>
+                                            <th>Hình ảnh sách</th>
+                                            <th class="datatable-nosort">Công cụ</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @{ int STT = 0;}
+                                        @foreach (var item in @ViewBag.Sach)
+                                        {
+                                            string path = @item.MASACH + ".png";
+                                            STT = STT + 1;
+                                            <tr>
+                                                <td class="table-plus">
+                                                    @STT
+                                                </td>
+                                                <td>@item.MASACH</td>
+                                                <td>@item.TENSACH</td>
+                                                <td><textarea readonly style="border:none">@item.TACGIA.TENTACGIA</textarea></td>
+                                                <td>
+                                                    <div class="name-avatar d-flex align-items-center">
+                                                        <div class="avatar mr-2 flex-shrink-0">
+                                                            <img src="~/Content/ClientContent/images/Books/@item.HINHANH" width="60" height="60" alt="hình ảnh">
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="table-actions">
+                                                        <a href="/Admin/XemChiTietSach?MaSach=@item.MASACH" data-color="#265ed7"><i class="icon-copy dw dw-edit2"></i></a>
+                                                        <a href="~/Content/Images/Sach/@path" title="Ảnh mã sách" data-color="#265ed7"><i class="fa fa-eye"></i></a>
+                                                        <a href="/Admin/Xoasach?MaSach=@item.MASACH" data-color="#e95959"><i class="icon-copy dw dw-delete-3"></i></a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        }
 
-        <div class="footer-wrap pd-20 mb-20 card-box">
-            Thư viện số hóa -  <a href="/" target="_blank">Ban cơ yếu chính phủ</a>
+
+                                    </tbody>
+                                </table>
+
+
+                            </div>
+                            @* Bảng sách cho mượn offline *@
+
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
+    <div class="footer-wrap pd-20 mb-20 card-box">
+        Thư viện số hóa -  <a href="/" target="_blank">Ban cơ yếu chính phủ</a>
+    </div>
 </div>
+
+<script>
+
+    $(document).ready(function () {
+        $('table').DataTable({
+            "language": {
+                "sProcessing": "Đang xử lý...",
+                "sLengthMenu": "Xem _MENU_ mục",
+                "sZeroRecords": "Không tìm thấy dòng nào phù hợp",
+                "sInfo": "Đang xem _START_ đến _END_ trong tổng số _TOTAL_ mục",
+                "sInfoEmpty": "Đang xem 0 đến 0 trong tổng số 0 mục",
+                "sInfoFiltered": "(được lọc từ _MAX_ mục)",
+                "sInfoPostFix": "",
+                "sSearch": "Tìm kiếm:",
+                "sUrl": "",
+                "oPaginate": {
+                    "sFirst": "Đầu",
+                    "sPrevious": "Trước",
+                    "sNext": "Tiếp",
+                    "sLast": "Cuối"
+                }
+            }
+        });
+    });
+
+
+</script>
+
+
 @{ ViewBag.Error = TempData["Error"] as string; }
 <script>
     var error = '@ViewBag.Error';

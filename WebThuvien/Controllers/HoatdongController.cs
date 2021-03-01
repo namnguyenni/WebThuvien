@@ -37,6 +37,12 @@ namespace WebThuvien.Controllers
             }
 
             ViewBag.currentPage = pageNumber;
+            int chia5 = (int)(baidangs.Count / 5);
+            if (chia5*5 - baidangs.Count<0)
+            {
+                ViewBag.countPage = chia5 + 1;
+            }
+            else ViewBag.countPage = chia5;
 
             return View();
         }

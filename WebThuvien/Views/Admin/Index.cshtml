@@ -3,6 +3,7 @@
     ViewBag.Title = "Trang chủ";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
 
 <div class="main-container">
     <div class="xs-pd-20-10 pd-ltr-20">
@@ -71,7 +72,7 @@
                     <div class="d-flex flex-wrap justify-content-between align-items-center pb-0 pb-md-3">
                         <div class="h5 mb-md-0">Thống kê mượn trả</div>
                         <div class="form-group mb-md-0">
-                            <select class="form-control form-control-sm selectpicker">
+                            <select id="ChartMuontra" class="form-control form-control-sm selectpicker">
                                 @for (int i = -2; i < 2; i++)
                                 {
                                     int year = ViewBag.nowyear + i;
@@ -248,89 +249,123 @@
 </div>
 
 <script>
-    var luotmuon = @Html.Raw(Json.Encode(ViewBag.luotmuon));
-    var luottra = @Html.Raw(Json.Encode(ViewBag.luottra));
 
-
-    var options = {
-        series: [
-        {
-            name: "Mượn",
-            data: luotmuon
-        },
-        {
-            name: "Trả",
-            data: luottra
-        }
-        ],
-        chart: {
-            height: 300,
-            type: 'line',
-            zoom: {
+    var options;
+    var luotmuon;
+    var luottra;
+    luotmuon = @Html.Raw(Json.Encode(ViewBag.luotmuon));
+    luottra = @Html.Raw(Json.Encode(ViewBag.luottra));
+    function UpdateChart() {
+        options = {
+            series: [
+            {
+                name: "Mượn",
+                data: luotmuon
+            },
+            {
+                name: "Trả",
+                data: luottra
+            }
+            ],
+            chart: {
+                height: 300,
+                type: 'line',
+                zoom: {
+                    enabled: false,
+                },
+                dropShadow: {
+                    enabled: true,
+                    color: '#000',
+                    top: 18,
+                    left: 7,
+                    blur: 16,
+                    opacity: 0.2
+                },
+                toolbar: {
+                    show: false
+                }
+            },
+            colors: ['#f0746c', '#255cd3'],
+            dataLabels: {
                 enabled: false,
             },
-            dropShadow: {
-                enabled: true,
-                color: '#000',
-                top: 18,
-                left: 7,
-                blur: 16,
-                opacity: 0.2
+            stroke: {
+                width: [3, 3],
+                curve: 'smooth'
             },
-            toolbar: {
-                show: false
-            }
-        },
-        colors: ['#f0746c', '#255cd3'],
-        dataLabels: {
-            enabled: false,
-        },
-        stroke: {
-            width: [3, 3],
-            curve: 'smooth'
-        },
-        grid: {
-            show: false,
-        },
-        markers: {
-            colors: ['#f0746c', '#255cd3'],
-            size: 5,
-            strokeColors: '#ffffff',
-            strokeWidth: 2,
-            hover: {
-                sizeOffset: 2
-            }
-        },
-        xaxis: {
-            categories: ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6', 'Tháng 7', 'Tháng 8', 'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'],
-            labels: {
-                style: {
-                    colors: '#8c9094'
-                }
-            }
-        },
-        yaxis: {
-            min: 0,
-            max: 35,
-            labels: {
-                style: {
-                    colors: '#8c9094'
-                }
-            }
-        },
-        legend: {
-            position: 'top',
-            horizontalAlign: 'right',
-            floating: true,
-            offsetY: 0,
-            labels: {
-                useSeriesColors: true
+            grid: {
+                show: false,
             },
             markers: {
-                width: 10,
-                height: 10,
+                colors: ['#f0746c', '#255cd3'],
+                size: 5,
+                strokeColors: '#ffffff',
+                strokeWidth: 2,
+                hover: {
+                    sizeOffset: 2
+                }
+            },
+            xaxis: {
+                categories: ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6', 'Tháng 7', 'Tháng 8', 'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'],
+                labels: {
+                    style: {
+                        colors: '#8c9094'
+                    }
+                }
+            },
+            yaxis: {
+                min: 0,
+                max: 10,
+                labels: {
+                    style: {
+                        colors: '#8c9094'
+                    }
+                }
+            },
+            legend: {
+                position: 'top',
+                horizontalAlign: 'right',
+                floating: true,
+                offsetY: 0,
+                labels: {
+                    useSeriesColors: true
+                },
+                markers: {
+                    width: 10,
+                    height: 10,
+                }
             }
-        }
-    };
+        };
+    }
+    UpdateChart();
+    //MaSach
+    $(document).on("change", "#ChartMuontra", function () {
+        var formData = new FormData();
+        var SachCode = $(this).val();
+        formData.append('year', SachCode)
+        $.ajax({
+            url: '/Admin/ChartMuontra',
+            type: 'POST',
+            data: formData,
+            processData: false,  // tell jQuery not to process the data
+            contentType: false,  // tell jQuery not to set contentType
+            success: function (data) {
+                luotmuon = data.luotmuon;
+                luottra = data.luottra;
+                chart.updateSeries([{
+                    name: 'Mượn',
+                    data: luotmuon
+                },
+                {
+                    name: 'Trả',
+                    data: luottra
+                }])
+            },
+            error: function (data) {
+                alert("Lỗi !!!")
+            }
+        });
+    });
+         
 
 </script>

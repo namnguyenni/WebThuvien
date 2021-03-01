@@ -14,13 +14,13 @@
 
         <div class="xs-pd-20-10 pd-ltr-20">
             <form method="post" enctype="multipart/form-data" action="/Admin/Chinhsuahoatdong">
-                <input name="MABAIDANG" type="text" value="@ViewBag.baidangs.MABAIDANG" style="display:none;" />
-                <input name="TACGIA" type="text" value="@ViewBag.baidangs.TACGIA" style="display:none;" />
+                <input required name="MABAIDANG" type="text" value="@ViewBag.baidangs.MABAIDANG" style="display:none;" />
+                <input required name="TACGIA" type="text" value="@ViewBag.baidangs.TACGIA" style="display:none;" />
                 <div class="row">
                     <div class="col-md-12 col-sm-12">
                         <div class="form-group">
                             <label>Tiêu đề</label>
-                            <input name="TIEUDE" value="@ViewBag.baidangs.TIEUDE" type="text" class="form-control">
+                            <input required name="TIEUDE" value="@ViewBag.baidangs.TIEUDE" type="text" class="form-control">
                         </div>
                     </div>
                 </div>
@@ -28,21 +28,25 @@
                     <div class="col-md-12 col-sm-12">
                         <div class="form-group">
                             <label>Địa điểm</label>
-                            <input name="DIADIEM" value="@ViewBag.baidangs.DIADIEM" type="text" class="form-control">
+                            <input required name="DIADIEM" value="@ViewBag.baidangs.DIADIEM" type="text" class="form-control">
                         </div>
                     </div>
                 </div>
+                @{ 
+                    string date1 = ViewBag.baidangs.THOIGIANBATDAU.ToString("yyyy-MM-dd");
+                    string date2 = ViewBag.baidangs.THOIGIANKETTHUC.ToString("yyyy-MM-dd");
+                }
                 <div class="row">
                     <div class="col-md-6 col-sm-12">
                         <div class="form-group">
                             <label>Thời gian bắt đầu</label>
-                            <input name="THOIGIANBATDAU" type="date" class="form-control">
+                            <input required name="THOIGIANBATDAU" type="date" value="@date1" class="form-control">
                         </div>
                     </div>
                     <div class="col-md-6 col-sm-12">
                         <div class="form-group">
                             <label>Thời gian kết thúc</label>
-                            <input name="THOIGIANKETTHUC" class="form-control" type="date">
+                            <input required name="THOIGIANKETTHUC" class="form-control" value="@date2" type="date">
                         </div>
                     </div>
 
@@ -52,6 +56,7 @@
                         <div class="form-group">
                             <label>Hình ảnh 1</label>
                             <input name="hinhanh1" id="ha_in1" type="file" class="form-control" accept="image/*">
+                            Hình ảnh cũ:
                             <img id="ha1" src="~/Content/ClientContent/Hoatdong/@ViewBag.baidangs.HINHANH1" />
 
                         </div>
@@ -60,6 +65,7 @@
                         <div class="form-group">
                             <label>Hình ảnh 2</label>
                             <input name="hinhanh2" id="ha_in2" class="form-control" type="file" accept="image/*">
+                            Hình ảnh cũ:
                             <img id="ha2" src="~/Content/ClientContent/Hoatdong/@ViewBag.baidangs.HINHANH2" />
                         </div>
                     </div>
@@ -70,7 +76,7 @@
                         <div class="form-group">
                             <div class="html-editor pd-20 card-box mb-30">
                                 <p>Nội dung</p>
-                                <textarea name="NOIDUNG" class="form-control">@ViewBag.baidangs.NOIDUNG</textarea>
+                                <textarea required name="NOIDUNG" class="form-control">@ViewBag.baidangs.NOIDUNG</textarea>
                             </div>
                         </div>
                     </div>

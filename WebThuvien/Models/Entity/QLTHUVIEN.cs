@@ -39,10 +39,6 @@ namespace WebThuvien.Models.Entity
                 .IsUnicode(false);
 
             modelBuilder.Entity<BAIDANGTHONGTIN>()
-                .Property(e => e.NOIDUNG)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<BAIDANGTHONGTIN>()
                 .Property(e => e.HINHANH1)
                 .IsUnicode(false);
 
@@ -89,8 +85,9 @@ namespace WebThuvien.Models.Entity
 
             modelBuilder.Entity<LOAITAIKHOAN>()
                 .HasMany(e => e.TAIKHOANs)
-                .WithOptional(e => e.LOAITAIKHOAN1)
-                .HasForeignKey(e => e.LOAITAIKHOAN);
+                .WithRequired(e => e.LOAITAIKHOAN1)
+                .HasForeignKey(e => e.LOAITAIKHOAN)
+                .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<MUONTRASACH>()
                 .Property(e => e.MATHE)

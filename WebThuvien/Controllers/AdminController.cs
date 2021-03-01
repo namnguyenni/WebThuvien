@@ -90,6 +90,24 @@ namespace WebThuvien.Controllers
             return View();
         }
 
+        [HttpPost]
+        public JsonResult ChartMuontra(int year)
+        {
+            QLTHUVIEN db = new QLTHUVIEN();
+            List<int> luotmuon = new List<int>();
+            List<int> luottra = new List<int>();
+            for (int i = 1; i < 13; i++)
+            {
+                int muon = 0, tra = 0;
+                muon = db.CHITIETMUONTRASACHes.Where(x => x.NGAYMUON.Value.Year == year && x.NGAYMUON.Value.Month == i).Count();
+                tra = db.CHITIETMUONTRASACHes.Where(x => x.NGAYTRA != null && x.NGAYTRA.Value.Year == year && x.NGAYTRA.Value.Month == i).Count();
+                luotmuon.Add(muon);
+                luottra.Add(tra);
+
+            }
+
+            return Json(new { luotmuon = luotmuon, luottra = luottra });
+        }
 
         //TẢI TÀI LIỆU ĐÃ SCAN LÊN CHO VÀO TRONG THƯ MỤC Ở SERVER
         public ActionResult Scan()
@@ -665,9 +683,6 @@ namespace WebThuvien.Controllers
                 {
                     for (int i = 0; i < listmasach.Length; i++)
                     {
-                        
-
-
                         string masach = listmasach[i];
                         SACH sach = db.SACHes.SingleOrDefault(x => x.MASACH == masach);
 

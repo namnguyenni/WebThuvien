@@ -1,6 +1,8 @@
 ﻿@{
     Layout = null;
 }    <!-- Start: News & Event -->
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+
 <section class="news-events section-padding">
     <div class="container">
         <div class="center-content">
@@ -13,7 +15,7 @@
             @foreach (var item in ViewBag.lstEvent as List<WebThuvien.Models.Entity.BAIDANGTHONGTIN>)
             {
                 <div class="single-news-event">
-                    <figure>
+                    <figure style="max-height:400px;max-width:400px">
                         <img src="~/Content/ClientContent/Hoatdong/@item.HINHANH1" alt="Bài đăng thông tin" />
                     </figure>
                     <div class="content-block">
@@ -42,8 +44,8 @@
                                     </a>
                                 </li>
                             </ul>
-                            <h3><a href=".#">@item.TIEUDE</a></h3>
-                            <p class="p-content">@item.NOIDUNG.</p>
+                            <h3><a href="/Hoatdong/Chitiet?Mabaidang=@item.MABAIDANG">@item.TIEUDE</a></h3>
+                            <p class="content-p">@item.NOIDUNG</p>
                             <a class="btn btn-primary" href="/Hoatdong/Chitiet?Mabaidang=@item.MABAIDANG">Xem chi tiết</a>
                         </div>
                     </div>
@@ -58,17 +60,14 @@
     </div>
 </section>
 <!-- End: News & Event -->
-
 <script>
-    function truncateText(selector, maxLength) {
-        var element = document.querySelector(selector),
-            truncated = element.innerText;
+    $(document).ready(function () {
 
-        if (truncated.length > maxLength) {
-            truncated = truncated.substr(0, maxLength) + '...';
-        }
-        return truncated;
-    }
+        $('.content-p').each(function (f) {
 
-    document.querySelector('.content-p').innerText = truncateText('.content-p', 300);
+            var newstr = $(this).text().substring(0, 300);
+            $(this).text(newstr);
+
+        });
+    })
 </script>

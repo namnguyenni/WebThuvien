@@ -25,20 +25,21 @@ namespace WebThuvien.Models.Entity
         [StringLength(20)]
         public string TENTAIKHOAN { get; set; }
 
+        [Required]
         [StringLength(20)]
         public string MATKHAU { get; set; }
 
         [StringLength(20)]
         public string EMAIL { get; set; }
 
-        public int? LOAITAIKHOAN { get; set; }
+        public int LOAITAIKHOAN { get; set; }
 
         [StringLength(100)]
         public string SOTHICHDOC { get; set; }
 
         [StringLength(50)]
         public string HOTEN { get; set; }
-        [Column(TypeName = "datetime")]
+
         public DateTime? DANGNHAPGANNHAT { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
