@@ -3,55 +3,116 @@
     ViewBag.Title = "Thẻ thư viện";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
-
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
 <div class="main-container">
-    <div class="xs-pd-20-10 pd-ltr-20">
-        <div class="card-box pb-10">
-            <div class="h5 pd-20 mb-0">Danh sách các cuốn sách trong thư viện</div>
-            <table class="data-table table nowrap">
-                <thead>
-                    <tr>
-                        <th class="table-plus">STT</th>
-                        <th>Mã thẻ</th>
-                        <th>Tên chủ thẻ</th>
-                        <th>Số sách đang mượn</th>
-                        <th class="datatable-nosort sorting_disabled" rowspan="1" colspan="1" aria-label="Action">Action</th>
-                        <th class="datatable-nosort sorting_disabled" rowspan="1" colspan="1" aria-label="Action">Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @{ int STT = 0;}
-                    @foreach (var item in @ViewBag.thethuviens as List<WebThuvien.Models.Entity.THETHUVIEN>)
-                    {
-                        STT = STT + 1;
-                        <tr>
-                            <td class="table-plus">
-                                @STT
-                            </td>
-                            <td>@item.MATHE</td>
-                            <td>@item.TENCHUTHE</td>
-                            <td>0</td>
+    <div class="pd-ltr-20 xs-pd-20-10">
+        <div class="min-height-200px">
+            <div class="page-header">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12">
+                        <div class="title">
+                            <h4>Lĩnh vực</h4>
+                        </div>
+                        <nav aria-label="breadcrumb" role="navigation">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item">
+                                    <a href="/Admin">Trang chủ</a>
+                                </li>
+                                <li class="breadcrumb-item">
+                                    <a href="#">Danh sách thẻ thư viện</a>
+                                </li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-30">
+                    <div class="card-box height-100-p overflow-hidden">
+                        <div class="profile-tab height-100-p">
 
-                            <td>
-                                <a href="/Admin/XemMauThe?mathe=@item.MATHE"><i title="Xem ảnh thẻ" class="icon-copy fa fa-cloud-download" style="font-size:20px" aria-hidden="true"></i></a>
-                            </td>
-                            <td>
-                                <div class="table-actions">
-                                    <i class="icon-copy fa fa-lock" style="font-size:20px" aria-hidden="true"></i>
-                                    <i class="icon-copy fa fa-unlock" aria-hidden="true"></i>
-                                </div>
-                            </td>
-                        </tr>
-                    }
+                            <div class="tab height-100-p">
+
+                                @* Bảng sách cho mượn offline *@
+                                <table class="table table-bordered" border="0" cellspacing="0" cellpadding="0" style="font-size:10px;">
+                                    <thead>
+                                        <tr>
+                                            <th class="table-plus">STT</th>
+                                            <th>Mã thẻ</th>
+                                            <th>Tên chủ thẻ</th>
+                                            <th>Số sách đang mượn</th>
+                                            <th class="datatable-nosort sorting_disabled" rowspan="1" colspan="1" aria-label="Action">Action</th>
+                                            <th class="datatable-nosort sorting_disabled" rowspan="1" colspan="1" aria-label="Action">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @{ int STT = 0;}
+                                        @foreach (var item in @ViewBag.thethuviens as List<WebThuvien.Models.Entity.THETHUVIEN>)
+                                        {
+                                            STT = STT + 1;
+                                            <tr>
+                                                <td class="table-plus">
+                                                    @STT
+                                                </td>
+                                                <td>@item.MATHE</td>
+                                                <td>@item.TENCHUTHE</td>
+                                                <td>0</td>
+
+                                                <td>
+                                                    <a href="/Admin/XemMauThe?mathe=@item.MATHE"><i title="Xem ảnh thẻ" class="icon-copy fa fa-cloud-download" style="font-size:20px" aria-hidden="true"></i></a>
+                                                </td>
+                                                <td>
+                                                    <div class="table-actions">
+                                                        <i class="icon-copy fa fa-lock" style="font-size:20px" aria-hidden="true"></i>
+                                                        <i class="icon-copy fa fa-unlock" aria-hidden="true"></i>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        }
 
 
-                </tbody>
-            </table>
-        </div>
+                                    </tbody>
+                                </table>
 
 
-        <div class="footer-wrap pd-20 mb-20 card-box">
-            Thư viện số hóa -  <a href="/" target="_blank">Ban cơ yếu chính phủ</a>
+                            </div>
+                            @* Bảng sách cho mượn offline *@
+
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
+    <div class="footer-wrap pd-20 mb-20 card-box">
+        Thư viện số hóa -  <a href="/" target="_blank">Ban cơ yếu chính phủ</a>
+    </div>
 </div>
+
+<script>
+
+
+    $(document).ready(function () {
+        $('table').DataTable({
+            "language": {
+                "sProcessing": "Đang xử lý...",
+                "sLengthMenu": "Xem _MENU_ mục",
+                "sZeroRecords": "Không tìm thấy dòng nào phù hợp",
+                "sInfo": "Đang xem _START_ đến _END_ trong tổng số _TOTAL_ mục",
+                "sInfoEmpty": "Đang xem 0 đến 0 trong tổng số 0 mục",
+                "sInfoFiltered": "(được lọc từ _MAX_ mục)",
+                "sInfoPostFix": "",
+                "sSearch": "Tìm kiếm:",
+                "sUrl": "",
+                "oPaginate": {
+                    "sFirst": "Đầu",
+                    "sPrevious": "Trước",
+                    "sNext": "Tiếp",
+                    "sLast": "Cuối"
+                }
+            }
+        });
+
+    });
+        
+</script>

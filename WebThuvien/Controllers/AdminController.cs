@@ -86,7 +86,7 @@ namespace WebThuvien.Controllers
             //đăng nhập gần nhất
             var Taikhoangannhat = db.TAIKHOANs.Where(x=>x.DANGNHAPGANNHAT!=null).OrderBy(x=>x.DANGNHAPGANNHAT).Take(5).ToList();
             ViewBag.Taikhoangannhat = Taikhoangannhat;
-
+            ViewBag.luotmuontra = db.CHITIETMUONTRASACHes.Where(x=>x.NGAYMUON.Value.Year == DateTime.Now.Year).Count();
             return View();
         }
 
@@ -1309,6 +1309,7 @@ namespace WebThuvien.Controllers
 
             QLTHUVIEN db = new QLTHUVIEN();
             ViewBag.thethuviens = db.THETHUVIENs.OrderBy(x => x.NGAYCAP).ToList();
+
 
             return View();
         }
