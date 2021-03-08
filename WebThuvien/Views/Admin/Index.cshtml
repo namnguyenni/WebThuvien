@@ -101,14 +101,7 @@
                 <div class="card-box height-100-p pd-20 min-height-200px">
                     <div class="d-flex justify-content-between pb-10">
                         <div class="h5 mb-0">Vừa truy cập</div>
-                        <div class="dropdown">
-                            <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" data-color="#1b3133" href="#" role="button" data-toggle="dropdown">
-                                <i class="dw dw-more"></i>
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-                                <a class="dropdown-item" href="#"><i class="dw dw-eye"></i> Xem chi tiêt</a>
-                            </div>
-                        </div>
+
                     </div>
                     <div class="user-list">
                         <ul>
@@ -133,20 +126,41 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-4 col-md-6 mb-20">
-                <div class="card-box height-100-p pd-20 min-height-200px">
-                    <div class="d-flex justify-content-between">
-                        <div class="h5 mb-0">Thống kê sách</div>
-                        <div class="dropdown">
-                            <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" data-color="#1b3133" href="#" role="button" data-toggle="dropdown">
-                                <i class="dw dw-more"></i>
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-                                <a class="dropdown-item" href="#"><i class="dw dw-eye"></i>Chi tiêt</a>
+            <div class="col-lg-4 col-md-12 mb-20">
+                <div class="col-md-12 mb-20">
+                    <div class="card-box min-height-200px pd-20 mb-20" data-bgcolor="#fe4ab8">
+                        <div class="d-flex justify-content-between pb-20 text-white">
+                            <div class="icon h1 text-white">
+                                <i class="fa fa-calendar" aria-hidden="true"></i>
+                                <!-- <i class="icon-copy fa fa-stethoscope" aria-hidden="true"></i> -->
+                            </div>
+                            <div class="font-14 text-right">
                             </div>
                         </div>
+                        <div class="d-flex justify-content-between align-items-end">
+                            <div class="text-white">
+                                <div class="font-14">Bài đăng tháng</div>
+                                <div class="font-24 weight-500">@ViewBag.Soluongbaidangthang</div>
+                            </div>
+
+                        </div>
                     </div>
-                    <div id="diseases-chart"></div>
+                    <div class="card-box min-height-200px pd-20" data-bgcolor="#4cff00">
+                        <div class="d-flex justify-content-between pb-20 text-white">
+                            <div class="icon h1 text-white">
+                                <i class="fa fa-stethoscope" aria-hidden="true"></i>
+                            </div>
+                            <div class="font-14 text-right">
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-end">
+                            <div class="text-white">
+                                <div class="font-14">Lượt quá hạn</div>
+                                <div class="font-24 weight-500">@ViewBag.Soluongquahan</div>
+                            </div>
+
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="col-lg-4 col-md-12 mb-20">
@@ -158,8 +172,6 @@
                                 <!-- <i class="icon-copy fa fa-stethoscope" aria-hidden="true"></i> -->
                             </div>
                             <div class="font-14 text-right">
-                                <div><i class="icon-copy ion-arrow-up-c"></i> 2.69%</div>
-                                <div class="font-12">Từ tháng trước</div>
                             </div>
                         </div>
                         <div class="d-flex justify-content-between align-items-end">
@@ -167,9 +179,7 @@
                                 <div class="font-14">Lượt mượn/trả</div>
                                 <div class="font-24 weight-500">@ViewBag.luotmuontra</div>
                             </div>
-                            <div class="max-width-150">
-                                <div id="appointment-chart"></div>
-                            </div>
+
                         </div>
                     </div>
                     <div class="card-box min-height-200px pd-20" data-bgcolor="#265ed7">
@@ -178,8 +188,6 @@
                                 <i class="fa fa-stethoscope" aria-hidden="true"></i>
                             </div>
                             <div class="font-14 text-right">
-                                <div><i class="icon-copy ion-arrow-down-c"></i> 3.69%</div>
-                                <div class="font-12">Từ tháng trước</div>
                             </div>
                         </div>
                         <div class="d-flex justify-content-between align-items-end">
@@ -187,9 +195,7 @@
                                 <div class="font-14">Số lượng bạn đọc</div>
                                 <div class="font-24 weight-500">@ViewBag.Soluongbandoc</div>
                             </div>
-                            <div class="max-width-150">
-                                <div id="surgery-chart"></div>
-                            </div>
+
                         </div>
                     </div>
                 </div>
@@ -255,6 +261,7 @@
     var luottra;
     luotmuon = @Html.Raw(Json.Encode(ViewBag.luotmuon));
     luottra = @Html.Raw(Json.Encode(ViewBag.luottra));
+
     function UpdateChart() {
         options = {
             series: [
@@ -315,7 +322,7 @@
             },
             yaxis: {
                 min: 0,
-                max: 10,
+                max: 50,
                 labels: {
                     style: {
                         colors: '#8c9094'

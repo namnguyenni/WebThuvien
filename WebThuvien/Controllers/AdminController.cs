@@ -79,7 +79,6 @@ namespace WebThuvien.Controllers
                 tra = db.CHITIETMUONTRASACHes.Where(x =>x.NGAYTRA!=null && x.NGAYTRA.Value.Year == nowyear && x.NGAYTRA.Value.Month == i).Count();
                 luotmuon.Add(muon);
                 luottra.Add(tra);
-
             }
             ViewBag.luotmuon = luotmuon;
             ViewBag.luottra = luottra;
@@ -673,7 +672,7 @@ namespace WebThuvien.Controllers
         {
             string[] listmasach = lstmasach[0].Split(',');
             string[] listthoigian = lstthoigianmuon[0].Split(',');
-
+            mathe = mathe.ToUpper();
             //thêm dữ liệu vào bảng muontra và bảng chi tiết mượn trả
             QLTHUVIEN db = new QLTHUVIEN();
             try
@@ -1615,6 +1614,32 @@ namespace WebThuvien.Controllers
 
 
         #endregion
+
+        #region Thống kê
+        public ActionResult Sachxemnhieu()
+        {
+            //kiểm tra sự tồn tại session
+            if (Session["Taikhoan"] == null)
+            {
+                return Redirect("/Home/Login");
+            }
+
+            QLTHUVIEN db = new QLTHUVIEN();
+            List<SACH> lstSach = db.Database.SqlQuery<SACH>("exec dbo.TOPPOPULARBOOK ").ToList();
+            List<SACH> lst = new List<SACH>();
+            foreach (var item in lstSach)
+            {
+                SACH sach = db.SACHes.SingleOrDefault(x => x.ID == item.ID);
+                lst.Add(sach);
+            }
+            ViewBag.Sach = lst;
+            return View();
+        }
+
+
+
+        #endregion
+
 
         public string ConvertDate(DateTime date)
         {

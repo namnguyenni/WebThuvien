@@ -1,0 +1,63 @@
+﻿
+@{
+    ViewBag.Title = "Sách xem nhiều";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+
+<div class="main-container">
+    <div class="xs-pd-20-10 pd-ltr-20">
+        <div class="title pb-20">
+            <h2 class="h3 mb-0">10 cuốn sách được bạn đọc quan tâm nhiều</h2>
+        </div>
+
+        <div class="card-box pb-10">
+            <table class="data-table table nowrap">
+                <thead>
+                    <tr>
+                        <th class="table-plus">STT</th>
+                        <th>Mã sách</th>
+                        <th>Tên sách</th>
+                        <th>Tác giả</th>
+                        <th>Hình ảnh sách</th>
+                        <th class="datatable-nosort">Công cụ</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{ int STT = 0;}
+                    @foreach (var item in @ViewBag.Sach as List<WebThuvien.Models.Entity.SACH>)
+                    {
+                        STT = STT + 1;
+                        <tr>
+                            <td class="table-plus">
+                                @STT
+                            </td>
+                            <td>@item.MASACH</td>
+                            <td>@item.TENSACH</td>
+                            <td>@item.TACGIA.TENTACGIA</td>
+                            <td>
+                                <div class="name-avatar d-flex align-items-center">
+                                    <div class="avatar mr-2 flex-shrink-0">
+                                        <img src="~/Content/ClientContent/images/Books/@item.HINHANH" class="border-radius-100 shadow" width="60" height="60" alt="hình ảnh">
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="table-actions">
+                                    <a href="/Admin/XemChiTietSach?MaSach=@item.MASACH" data-color="#265ed7"><i class="icon-copy dw dw-edit2"></i></a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="footer-wrap pd-20 mb-20 card-box">
+            Thư viện số hóa - <a href="/" target="_blank">Ban cơ yếu chính phủ</a>
+        </div>
+    </div>
+</div>
+
