@@ -11,7 +11,7 @@
                 <div class="row">
                     <div class="col-md-12 col-sm-12">
                         <div class="title">
-                            <h4>Lĩnh vực</h4>
+                            <h4>Thẻ thư viện</h4>
                         </div>
                         <nav aria-label="breadcrumb" role="navigation">
                             <ol class="breadcrumb">
@@ -19,7 +19,7 @@
                                     <a href="/Admin">Trang chủ</a>
                                 </li>
                                 <li class="breadcrumb-item">
-                                    <a href="#">Danh sách thẻ thư viện</a>
+                                    <a href="#">Thẻ thư viện</a>
                                 </li>
                             </ol>
                         </nav>
@@ -40,9 +40,8 @@
                                             <th class="table-plus">STT</th>
                                             <th>Mã thẻ</th>
                                             <th>Tên chủ thẻ</th>
-                                            <th>Số sách đang mượn</th>
-                                            <th class="datatable-nosort sorting_disabled" rowspan="1" colspan="1" aria-label="Action">Action</th>
-                                            <th class="datatable-nosort sorting_disabled" rowspan="1" colspan="1" aria-label="Action">Action</th>
+                                            <th class="datatable-nosort sorting_disabled" rowspan="1" colspan="1" aria-label="Action">Hình ảnh</th>
+                                            <th class="datatable-nosort sorting_disabled" rowspan="1" colspan="1" aria-label="Action">Tình trạng</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -56,15 +55,21 @@
                                                 </td>
                                                 <td>@item.MATHE</td>
                                                 <td>@item.TENCHUTHE</td>
-                                                <td>0</td>
 
                                                 <td>
-                                                    <a href="/Admin/XemMauThe?mathe=@item.MATHE"><i title="Xem ảnh thẻ" class="icon-copy fa fa-cloud-download" style="font-size:20px" aria-hidden="true"></i></a>
+                                                    <a href="/Admin/XemMauThe?mathe=@item.MATHE"><img src="/Admin/XemMauThe?mathe=@item.MATHE" height="200" width="300"/></a>
                                                 </td>
                                                 <td>
                                                     <div class="table-actions">
-                                                        <i class="icon-copy fa fa-lock" style="font-size:20px" aria-hidden="true"></i>
-                                                        <i class="icon-copy fa fa-unlock" aria-hidden="true"></i>
+                                                        @if (item.TRANGTHAI == 0)
+                                                        {
+                                                            <p>Không mượn sách</p>
+                                                        }
+                                                        else
+                                                        {
+                                                            <p>Đang mượn sách</p>
+
+                                                        }
                                                     </div>
                                                 </td>
                                             </tr>

@@ -713,6 +713,7 @@ namespace WebThuvien.Controllers
                             chitiet.MAMUONTRASACH = mamuontra;
                             chitiet.NGAYMUON = DateTime.UtcNow;
                             chitiet.THOIGIANMUON = Convert.ToInt32(listthoigian[i]);
+                            the.TRANGTHAI = 1;
                             db.CHITIETMUONTRASACHes.Add(chitiet);
                             db.SaveChanges();
 
@@ -849,6 +850,11 @@ namespace WebThuvien.Controllers
                         //LẤY NGÀY TRẢ
                         DateTime date = DateTime.Now;
                         chitiet.NGAYTRA = date;
+                        chitiet.MUONTRASACH.THETHUVIEN.TRANGTHAI = 0;
+                        if (db.CHITIETMUONTRASACHes.SingleOrDefault(x => x.MAMUONTRASACH == chitiet.MAMUONTRASACH && x.NGAYTRA == null) == null)
+                        {
+                            chitiet.MUONTRASACH.THETHUVIEN.TRANGTHAI = 1;
+                        }
                         db.SaveChanges();
                     }
                 }
@@ -1407,6 +1413,7 @@ namespace WebThuvien.Controllers
             string mathe = "TV" + year +""+ number;
             //lưu thông tin thẻ vào cơ sở dữ liệu
             thethuvien.MATHE = mathe;
+            thethuvien.TRANGTHAI = 0;
             QLTHUVIEN db = new QLTHUVIEN();
             try
             {

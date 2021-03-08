@@ -37,8 +37,9 @@ namespace WebThuvien.Models.Entity
 
         [Column(TypeName = "date")]
         public DateTime? NGAYHETHAN { get; set; }
-
         public int? GIOITINH { get; set; }
+        public int? TRANGTHAI { get; set; }
+
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DOCGIA> DOCGIAs { get; set; }
