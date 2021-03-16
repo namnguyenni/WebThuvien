@@ -172,6 +172,19 @@ namespace WebThuvien.Controllers
         {
             QLTHUVIEN db = new QLTHUVIEN();
             TAIKHOAN taikhoan = db.TAIKHOANs.SingleOrDefault(x => x.TENTAIKHOAN == tentaikhoan);
+            //logout tai khoan hien tai
+            if (Session["TaikhoanBanDoc"] != null)
+            {
+                Session.Remove("TaikhoanBanDoc");
+            }
+
+            if (Session["Taikhoan"] != null)
+            {
+                Session.Remove("Taikhoan");
+                Session.Remove("TaikhoanBanDoc");
+
+            }
+
             if (taikhoan != null && taikhoan.MATKHAU == matkhau)
             {
                 taikhoan.DANGNHAPGANNHAT = DateTime.Now;
@@ -678,7 +691,7 @@ namespace WebThuvien.Controllers
             try
             {
                 THETHUVIEN the = db.THETHUVIENs.SingleOrDefault(x => x.MATHE == mathe);
-                if (the != null)
+                if (the != null && DateTime.Now< the.NGAYHETHAN)
                 {
                     for (int i = 0; i < listmasach.Length; i++)
                     {

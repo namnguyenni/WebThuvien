@@ -125,9 +125,18 @@
 
     }
 
+
     $(document).ready(function () {
         setSelectedPageNav();
     })
+    </script>
+    <script>
+        $(document).ready(function () {
+            // Handler for .ready() called.
+            $('html, body').animate({
+                scrollTop: $('#content').offset().top
+            }, 'slow');
+        });
     </script>
 </body>
 

@@ -3,6 +3,7 @@
 }    
 @{
     var session = Session["TaikhoanBanDoc"] as WebThuvien.Models.Entity.TAIKHOAN;
+    var session_ad = Session["Taikhoan"] as WebThuvien.Models.Entity.TAIKHOAN;
 }
 <!-- Start: Header Section -->
 <header id="header" class="navbar-wrapper">
@@ -15,7 +16,7 @@
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="topbar-info">
-                                    <a href="tel:+84 123123123"><i class="fa fa-phone"></i>+84 123123123</a>
+                                    <a href="tel:(024) 3773 8668"><i class="fa fa-phone"></i>(024) 3773 8668</a>
                                     <span>/</span>
                                     <a href="mailto:bancoyeuchinhphu@gmail.com"><i class="fa fa-envelope"></i>bancoyeuchinhphu@gmail.com</a>
                                 </div>
@@ -26,6 +27,10 @@
                                     {
                                         <span>Xin chào @session.TENTAIKHOAN | </span>
                                         <a href="/Home/Logout"><i class="fa fa-lock"></i>Đăng xuất</a>
+                                        if (session_ad != null)
+                                        {
+                                            <a href="/Admin"> | <i class="fa fa-user"></i>Trang quản trị</a>
+                                        }
                                     }
                                     else
                                     {
